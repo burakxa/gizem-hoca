@@ -28,7 +28,7 @@ const MainMenu = () => {
             <img
               src="https://horizons-cdn.hostinger.com/451c65e3-9af7-4c36-9235-9b5c17a191ce/5987e4c01aee4b6498a58f6a3b12f01e.png"
               alt="Gizem Hoca"
-              className="h-16 w-auto"
+              className="h-20 w-auto max-w-[280px] object-contain"
             />
           </Link>
 
