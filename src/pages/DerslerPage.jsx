@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet';
-import { PlayCircle, X } from 'lucide-react';
-import Pagination from '@/components/ui/Pagination.jsx';
+import { PlayCircle, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const videos = [
   { id: '2_pyykhX08M', title: 'Postürünü Geri Kazan - 25 Dakikalık Duruş ve Mobilite Çalışması', category: 'Postür' },
@@ -157,12 +156,21 @@ const DerslerPage = () => {
         </AnimatePresence>
 
         {totalPages > 1 && (
-          <div className="mt-12 flex justify-center">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={setCurrentPage}
-            />
+          <div className="mt-12 flex items-center justify-center gap-2">
+            <button onClick={() => setCurrentPage(p => p - 1)} disabled={currentPage === 1}
+              className="p-2 rounded-full disabled:opacity-30 hover:bg-brand-black/10 transition-colors">
+              <ChevronLeft className="h-5 w-5 text-brand-black" />
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map(n => (
+              <button key={n} onClick={() => setCurrentPage(n)}
+                className={`w-10 h-10 rounded-full text-sm font-bold transition-all ${currentPage === n ? 'bg-brand-black text-brand-lime' : 'text-brand-black hover:bg-brand-black/10'}`}>
+                {n}
+              </button>
+            ))}
+            <button onClick={() => setCurrentPage(p => p + 1)} disabled={currentPage === totalPages}
+              className="p-2 rounded-full disabled:opacity-30 hover:bg-brand-black/10 transition-colors">
+              <ChevronRight className="h-5 w-5 text-brand-black" />
+            </button>
           </div>
         )}
       </motion.div>
