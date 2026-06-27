@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&display=swap');
+
+@layer base {
+  :root {
+      --background: 69 64% 58%;
+      /* #cddc4e */
+      --foreground: 0 0% 0%;
+      /* siyah */
+  
+      --card: 69 64% 58%;
+      --card-foreground: 0 0% 0%;
+  
+      --popover: 69 64% 58%;
+      --popover-foreground: 0 0% 0%;
+  
+      --primary: 0 0% 0%;
+      /* siyah */
+      --primary-foreground: 69 64% 58%;
+      /* #cddc4e */
+  
+      --secondary: 0 0% 100%;
+      /* beyaz */
+      --secondary-foreground: 0 0% 0%;
+      /* siyah */
+  
+      --muted: 0 0% 95%;
+      /* çok açık gri */
+      --muted-foreground: 0 0% 40%;
+      /* koyu gri */
+  
+      --accent: 69 64% 58%;
+      /* #cddc4e */
+      --accent-foreground: 0 0% 0%;
+      /* siyah */
+  
+      --destructive: 0 84.2% 60.2%;
+      /* kırmızı */
+      --destructive-foreground: 0 0% 100%;
+      /* beyaz */
+  
+      --border: 0 0% 0%;
+      /* siyah */
+      --input: 0 0% 0%;
+      /* siyah */
+      --ring: 69 64% 58%;
+      /* #cddc4e */
+    }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-brand-black font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+}
