@@ -11,33 +11,7 @@ const inspirationalQuotes = [
   "Kendine ayırdığın her an, en değerli yatırımdır.",
 ];
 
-const LoadingScreen = ({ onFinished }) => {
-  const [quote, setQuote] = useState('');
-  useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * inspirationalQuotes.length);
-    setQuote(inspirationalQuotes[randomIndex]);
-    const timer = setTimeout(onFinished, 2200);
-    return () => clearTimeout(timer);
-  }, [onFinished]);
 
-  return (
-    <motion.div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-brand-black"
-      initial={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.8 }}
-    >
-      <motion.p
-        className="text-brand-lime text-2xl md:text-4xl font-black text-center tracking-tight p-8 max-w-2xl"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        {quote}
-      </motion.p>
-    </motion.div>
-  );
-};
 
 const GIZEM_PHOTO = 'https://horizons-cdn.hostinger.com/451c65e3-9af7-4c36-9235-9b5c17a191ce/71e533503d331149fe73f8e165f13f5b.png';
 
@@ -78,7 +52,6 @@ const AnimatedNumber = ({ target, suffix = '' }) => {
 };
 
 const HomePage = () => {
-  const [loading, setLoading] = useState(true);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [statsVisible, setStatsVisible] = useState(false);
 
@@ -91,11 +64,7 @@ const HomePage = () => {
 
   return (
     <>
-      <AnimatePresence>
-        {loading && <LoadingScreen onFinished={() => setLoading(false)} />}
-      </AnimatePresence>
-
-      <div className="w-full min-h-screen bg-brand-lime overflow-y-auto">
+      <div className="w-full bg-brand-lime">
 
         {/* ——— HERO ——— */}
         <div className="relative min-h-screen flex flex-col p-8 lg:p-16 overflow-hidden">
