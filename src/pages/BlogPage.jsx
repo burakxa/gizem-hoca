@@ -1,48 +1,45 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { blogPosts as localPosts } from '@/data/blogData';
 
-const BlogPage = () => {
-  const [posts, setPosts] = useState(localPosts);
+const G = { bg:'#0d1b3e', gold:'#d4af37', goldBorder:'rgba(212,175,55,0.2)', white:'#fff', whiteMid:'rgba(255,255,255,0.5)' };
 
+export default function BlogPage() {
   return (
     <>
-      <Helmet>
-        <title>Blog - Gizem Hoca Pilates</title>
-        <meta name="description" content="Pilates, sağlık ve iyi yaşam üzerine yazılar." />
-      </Helmet>
-
-      <div className="border-b-2 border-brand-black p-8 lg:p-12">
-        <p className="text-[10px] font-black tracking-widest text-brand-black/40 mb-3">GİZEM HOCA PİLATES</p>
-        <h1 className="text-5xl md:text-7xl font-black text-brand-black leading-none tracking-tighter">BLOG</h1>
-      </div>
-
-      <div className="divide-y-2 divide-black/10">
-        {posts.map((post, i) => (
-          <motion.div key={post.id}
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.07 }}
-            className="group">
-            <Link to={`/blog/${post.id}`} className="grid grid-cols-1 md:grid-cols-4 p-8 lg:p-12 hover:bg-brand-black/[0.02] transition-colors gap-6">
-              <div className="md:col-span-1">
-                <p className="text-[10px] font-black tracking-widest text-brand-black/40">{post.date}</p>
-                <p className="text-[10px] font-black tracking-widest text-brand-black/30 mt-1">{post.category?.toUpperCase()}</p>
-              </div>
-              <div className="md:col-span-3">
-                <h2 className="text-2xl font-black text-brand-black group-hover:text-brand-black/50 transition-colors tracking-tight mb-3">{post.title}</h2>
-                <p className="text-sm text-brand-black/55 leading-relaxed mb-4">{post.summary}</p>
-                <span className="inline-flex items-center gap-2 text-[10px] font-black tracking-widest text-brand-black border-b-2 border-brand-black pb-0.5 group-hover:text-brand-black/40 transition-colors">
-                  DEVAMINI OKU <ArrowRight size={12} />
-                </span>
-              </div>
-            </Link>
-          </motion.div>
-        ))}
+      <Helmet><title>Blog - Gizem Hoca Pilates</title></Helmet>
+      <div style={{ background:G.bg, fontFamily:'Montserrat,sans-serif', minHeight:'100vh' }}>
+        <div style={{ padding:'32px 40px', borderBottom:`1px solid ${G.goldBorder}`, display:'flex', alignItems:'center', gap:'16px' }}>
+          <div style={{ width:'32px', height:'2px', background:G.gold }} />
+          <div>
+            <p style={{ fontSize:'9px', fontWeight:900, letterSpacing:'0.2em', color:G.gold, marginBottom:'6px' }}>GİZEM HOCA PİLATES</p>
+            <h1 style={{ fontSize:'56px', fontWeight:900, color:'#fff', lineHeight:0.92, letterSpacing:'-0.03em' }}>BLOG</h1>
+          </div>
+        </div>
+        <div>
+          {localPosts.map((post, i) => (
+            <motion.div key={post.id} initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:i*0.07 }}
+              style={{ borderBottom:`1px solid ${G.goldBorder}` }}>
+              <Link to={`/blog/${post.id}`} style={{ display:'grid', gridTemplateColumns:'160px 1fr', padding:'28px 40px', gap:'24px', textDecoration:'none' }}>
+                <div>
+                  <p style={{ fontSize:'11px', color:G.whiteMid }}>{post.date}</p>
+                  <p style={{ fontSize:'9px', fontWeight:900, letterSpacing:'0.1em', color:G.gold, marginTop:'4px' }}>{(post.category||'').toUpperCase()}</p>
+                </div>
+                <div>
+                  <h2 style={{ fontSize:'20px', fontWeight:900, color:'#fff', letterSpacing:'-0.02em', marginBottom:'8px', lineHeight:1.1 }}>{post.title}</h2>
+                  <p style={{ fontSize:'12px', color:G.whiteMid, lineHeight:1.7, marginBottom:'12px' }}>{post.summary}</p>
+                  <span style={{ fontSize:'9px', fontWeight:900, letterSpacing:'0.1em', color:G.gold, borderBottom:`2px solid ${G.gold}`, paddingBottom:'2px', display:'inline-flex', alignItems:'center', gap:'4px' }}>
+                    DEVAMINI OKU <ArrowRight size={12} />
+                  </span>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </>
   );
-};
-
-export default BlogPage;
+}

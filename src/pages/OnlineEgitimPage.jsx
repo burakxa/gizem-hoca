@@ -23,7 +23,7 @@ const OnlineEgitimPage = ({ handleNotImplemented }) => {
         initial="initial"
         animate="animate"
         exit="exit"
-        className="w-full h-full flex flex-col bg-brand-bg"
+        className="w-full h-full flex flex-col bg-[#0d1b3e]"
       >
         <div className="w-full h-full md:w-1/2 md:fixed md:left-0 md:top-0 flex items-center justify-center p-8 lg:p-16">
           <motion.div 
@@ -36,9 +36,9 @@ const OnlineEgitimPage = ({ handleNotImplemented }) => {
           </motion.div>
         </div>
         
-        <div className="w-full md:w-1/2 md:ml-auto bg-brand-bg p-8 lg:p-16 flex flex-col justify-center min-h-screen overflow-y-auto">
+        <div className="w-full md:w-1/2 md:ml-auto bg-[#0d1b3e] p-8 lg:p-16 flex flex-col justify-center min-h-screen overflow-y-auto">
           <motion.h1 
-            className="text-5xl md:text-6xl font-black text-brand-black leading-none tracking-tighter mb-8"
+            className="text-5xl md:text-6xl font-black text-white leading-none tracking-tighter mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -78,13 +78,13 @@ const OnlineEgitimPage = ({ handleNotImplemented }) => {
             <h2 className="text-2xl font-black tracking-tight mb-4">Kayıt Ol</h2>
             <div>
               <Label htmlFor="name" className="font-bold">İsim</Label>
-              <Input id="name" type="text" required className="mt-1 bg-transparent border-2 border-brand-black rounded-none placeholder:text-gray-700 focus:ring-brand-lime-darker focus:border-brand-lime-darker" />
+              <Input id="name" type="text" required className="mt-1 bg-transparent border-2 border-[rgba(212,175,55,0.2)] rounded-none placeholder:text-gray-700 focus:ring-brand-lime-darker focus:border-[#d4af37]-darker" />
             </div>
             <div>
               <Label htmlFor="email" className="font-bold">E-posta</Label>
-              <Input id="email" type="email" required className="mt-1 bg-transparent border-2 border-brand-black rounded-none placeholder:text-gray-700 focus:ring-brand-lime-darker focus:border-brand-lime-darker" />
+              <Input id="email" type="email" required className="mt-1 bg-transparent border-2 border-[rgba(212,175,55,0.2)] rounded-none placeholder:text-gray-700 focus:ring-brand-lime-darker focus:border-[#d4af37]-darker" />
             </div>
-            <Button type="submit" className="w-full bg-brand-black text-white font-bold text-lg py-3 rounded-none hover:bg-brand-bg hover:text-black transition-colors duration-300">
+            <Button type="submit" className="w-full bg-[#071029] text-white font-bold text-lg py-3 rounded-none hover:bg-[#0d1b3e] hover:text-black transition-colors duration-300">
               KAYIT İÇİN GÖNDER
             </Button>
           </motion.form>

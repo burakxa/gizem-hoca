@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 import { PlayCircle, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
+const G = { bg:'#0d1b3e', dark:'#071029', gold:'#d4af37', goldFaint:'rgba(212,175,55,0.1)', goldBorder:'rgba(212,175,55,0.2)', white:'#fff', whiteMid:'rgba(255,255,255,0.5)' };
+
 const videos = [
   { id: '2_pyykhX08M', title: 'Postürünü Geri Kazan - 25 Dakikalık Duruş ve Mobilite Çalışması', category: 'Postür' },
   { id: 'gYaAsuUH3ag', title: 'Vücudunu Hizada Tut! 40 Dakikalık Dengeleyici Pilates Flow', category: 'Full Body' },
@@ -18,106 +20,98 @@ const videos = [
   { id: 'l7MRcgvVBDQ', title: 'Hamile Pilatesi - Güvenli Gebelik Egzersizleri', category: 'Özel' },
 ];
 
-const categories = ['TÜMÜ', 'BAŞLANGIÇ', 'CORE', 'FULL BODY', 'POSTÜR', 'REFORMER', 'ESNEKLİK', 'ÖZEL'];
-const catMap = { 'TÜMÜ': '', 'BAŞLANGIÇ': 'Başlangıç', 'CORE': 'Core', 'FULL BODY': 'Full Body', 'POSTÜR': 'Postür', 'REFORMER': 'Reformer', 'ESNEKLİK': 'Esneklik', 'ÖZEL': 'Özel' };
+const cats = ['TÜMÜ','BAŞLANGIÇ','CORE','FULL BODY','POSTÜR','REFORMER','ESNEKLİK','ÖZEL'];
+const catMap = { 'TÜMÜ':'', 'BAŞLANGIÇ':'Başlangıç', 'CORE':'Core', 'FULL BODY':'Full Body', 'POSTÜR':'Postür', 'REFORMER':'Reformer', 'ESNEKLİK':'Esneklik', 'ÖZEL':'Özel' };
 
-const DerslerPage = () => {
-  const [selectedVideo, setSelectedVideo] = useState(null);
-  const [activeCategory, setActiveCategory] = useState('TÜMÜ');
-  const [currentPage, setCurrentPage] = useState(1);
-  const videosPerPage = 6;
-
-  const filteredVideos = activeCategory === 'TÜMÜ' ? videos : videos.filter(v => v.category === catMap[activeCategory]);
-  const totalPages = Math.ceil(filteredVideos.length / videosPerPage);
-  const currentVideos = filteredVideos.slice((currentPage - 1) * videosPerPage, currentPage * videosPerPage);
+export default function DerslerPage() {
+  const [sel, setSel] = useState(null);
+  const [cat, setCat] = useState('TÜMÜ');
+  const [page, setPage] = useState(1);
+  const perPage = 6;
+  const filtered = cat === 'TÜMÜ' ? videos : videos.filter(v => v.category === catMap[cat]);
+  const total = Math.ceil(filtered.length / perPage);
+  const current = filtered.slice((page-1)*perPage, page*perPage);
 
   return (
     <>
       <Helmet><title>Dersler - Gizem Hoca Pilates</title></Helmet>
-      <div className="bg-brand-bg">
-        <div className="border-b-2 border-brand-black p-8 lg:p-12 flex items-center gap-4">
-          <div className="w-8 h-[3px] bg-brand-lime" />
+      <div style={{ background: G.bg, fontFamily:'Montserrat,sans-serif', minHeight:'100vh' }}>
+        <div style={{ padding:'32px 40px', borderBottom:`1px solid ${G.goldBorder}`, display:'flex', alignItems:'center', gap:'16px' }}>
+          <div style={{ width:'32px', height:'2px', background:G.gold }} />
           <div>
-            <p className="text-[10px] font-black tracking-widest text-brand-lime mb-1">GİZEM HOCA PİLATES</p>
-            <h1 className="text-5xl md:text-7xl font-black text-brand-black leading-none tracking-tighter">DERSLER</h1>
+            <p style={{ fontSize:'9px', fontWeight:900, letterSpacing:'0.2em', color:G.gold, marginBottom:'6px' }}>GİZEM HOCA PİLATES</p>
+            <h1 style={{ fontSize:'56px', fontWeight:900, color:'#fff', lineHeight:0.92, letterSpacing:'-0.03em' }}>DERSLER</h1>
           </div>
         </div>
 
-        <div className="flex overflow-x-auto border-b-2 border-brand-black">
-          {categories.map(cat => (
-            <button key={cat} onClick={() => { setActiveCategory(cat); setCurrentPage(1); }}
-              className={`px-5 py-3 text-[10px] font-black tracking-widest whitespace-nowrap border-r border-brand-tan transition-all ${
-                activeCategory === cat ? 'bg-brand-black text-brand-lime' : 'bg-brand-bg text-brand-brown hover:text-brand-black'
-              }`}>
-              {cat}
+        <div style={{ display:'flex', overflowX:'auto', borderBottom:`1px solid ${G.goldBorder}` }}>
+          {cats.map(c => (
+            <button key={c} onClick={() => { setCat(c); setPage(1); }}
+              style={{ padding:'10px 18px', fontSize:'9px', fontWeight:900, letterSpacing:'0.08em', whiteSpace:'nowrap', borderRight:`1px solid ${G.goldBorder}`, cursor:'pointer', border:'none', background: cat===c ? G.gold : 'transparent', color: cat===c ? G.bg : G.whiteMid, fontFamily:'Montserrat', borderRight:`1px solid ${G.goldBorder}` }}>
+              {c}
             </button>
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {currentVideos.map((video, i) => (
-            <motion.div key={video.id}
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.05 }}
-              className="border-b border-r border-brand-tan group cursor-pointer"
-              onClick={() => setSelectedVideo(video)}>
-              <div className="relative aspect-video overflow-hidden">
-                <img src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`} alt={video.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
-                  style={{ filter: 'sepia(0.3) contrast(1.1)' }} />
-                <div className="absolute inset-0 bg-brand-black/25 group-hover:bg-brand-black/10 transition-all flex items-center justify-center">
-                  <div className="w-12 h-12 bg-brand-lime rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all scale-75 group-hover:scale-100 border-2 border-brand-black">
-                    <PlayCircle size={20} className="text-brand-black" />
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr' }}>
+          {current.map((v, i) => (
+            <motion.div key={v.id} initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:i*0.05 }}
+              style={{ borderBottom:`1px solid ${G.goldBorder}`, borderRight:`1px solid ${G.goldBorder}`, cursor:'pointer' }}
+              onClick={() => setSel(v)}>
+              <div style={{ position:'relative', aspectRatio:'16/9', overflow:'hidden' }}>
+                <img src={`https://img.youtube.com/vi/${v.id}/hqdefault.jpg`} alt={v.title}
+                  style={{ width:'100%', height:'100%', objectFit:'cover', filter:'brightness(0.6)', transition:'all 0.4s' }} />
+                <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', background:'rgba(13,27,62,0.3)' }}>
+                  <div style={{ width:'44px', height:'44px', background:G.gold, borderRadius:'50%', display:'flex', alignItems:'center', justifyContent:'center' }}>
+                    <PlayCircle size={20} style={{ color:G.bg }} />
                   </div>
                 </div>
-                <span className="absolute top-3 left-3 bg-brand-black text-brand-lime text-[9px] font-black tracking-widest px-3 py-1 rounded-full">
-                  {video.category.toUpperCase()}
+                <span style={{ position:'absolute', top:'10px', left:'10px', background:G.gold, color:G.bg, fontSize:'8px', fontWeight:900, padding:'3px 10px', borderRadius:'999px', letterSpacing:'0.06em' }}>
+                  {v.category.toUpperCase()}
                 </span>
               </div>
-              <div className="p-4 border-t border-brand-tan">
-                <h3 className="text-xs font-bold text-brand-black leading-snug group-hover:text-brand-lime transition-colors">{video.title}</h3>
+              <div style={{ padding:'14px 16px', borderTop:`1px solid ${G.goldBorder}` }}>
+                <h3 style={{ fontSize:'11px', fontWeight:700, color:'#fff', lineHeight:1.4 }}>{v.title}</h3>
               </div>
             </motion.div>
           ))}
         </div>
 
-        {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-0 border-t-2 border-brand-black">
-            <button onClick={() => setCurrentPage(p => p - 1)} disabled={currentPage === 1}
-              className="p-4 border-r border-brand-tan disabled:opacity-30 hover:bg-brand-black/5 transition-colors">
-              <ChevronLeft className="h-5 w-5 text-brand-black" />
+        {total > 1 && (
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'center', borderTop:`1px solid ${G.goldBorder}` }}>
+            <button onClick={() => setPage(p=>p-1)} disabled={page===1}
+              style={{ padding:'14px', border:'none', borderRight:`1px solid ${G.goldBorder}`, background:'transparent', cursor:'pointer', opacity: page===1?0.3:1 }}>
+              <ChevronLeft size={20} style={{ color:G.gold }} />
             </button>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map(n => (
-              <button key={n} onClick={() => setCurrentPage(n)}
-                className={`w-12 h-12 text-xs font-black border-r border-brand-tan transition-all ${
-                  currentPage === n ? 'bg-brand-black text-brand-lime' : 'text-brand-brown hover:bg-brand-black/5'
-                }`}>{n}</button>
+            {Array.from({length:total},(_,i)=>i+1).map(n => (
+              <button key={n} onClick={() => setPage(n)}
+                style={{ width:'48px', height:'48px', fontSize:'11px', fontWeight:900, background: page===n?G.gold:'transparent', color: page===n?G.bg:G.whiteMid, border:'none', borderRight:`1px solid ${G.goldBorder}`, cursor:'pointer', fontFamily:'Montserrat' }}>
+                {n}
+              </button>
             ))}
-            <button onClick={() => setCurrentPage(p => p + 1)} disabled={currentPage === totalPages}
-              className="p-4 disabled:opacity-30 hover:bg-brand-black/5 transition-colors">
-              <ChevronRight className="h-5 w-5 text-brand-black" />
+            <button onClick={() => setPage(p=>p+1)} disabled={page===total}
+              style={{ padding:'14px', border:'none', background:'transparent', cursor:'pointer', opacity: page===total?0.3:1 }}>
+              <ChevronRight size={20} style={{ color:G.gold }} />
             </button>
           </div>
         )}
       </div>
 
       <AnimatePresence>
-        {selectedVideo && (
-          <motion.div className="fixed inset-0 bg-brand-black/95 flex items-center justify-center z-50 p-4"
-            onClick={() => setSelectedVideo(null)} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <motion.div onClick={e => e.stopPropagation()} className="relative w-full max-w-4xl aspect-video"
-              initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}>
-              <iframe className="absolute inset-0 w-full h-full rounded-lg"
-                src={`https://www.youtube.com/embed/${selectedVideo.id}?autoplay=1`}
-                title={selectedVideo.title} frameBorder="0"
+        {sel && (
+          <motion.div style={{ position:'fixed', inset:0, background:'rgba(7,16,41,0.97)', display:'flex', alignItems:'center', justifyContent:'center', zIndex:50, padding:'16px' }}
+            onClick={() => setSel(null)} initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }}>
+            <motion.div onClick={e=>e.stopPropagation()} style={{ position:'relative', width:'100%', maxWidth:'900px', aspectRatio:'16/9' }}
+              initial={{ scale:0.9 }} animate={{ scale:1 }} exit={{ scale:0.9 }}>
+              <iframe style={{ position:'absolute', inset:0, width:'100%', height:'100%', borderRadius:'8px', border:`1px solid ${G.goldBorder}` }}
+                src={`https://www.youtube.com/embed/${sel.id}?autoplay=1`} title={sel.title} frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
-              <button className="absolute -top-10 right-0 text-brand-bg/60 hover:text-brand-bg text-[10px] font-black tracking-widest flex items-center gap-2 transition-colors"
-                onClick={() => setSelectedVideo(null)}>KAPAT <X size={14} /></button>
+              <button style={{ position:'absolute', top:'-40px', right:0, color:G.whiteMid, background:'none', border:'none', cursor:'pointer', fontSize:'10px', fontWeight:900, letterSpacing:'0.1em', display:'flex', alignItems:'center', gap:'6px', fontFamily:'Montserrat' }}
+                onClick={() => setSel(null)}>KAPAT <X size={14} /></button>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
     </>
   );
-};
-
-export default DerslerPage;
+}

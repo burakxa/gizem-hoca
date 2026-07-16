@@ -3,272 +3,239 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, ChevronRight, PlayCircle, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const GIZEM_PHOTO = 'https://horizons-cdn.hostinger.com/451c65e3-9af7-4c36-9235-9b5c17a191ce/71e533503d331149fe73f8e165f13f5b.png';
+const PHOTO = 'https://horizons-cdn.hostinger.com/451c65e3-9af7-4c36-9235-9b5c17a191ce/71e533503d331149fe73f8e165f13f5b.png';
+const G = { bg: '#0d1b3e', dark: '#071029', gold: '#d4af37', goldFaint: 'rgba(212,175,55,0.12)', goldBorder: 'rgba(212,175,55,0.25)', white: 'rgba(255,255,255,0.85)', whiteMid: 'rgba(255,255,255,0.45)', whiteLow: 'rgba(255,255,255,0.15)' };
 
 const testimonials = [
-  { name: 'Elif T.', job: 'Öğretmen', tag: 'Bireysel Ders', text: 'Sırt ağrılarım tamamen geçti, duruşum düzeldi. Rehberliği inanılmaz.' },
-  { name: 'Selin A.', job: 'Pazarlama', tag: 'Grup Ders', text: 'Her ders sonrası yenilenmiş hissediyorum. Adeta terapi.' },
+  { name: 'Elif T.', job: 'Öğretmen', tag: 'Bireysel', text: 'Sırt ağrılarım tamamen geçti, duruşum düzeldi. Rehberliği inanılmaz.' },
+  { name: 'Selin A.', job: 'Pazarlama', tag: 'Grup', text: 'Her ders sonrası yenilenmiş hissediyorum. Adeta terapi.' },
   { name: 'Merve K.', job: 'Doktor', tag: 'Online', text: '3 ayda fark inanılmaz. Hem güçlendim hem rahatladım.' },
 ];
 
-const featuredVideos = [
-  { id: '2_pyykhX08M', title: 'Postürünü Geri Kazan', duration: '25 dk' },
-  { id: 'gYaAsuUH3ag', title: 'Dengeleyici Pilates Flow', duration: '40 dk' },
-  { id: 'zCK3RRKMtCg', title: 'Mat Pilates Rutini', duration: '30 dk' },
+const videos = [
+  { id: '2_pyykhX08M', title: 'Postürünü Geri Kazan', dur: '25 dk' },
+  { id: 'gYaAsuUH3ag', title: 'Dengeleyici Pilates Flow', dur: '40 dk' },
+  { id: 'zCK3RRKMtCg', title: 'Mat Pilates Rutini', dur: '30 dk' },
 ];
 
-const AnimatedNumber = ({ target, suffix }) => {
-  const [count, setCount] = useState(0);
+const AnimNum = ({ n, s }) => {
+  const [c, setC] = useState(0);
   useEffect(() => {
-    let start = 0;
-    const step = target / 60;
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= target) { setCount(target); clearInterval(timer); }
-      else setCount(Math.floor(start));
-    }, 16);
-    return () => clearInterval(timer);
-  }, [target]);
-  return <>{count}{suffix}</>;
+    let v = 0; const step = n / 60;
+    const t = setInterval(() => { v += step; if (v >= n) { setC(n); clearInterval(t); } else setC(Math.floor(v)); }, 16);
+    return () => clearInterval(t);
+  }, [n]);
+  return <>{c}{s}</>;
 };
 
-const HomePage = () => {
-  const [selectedVideo, setSelectedVideo] = useState(null);
-  const [statsVisible, setStatsVisible] = useState(false);
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
+const Btn = ({ style, ...p }) => <button style={{ borderRadius: '999px', fontFamily: 'Montserrat', fontWeight: 900, letterSpacing: '0.06em', fontSize: '10px', cursor: 'pointer', border: 'none', ...style }} {...p} />;
+
+export default function HomePage() {
+  const [selVideo, setSelVideo] = useState(null);
+  const [statsVis, setStatsVis] = useState(false);
+  const [activeT, setActiveT] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => setActiveTestimonial(p => (p + 1) % testimonials.length), 3500);
-    return () => clearInterval(interval);
+    const iv = setInterval(() => setActiveT(p => (p + 1) % testimonials.length), 3500);
+    return () => clearInterval(iv);
   }, []);
 
   return (
-    <div className="w-full bg-brand-bg">
+    <div style={{ background: G.bg, fontFamily: 'Montserrat, sans-serif' }}>
 
-      {/* ——— HERO ——— */}
-      <div className="grid grid-cols-1 md:grid-cols-2 min-h-[85vh] border-b-2 border-brand-black">
-        {/* Sol */}
-        <motion.div className="p-10 lg:p-16 flex flex-col justify-between border-b-2 md:border-b-0 md:border-r-2 border-brand-black relative overflow-hidden"
+      {/* HERO */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: '85vh', borderBottom: `1px solid ${G.goldBorder}` }}>
+        <motion.div style={{ padding: '48px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderRight: `1px solid ${G.goldBorder}`, position: 'relative', overflow: 'hidden' }}
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
-          <div className="absolute bottom-[-60px] left-[-40px] w-[280px] h-[280px] rounded-full bg-brand-lime opacity-[0.06] pointer-events-none" />
-          <div className="absolute top-[-30px] right-[-30px] w-[100px] h-[100px] rounded-full border-4 border-brand-lime opacity-10 pointer-events-none" />
+          <div style={{ position: 'absolute', bottom: '-60px', left: '-40px', width: '260px', height: '260px', borderRadius: '50%', background: G.gold, opacity: 0.04, pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', top: '-30px', right: '-30px', width: '120px', height: '120px', borderRadius: '50%', border: `3px solid ${G.gold}`, opacity: 0.08, pointerEvents: 'none' }} />
 
-          <div>
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-8 h-[3px] bg-brand-lime" />
-              <span className="text-[10px] font-black tracking-[0.2em] text-brand-lime">PİLATES STÜDYOsu · EST. 2016</span>
-            </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div style={{ width: '32px', height: '2px', background: G.gold }} />
+            <span style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.2em', color: G.gold }}>PİLATES EĞİTMENİ · EST. 2016</span>
           </div>
 
           <div>
-            <motion.h1 className="text-6xl md:text-7xl font-black text-brand-black leading-none tracking-tighter mb-6"
+            <motion.h1 style={{ fontSize: '60px', fontWeight: 900, color: '#fff', lineHeight: 0.92, letterSpacing: '-0.03em', marginBottom: '18px' }}
               initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.7 }}>
-              Move.<br />Breathe.<br /><span className="text-brand-lime">Thrive.</span>
+              Move.<br />Breathe.<br /><span style={{ color: G.gold }}>Thrive.</span>
             </motion.h1>
-            <motion.p className="text-sm text-brand-brown leading-relaxed max-w-xs mb-8"
+            <motion.p style={{ fontSize: '13px', color: G.whiteMid, lineHeight: 1.7, maxWidth: '280px', marginBottom: '24px' }}
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
-              Hareketin dönüştürücü gücüne inanıyorum. Her öğrencimin potansiyelini ortaya çıkarmasına yardım ediyorum — bedensel güç ve zihinsel huzurla.
+              Hareketin dönüştürücü gücüne inanıyorum. Her öğrencimin potansiyelini ortaya çıkarmasına yardım ediyorum.
             </motion.p>
-            <motion.div className="flex gap-3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
-              <Link to="/fiyatlar">
-                <button className="bg-brand-lime text-brand-bg text-[10px] font-black tracking-wider px-6 py-3 rounded-full hover:bg-brand-lime/80 transition-colors flex items-center gap-2">
-                  DERS AL <ArrowRight size={13} />
-                </button>
-              </Link>
-              <Link to="/hakkimda">
-                <button className="bg-transparent text-brand-black text-[10px] font-black tracking-wider px-6 py-3 rounded-full border-2 border-brand-black hover:bg-brand-black/5 transition-colors">
-                  HAKKIMDA
-                </button>
-              </Link>
+            <motion.div style={{ display: 'flex', gap: '10px' }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
+              <Link to="/fiyatlar"><Btn style={{ background: G.gold, color: G.bg, padding: '11px 22px' }}>DERS AL →</Btn></Link>
+              <Link to="/hakkimda"><Btn style={{ background: 'transparent', color: G.whiteMid, padding: '11px 18px', border: `1.5px solid ${G.whiteLow}` }}>HAKKIMDA</Btn></Link>
             </motion.div>
           </div>
 
-          <motion.div className="grid grid-cols-3 gap-4 pt-6 border-t-2 border-brand-tan"
+          <motion.div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px', paddingTop: '24px', borderTop: `1px solid ${G.goldBorder}` }}
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }}
-            onViewportEnter={() => setStatsVisible(true)}>
-            {[{ n: 500, s: '+', l: 'MUTLU ÖĞRENCİ' }, { n: 8, s: '+', l: 'YIL DENEYİM' }, { n: 4, s: '', l: 'SERTİFİKA' }].map((stat, i) => (
-              <div key={i}>
-                <div className="text-3xl font-black text-brand-black">
-                  {statsVisible ? <AnimatedNumber target={stat.n} suffix={stat.s} /> : `0${stat.s}`}
+            onViewportEnter={() => setStatsVis(true)}>
+            {[{ n: 500, s: '+', l: 'ÖĞRENCİ' }, { n: 8, s: '+', l: 'YIL' }, { n: 4, s: '', l: 'SERTİFİKA' }].map((st, i) => (
+              <div key={i} style={{ background: G.goldFaint, border: `1px solid ${G.goldBorder}`, borderRadius: '10px', padding: '14px', textAlign: 'center' }}>
+                <div style={{ fontSize: '24px', fontWeight: 900, color: G.gold, lineHeight: 1 }}>
+                  {statsVis ? <AnimNum n={st.n} s={st.s} /> : `0${st.s}`}
                 </div>
-                <div className="text-[9px] font-black tracking-wider text-brand-brown mt-1">{stat.l}</div>
+                <div style={{ fontSize: '8px', fontWeight: 900, letterSpacing: '0.1em', color: G.whiteLow, marginTop: '4px' }}>{st.l}</div>
               </div>
             ))}
           </motion.div>
         </motion.div>
 
-        {/* Sağ — Fotoğraf */}
-        <motion.div className="relative overflow-hidden min-h-[400px]"
+        <motion.div style={{ position: 'relative', overflow: 'hidden', minHeight: '400px' }}
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.1 }}>
-          <img src={GIZEM_PHOTO} alt="Gizem Hoca"
-            className="w-full h-full object-cover absolute inset-0" style={{ filter: 'sepia(0.35) contrast(1.1)' }} />
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-black/50 via-transparent to-transparent" />
-          <div className="absolute top-5 left-5 bg-brand-bg text-brand-black text-[9px] font-black tracking-wider px-4 py-2 rounded-full border-2 border-brand-black">
+          <img src={PHOTO} alt="Gizem Hoca" style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0, filter: 'grayscale(0.3) brightness(0.7) sepia(0.2)' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(7,16,41,0.7) 0%, transparent 60%)' }} />
+          <div style={{ position: 'absolute', top: '16px', left: '16px', background: G.gold, color: G.bg, fontSize: '9px', fontWeight: 900, padding: '6px 14px', borderRadius: '999px', letterSpacing: '0.06em' }}>
             ✦ 500+ ÖĞRENCİ
           </div>
-          <div className="absolute bottom-5 right-5 bg-brand-lime text-brand-bg text-[9px] font-black tracking-wider px-4 py-2 rounded-full">
-            8+ Yıl Deneyim ✦
+          <div style={{ position: 'absolute', bottom: '16px', right: '16px', background: 'rgba(7,16,41,0.8)', border: `1px solid ${G.gold}`, color: G.gold, fontSize: '9px', fontWeight: 900, padding: '6px 14px', borderRadius: '999px' }}>
+            8+ Yıl Deneyim
           </div>
         </motion.div>
       </div>
 
-      {/* ——— HİZMETLER ——— */}
-      <div className="bg-brand-black border-b-2 border-brand-black">
-        <div className="grid grid-cols-2 md:grid-cols-4">
-          {[
-            { icon: '👤', title: 'Bireysel Ders', desc: 'Size özel program, en hızlı ilerleme.' },
-            { icon: '👥', title: 'Grup Dersi', desc: 'Küçük gruplar, büyük motivasyon.' },
-            { icon: '💻', title: 'Online Ders', desc: 'Nerede olursanız olun, esnek seans.' },
-            { icon: '🏋️', title: 'Reformer', desc: 'Profesyonel alet eğitimi.', accent: true },
-          ].map((s, i) => (
-            <motion.div key={i}
-              className={`p-6 ${i < 3 ? 'border-r border-brand-bg/10' : ''} ${s.accent ? 'bg-brand-lime' : ''}`}
-              initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
-              <div className="text-2xl mb-4">{s.icon}</div>
-              <div className={`text-xs font-black tracking-wider mb-2 ${s.accent ? 'text-brand-bg' : 'text-brand-bg'}`}>{s.title}</div>
-              <div className={`text-xs leading-relaxed ${s.accent ? 'text-brand-black/60' : 'text-brand-bg/40'}`}>{s.desc}</div>
-            </motion.div>
-          ))}
-        </div>
+      {/* HİZMETLER */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', borderBottom: `1px solid ${G.goldBorder}` }}>
+        {[
+          { icon: '👤', t: 'Bireysel Ders', d: 'Size özel program.' },
+          { icon: '👥', t: 'Grup Dersi', d: 'Max 4 kişi.' },
+          { icon: '💻', t: 'Online Ders', d: 'Her yerden.' },
+          { icon: '🏋️', t: 'Reformer', d: 'Alet eğitimi.', accent: true },
+        ].map((s, i) => (
+          <motion.div key={i} style={{ padding: '20px', borderRight: i < 3 ? `1px solid ${G.goldBorder}` : 'none', background: s.accent ? G.goldFaint : 'transparent' }}
+            initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
+            <div style={{ fontSize: '22px', marginBottom: '10px' }}>{s.icon}</div>
+            <div style={{ fontSize: '10px', fontWeight: 900, letterSpacing: '0.06em', color: s.accent ? G.gold : '#fff', marginBottom: '5px' }}>{s.t}</div>
+            <div style={{ fontSize: '11px', color: G.whiteMid, lineHeight: 1.5 }}>{s.d}</div>
+          </motion.div>
+        ))}
       </div>
 
-      {/* ——— VİDEO + BİYO ——— */}
-      <div className="grid grid-cols-1 md:grid-cols-2 border-b-2 border-brand-black">
-        <div className="p-8 lg:p-12 border-b-2 md:border-b-0 md:border-r-2 border-brand-black">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-6 h-[2px] bg-brand-lime" />
-            <p className="text-[10px] font-black tracking-widest text-brand-lime">ÖNE ÇIKAN DERSLER</p>
+      {/* VİDEO + BİYO */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', borderBottom: `1px solid ${G.goldBorder}` }}>
+        <div style={{ padding: '40px', borderRight: `1px solid ${G.goldBorder}` }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px' }}>
+            <div style={{ width: '24px', height: '2px', background: G.gold }} />
+            <span style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.15em', color: G.gold }}>ÖNE ÇIKAN DERSLER</span>
           </div>
-          <motion.div className="relative aspect-video rounded-lg overflow-hidden cursor-pointer mb-4 border-2 border-brand-black group"
-            onClick={() => setSelectedVideo(featuredVideos[0])} whileHover={{ scale: 1.01 }}>
-            <img src={`https://img.youtube.com/vi/${featuredVideos[0].id}/hqdefault.jpg`} alt={featuredVideos[0].title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              style={{ filter: 'sepia(0.3) contrast(1.1)' }} />
-            <div className="absolute inset-0 bg-brand-black/30 flex items-center justify-center">
-              <div className="w-14 h-14 bg-brand-lime rounded-full flex items-center justify-center group-hover:scale-110 transition-transform border-2 border-brand-black">
-                <PlayCircle size={22} className="text-brand-black" />
+          <motion.div style={{ position: 'relative', aspectRatio: '16/9', borderRadius: '8px', overflow: 'hidden', border: `1px solid ${G.goldBorder}`, cursor: 'pointer', marginBottom: '14px' }}
+            onClick={() => setSelVideo(videos[0])} whileHover={{ scale: 1.01 }}>
+            <img src={`https://img.youtube.com/vi/${videos[0].id}/hqdefault.jpg`} alt={videos[0].title}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.6)' }} />
+            <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ width: '48px', height: '48px', background: G.gold, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <PlayCircle size={22} style={{ color: G.bg }} />
               </div>
             </div>
-            <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-brand-black/80 to-transparent">
-              <p className="text-brand-bg text-xs font-bold">{featuredVideos[0].title}</p>
-              <p className="text-brand-bg/50 text-[10px]">{featuredVideos[0].duration}</p>
+            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '12px', background: 'linear-gradient(to top, rgba(7,16,41,0.9) 0%, transparent 100%)' }}>
+              <p style={{ color: '#fff', fontSize: '11px', fontWeight: 700 }}>{videos[0].title}</p>
+              <p style={{ color: G.gold, fontSize: '9px' }}>{videos[0].dur}</p>
             </div>
           </motion.div>
-          <div className="space-y-3">
-            {featuredVideos.slice(1).map(video => (
-              <div key={video.id} className="flex gap-3 items-center cursor-pointer group border-b border-brand-tan pb-3 last:border-0"
-                onClick={() => setSelectedVideo(video)}>
-                <div className="w-16 h-10 overflow-hidden flex-shrink-0 rounded border border-brand-tan">
-                  <img src={`https://img.youtube.com/vi/${video.id}/default.jpg`} alt={video.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform" style={{ filter: 'sepia(0.3)' }} />
-                </div>
-                <div>
-                  <p className="text-xs font-bold text-brand-black group-hover:text-brand-lime transition-colors">{video.title}</p>
-                  <p className="text-[10px] text-brand-brown">{video.duration}</p>
-                </div>
+          {videos.slice(1).map(v => (
+            <div key={v.id} style={{ display: 'flex', gap: '10px', alignItems: 'center', cursor: 'pointer', paddingBottom: '12px', marginBottom: '12px', borderBottom: `1px solid ${G.goldBorder}` }}
+              onClick={() => setSelVideo(v)}>
+              <div style={{ width: '60px', height: '38px', borderRadius: '4px', overflow: 'hidden', border: `1px solid ${G.goldBorder}`, flexShrink: 0 }}>
+                <img src={`https://img.youtube.com/vi/${v.id}/default.jpg`} alt={v.title} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.7)' }} />
               </div>
-            ))}
-          </div>
-          <Link to="/dersler" className="inline-flex items-center gap-2 mt-6 text-[10px] font-black tracking-widest text-brand-lime border-b-2 border-brand-lime pb-0.5">
+              <div>
+                <p style={{ fontSize: '11px', fontWeight: 700, color: '#fff' }}>{v.title}</p>
+                <p style={{ fontSize: '9px', color: G.gold }}>{v.dur}</p>
+              </div>
+            </div>
+          ))}
+          <Link to="/dersler" style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.1em', color: G.gold, borderBottom: `2px solid ${G.gold}`, paddingBottom: '2px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
             TÜM DERSLER <ArrowRight size={12} />
           </Link>
         </div>
 
-        <div className="p-8 lg:p-12">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-6 h-[2px] bg-brand-lime" />
-            <p className="text-[10px] font-black tracking-widest text-brand-lime">HAKKIMDA</p>
+        <div style={{ padding: '40px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px' }}>
+            <div style={{ width: '24px', height: '2px', background: G.gold }} />
+            <span style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.15em', color: G.gold }}>HAKKIMDA</span>
           </div>
-          <div className="aspect-[4/3] overflow-hidden rounded-lg border-2 border-brand-black mb-6">
+          <div style={{ borderRadius: '8px', overflow: 'hidden', aspectRatio: '4/3', marginBottom: '20px', border: `1px solid ${G.goldBorder}` }}>
             <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800" alt="Pilates"
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-              style={{ filter: 'sepia(0.3) contrast(1.1)' }} />
+              style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.6) sepia(0.2)' }} />
           </div>
-          <blockquote className="text-xl font-black text-brand-black leading-tight mb-4 italic">
+          <blockquote style={{ fontSize: '18px', fontWeight: 900, color: '#fff', lineHeight: 1.15, marginBottom: '12px', fontStyle: 'italic' }}>
             "Pilates bir egzersiz değil, yaşam felsefesidir."
           </blockquote>
-          <p className="text-xs text-brand-brown leading-relaxed mb-6">
-            Hareketin ve sağlığın hayatımızdaki dönüştürücü gücüne her zaman inandım. Derslerimde zihin-beden bütünlüğünü ön planda tutuyorum.
+          <p style={{ fontSize: '12px', color: G.whiteMid, lineHeight: 1.7, marginBottom: '16px' }}>
+            Hareketin ve sağlığın hayatımızdaki dönüştürücü gücüne her zaman inandım.
           </p>
-          <div className="flex flex-wrap gap-2 mb-6">
-            {['Balanced Body®', 'Reformer', 'Hamile Pilatesi', 'Postür'].map(cert => (
-              <span key={cert} className="text-[10px] font-black border-2 border-brand-black text-brand-black px-3 py-1 rounded-full">{cert}</span>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '20px' }}>
+            {['Balanced Body®', 'Reformer', 'Hamile Pilatesi', 'Postür'].map(c => (
+              <span key={c} style={{ fontSize: '9px', fontWeight: 900, border: `1px solid ${G.goldBorder}`, color: G.gold, padding: '4px 10px', borderRadius: '999px' }}>{c}</span>
             ))}
           </div>
-          <Link to="/hakkimda" className="inline-flex items-center gap-2 text-[10px] font-black tracking-widest text-brand-lime border-b-2 border-brand-lime pb-0.5">
+          <Link to="/hakkimda" style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.1em', color: G.gold, borderBottom: `2px solid ${G.gold}`, paddingBottom: '2px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
             DAHA FAZLA <ArrowRight size={12} />
           </Link>
         </div>
       </div>
 
-      {/* ——— YORUMLAR ——— */}
-      <div className="bg-brand-black p-8 lg:p-12 border-b-2 border-brand-black">
-        <div className="flex justify-between items-center mb-8">
-          <div className="flex items-center gap-3">
-            <div className="w-6 h-[2px] bg-brand-lime" />
-            <p className="text-[10px] font-black tracking-widest text-brand-lime">ÖĞRENCİLER NE DİYOR?</p>
+      {/* YORUMLAR */}
+      <div style={{ padding: '40px', borderBottom: `1px solid ${G.goldBorder}`, background: G.dark }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div style={{ width: '24px', height: '2px', background: G.gold }} />
+            <span style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.15em', color: G.gold }}>ÖĞRENCİLER NE DİYOR?</span>
           </div>
-          <Link to="/musteri-yorumlari" className="text-[10px] font-black tracking-wider text-brand-lime/50 hover:text-brand-lime transition-colors flex items-center gap-1">
+          <Link to="/musteri-yorumlari" style={{ fontSize: '9px', fontWeight: 900, color: 'rgba(212,175,55,0.4)', display: 'flex', alignItems: 'center', gap: '4px' }}>
             TÜMÜ <ChevronRight size={12} />
           </Link>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '12px' }}>
           {testimonials.map((t, i) => (
-            <motion.div key={i} className="border border-brand-bg/10 rounded-lg p-6 hover:border-brand-lime/30 transition-colors"
+            <motion.div key={i} style={{ border: `1px solid ${G.goldBorder}`, borderRadius: '10px', padding: '20px', background: G.goldFaint }}
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
-              <div className="text-brand-lime text-xs mb-3">★★★★★</div>
-              <p className="text-sm text-brand-bg/70 leading-relaxed italic mb-4">"{t.text}"</p>
-              <div className="flex justify-between items-end">
+              <div style={{ color: G.gold, fontSize: '11px', marginBottom: '10px' }}>★★★★★</div>
+              <p style={{ fontSize: '12px', color: G.white, lineHeight: 1.65, fontStyle: 'italic', marginBottom: '14px' }}>"{t.text}"</p>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
                 <div>
-                  <p className="text-xs font-black text-brand-lime">— {t.name}</p>
-                  <p className="text-[10px] text-brand-bg/25 mt-0.5">{t.job}</p>
+                  <p style={{ fontSize: '11px', fontWeight: 900, color: G.gold }}>— {t.name}</p>
+                  <p style={{ fontSize: '9px', color: G.whiteLow, marginTop: '2px' }}>{t.job}</p>
                 </div>
-                <span className="text-[9px] font-black text-brand-bg/20 tracking-wide">{t.tag}</span>
+                <span style={{ fontSize: '8px', fontWeight: 900, color: 'rgba(212,175,55,0.3)', letterSpacing: '0.06em' }}>{t.tag}</span>
               </div>
             </motion.div>
           ))}
         </div>
       </div>
 
-      {/* ——— CTA ——— */}
-      <div className="bg-brand-lime border-b-2 border-brand-black p-8 lg:p-12 flex flex-col md:flex-row items-center justify-between gap-6">
+      {/* CTA */}
+      <div style={{ padding: '40px', borderBottom: `1px solid ${G.goldBorder}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: G.goldFaint }}>
         <div>
-          <h2 className="text-3xl md:text-4xl font-black text-brand-black tracking-tight">Başlamaya hazır mısın?</h2>
-          <p className="text-sm text-brand-black/50 mt-2">İlk ders için hemen iletişime geç.</p>
+          <h2 style={{ fontSize: '32px', fontWeight: 900, color: '#fff', letterSpacing: '-0.02em' }}>Başlamaya hazır mısın?</h2>
+          <p style={{ fontSize: '13px', color: G.whiteMid, marginTop: '6px' }}>İlk ders için hemen iletişime geç.</p>
         </div>
-        <div className="flex gap-3">
-          <Link to="/fiyatlar">
-            <button className="bg-brand-black text-brand-lime text-[10px] font-black tracking-wider px-7 py-4 rounded-full hover:bg-brand-black/80 transition-colors flex items-center gap-2">
-              PAKETLERİ GÖR <ArrowRight size={14} />
-            </button>
-          </Link>
-          <Link to="/iletisim">
-            <button className="bg-transparent text-brand-black text-[10px] font-black tracking-wider px-7 py-4 rounded-full border-2 border-brand-black hover:bg-brand-black/5 transition-colors">
-              İLETİŞİM
-            </button>
-          </Link>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <Link to="/fiyatlar"><Btn style={{ background: G.gold, color: G.bg, padding: '12px 24px' }}>PAKETLERİ GÖR →</Btn></Link>
+          <Link to="/iletisim"><Btn style={{ background: 'transparent', color: '#fff', padding: '12px 20px', border: `1.5px solid ${G.whiteLow}` }}>İLETİŞİM</Btn></Link>
         </div>
       </div>
 
-      {/* Video Modal */}
+      {/* VIDEO MODAL */}
       <AnimatePresence>
-        {selectedVideo && (
-          <motion.div className="fixed inset-0 bg-brand-black/95 flex items-center justify-center z-50 p-4"
-            onClick={() => setSelectedVideo(null)} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <motion.div onClick={e => e.stopPropagation()} className="relative w-full max-w-4xl aspect-video"
+        {selVideo && (
+          <motion.div style={{ position: 'fixed', inset: 0, background: 'rgba(7,16,41,0.97)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, padding: '16px' }}
+            onClick={() => setSelVideo(null)} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <motion.div onClick={e => e.stopPropagation()} style={{ position: 'relative', width: '100%', maxWidth: '900px', aspectRatio: '16/9' }}
               initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}>
-              <iframe className="absolute inset-0 w-full h-full rounded-lg"
-                src={`https://www.youtube.com/embed/${selectedVideo.id}?autoplay=1`}
-                title={selectedVideo.title} frameBorder="0"
+              <iframe style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', borderRadius: '8px' }}
+                src={`https://www.youtube.com/embed/${selVideo.id}?autoplay=1`}
+                title={selVideo.title} frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
-              <button className="absolute -top-10 right-0 text-brand-bg/60 hover:text-brand-bg transition-colors flex items-center gap-2 text-[10px] font-black tracking-widest"
-                onClick={() => setSelectedVideo(null)}>KAPAT <X size={14} /></button>
+              <button style={{ position: 'absolute', top: '-40px', right: 0, color: 'rgba(255,255,255,0.5)', background: 'none', border: 'none', cursor: 'pointer', fontSize: '10px', fontWeight: 900, letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: '6px' }}
+                onClick={() => setSelVideo(null)}>KAPAT <X size={14} /></button>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
     </div>
   );
-};
-
-export default HomePage;
+}

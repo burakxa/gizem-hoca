@@ -8,16 +8,16 @@ import CookieBanner from '@/components/ui/CookieBanner';
 
 const pageVariants = {
   initial: { opacity: 0, y: 8 },
-  animate: { opacity: 1, y: 0, transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] } },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.3 } },
   exit: { opacity: 0, y: -8, transition: { duration: 0.15 } },
 };
 
 const PageLayout = ({ handleNotImplemented }) => {
   const location = useLocation();
   return (
-    <div className="min-h-screen bg-brand-bg flex flex-col">
+    <div style={{ minHeight: '100vh', background: '#0d1b3e', display: 'flex', flexDirection: 'column' }}>
       <MainMenu />
-      <main className="flex-1 w-full">
+      <main style={{ flex: 1 }}>
         <AnimatePresence mode="wait">
           <motion.div key={location.pathname} variants={pageVariants} initial="initial" animate="animate" exit="exit">
             <Outlet context={{ handleNotImplemented }} />

@@ -10,7 +10,7 @@ const ServicesPage = ({ handleNotImplemented }) => {
                 <title>Hizmetler - Gizem Hoca Pilates</title>
                 <meta name="description" content="Kişisel antrenmanlar, grup dersleri, mindfulness pilates ve online seanslarla hedeflerinize ulaşın." />
             </Helmet>
-             <div className="pt-24 bg-brand-bg">
+             <div className="pt-24 bg-[#0d1b3e]">
                 <motion.div 
                     className="section-padding bg-cover bg-center"
                     initial={{ opacity: 0 }}
@@ -18,7 +18,7 @@ const ServicesPage = ({ handleNotImplemented }) => {
                     transition={{ duration: 0.5 }}
                 >
                     <motion.h1 
-                        className="text-5xl md:text-7xl font-black text-center text-brand-black uppercase"
+                        className="text-5xl md:text-7xl font-black text-center text-white uppercase"
                         initial={{ y: -20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ duration: 0.5, delay: 0.2 }}
@@ -26,7 +26,7 @@ const ServicesPage = ({ handleNotImplemented }) => {
                         Hizmetlerimiz
                     </motion.h1>
                     <motion.p
-                        className="text-xl md:text-2xl text-center text-brand-black mt-4"
+                        className="text-xl md:text-2xl text-center text-white mt-4"
                         initial={{ y: -20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ duration: 0.5, delay: 0.4 }}

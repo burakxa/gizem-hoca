@@ -17,7 +17,7 @@ const BlogPostPage = () => {
 
   if (!post) {
     return (
-      <div className="w-full h-screen flex items-center justify-center bg-brand-bg text-black">
+      <div className="w-full h-screen flex items-center justify-center bg-[#0d1b3e] text-black">
         <h1 className="text-3xl font-bold">Yazı bulunamadı.</h1>
       </div>
     );
@@ -34,7 +34,7 @@ const BlogPostPage = () => {
         initial="initial"
         animate="animate"
         exit="exit"
-        className="w-full p-8 lg:p-16 flex flex-col justify-start min-h-screen overflow-y-auto bg-brand-bg"
+        className="w-full p-8 lg:p-16 flex flex-col justify-start min-h-screen overflow-y-auto bg-[#0d1b3e]"
       >
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -42,7 +42,7 @@ const BlogPostPage = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-12"
         >
-          <Link to="/blog" className="flex items-center text-brand-black font-bold hover:text-white transition-colors">
+          <Link to="/blog" className="flex items-center text-white font-bold hover:text-white transition-colors">
             <ArrowLeft size={18} className="mr-2" />
             Tüm Yazılara Geri Dön
           </Link>
@@ -54,9 +54,9 @@ const BlogPostPage = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           <p className="text-sm font-bold text-black">{post.date} / {post.category}</p>
-          <h1 className="text-4xl md:text-5xl font-black text-brand-black leading-none tracking-tighter mt-2 mb-8">{post.title}</h1>
+          <h1 className="text-4xl md:text-5xl font-black text-white leading-none tracking-tighter mt-2 mb-8">{post.title}</h1>
           <div 
-            className="prose prose-lg max-w-none text-brand-black font-medium"
+            className="prose prose-lg max-w-none text-white font-medium"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
         </motion.article>

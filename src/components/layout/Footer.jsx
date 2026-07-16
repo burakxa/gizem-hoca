@@ -2,51 +2,56 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Instagram, Youtube, Facebook } from 'lucide-react';
 
+const S = {
+  wrap: { background: '#071029', borderTop: '1px solid rgba(212,175,55,0.2)' },
+  grid: { display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', borderBottom: '1px solid rgba(212,175,55,0.1)' },
+  cell: { padding: '28px', borderRight: '1px solid rgba(212,175,55,0.1)' },
+  cellDark: { padding: '28px', background: 'rgba(212,175,55,0.06)' },
+  heading: { fontSize: '10px', fontWeight: 900, letterSpacing: '0.15em', color: '#d4af37', marginBottom: '14px', display: 'block' },
+  link: { fontSize: '12px', color: 'rgba(255,255,255,0.4)', display: 'block', marginBottom: '8px', textDecoration: 'none' },
+  bottom: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 28px' },
+};
+
 const Footer = () => {
   const year = new Date().getFullYear();
   return (
-    <footer className="bg-brand-bg border-t-2 border-brand-black">
-      <div className="grid grid-cols-1 md:grid-cols-4 border-b-2 border-brand-black">
-        <div className="p-8 border-b-2 md:border-b-0 md:border-r-2 border-brand-black">
-          <div className="text-lg font-black text-brand-black mb-4">GIZEM<span className="text-brand-lime">●</span>HOCA</div>
-          <p className="text-xs text-brand-brown leading-relaxed mb-4">Pilates sadece bir egzersiz değil, yaşam felsefesidir.</p>
-          <div className="flex gap-3">
-            <a href="https://www.instagram.com/gizemmhoca/" target="_blank" rel="noopener noreferrer"><Instagram size={18} className="text-brand-brown hover:text-brand-black transition-colors" /></a>
-            <a href="https://www.youtube.com/@gizemmhoca" target="_blank" rel="noopener noreferrer"><Youtube size={18} className="text-brand-brown hover:text-brand-black transition-colors" /></a>
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><Facebook size={18} className="text-brand-brown hover:text-brand-black transition-colors" /></a>
+    <footer style={S.wrap}>
+      <div style={S.grid}>
+        <div style={S.cell}>
+          <img src="https://horizons-cdn.hostinger.com/451c65e3-9af7-4c36-9235-9b5c17a191ce/5987e4c01aee4b6498a58f6a3b12f01e.png"
+            alt="Gizem Hoca" style={{ height: '36px', filter: 'brightness(0) invert(1)', marginBottom: '14px', display: 'block' }} />
+          <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.35)', lineHeight: 1.7, marginBottom: '16px' }}>Pilates sadece bir egzersiz değil, yaşam felsefesidir.</p>
+          <div style={{ display: 'flex', gap: '12px' }}>
+            <a href="https://www.instagram.com/gizemmhoca/" target="_blank" rel="noopener noreferrer"><Instagram size={18} style={{ color: 'rgba(212,175,55,0.5)' }} /></a>
+            <a href="https://www.youtube.com/@gizemmhoca" target="_blank" rel="noopener noreferrer"><Youtube size={18} style={{ color: 'rgba(212,175,55,0.5)' }} /></a>
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><Facebook size={18} style={{ color: 'rgba(212,175,55,0.5)' }} /></a>
           </div>
         </div>
-        <div className="p-8 border-b-2 md:border-b-0 md:border-r-2 border-brand-black">
-          <h3 className="text-[10px] font-black tracking-widest text-brand-lime mb-4">SAYFALAR</h3>
-          <ul className="space-y-2">
-            {[['/', 'Anasayfa'], ['/dersler', 'Dersler'], ['/program', 'Program'], ['/fiyatlar', 'Fiyatlar'], ['/galeri', 'Galeri']].map(([p, l]) => (
-              <li key={p}><Link to={p} className="text-xs text-brand-brown hover:text-brand-black transition-colors">{l}</Link></li>
-            ))}
-          </ul>
+        <div style={S.cell}>
+          <span style={S.heading}>SAYFALAR</span>
+          {[['/', 'Anasayfa'], ['/dersler', 'Dersler'], ['/program', 'Program'], ['/fiyatlar', 'Fiyatlar'], ['/galeri', 'Galeri']].map(([p, l]) => (
+            <Link key={p} to={p} style={S.link}>{l}</Link>
+          ))}
         </div>
-        <div className="p-8 border-b-2 md:border-b-0 md:border-r-2 border-brand-black">
-          <h3 className="text-[10px] font-black tracking-widest text-brand-lime mb-4">DAHA FAZLA</h3>
-          <ul className="space-y-2">
-            {[['/blog', 'Blog'], ['/hakkimda', 'Hakkımda'], ['/musteri-yorumlari', 'Yorumlar'], ['/sss', 'SSS'], ['/iletisim', 'İletişim']].map(([p, l]) => (
-              <li key={p}><Link to={p} className="text-xs text-brand-brown hover:text-brand-black transition-colors">{l}</Link></li>
-            ))}
-          </ul>
+        <div style={S.cell}>
+          <span style={S.heading}>DAHA FAZLA</span>
+          {[['/blog', 'Blog'], ['/hakkimda', 'Hakkımda'], ['/musteri-yorumlari', 'Yorumlar'], ['/sss', 'SSS'], ['/iletisim', 'İletişim']].map(([p, l]) => (
+            <Link key={p} to={p} style={S.link}>{l}</Link>
+          ))}
         </div>
-        <div className="p-8 bg-brand-black">
-          <h3 className="text-[10px] font-black tracking-widest text-brand-lime mb-4">İLETİŞİM</h3>
-          <ul className="space-y-3">
-            <li><a href="https://wa.me/905383135720" target="_blank" rel="noopener noreferrer" className="text-xs text-brand-bg/50 hover:text-brand-lime transition-colors">💬 +90 538 313 57 20</a></li>
-            <li><a href="mailto:merhaba@gizemhoca.net" className="text-xs text-brand-bg/50 hover:text-brand-lime transition-colors">✉️ merhaba@gizemhoca.net</a></li>
-            <li className="text-xs text-brand-bg/50">📍 Beşiktaş, İstanbul</li>
-          </ul>
-          <Link to="/iletisim" className="inline-block mt-6 bg-brand-lime text-brand-bg text-[10px] font-black tracking-wider px-5 py-2 rounded-full hover:bg-brand-lime/80 transition-colors">
+        <div style={S.cellDark}>
+          <span style={S.heading}>İLETİŞİM</span>
+          <a href="https://wa.me/905383135720" target="_blank" rel="noopener noreferrer" style={S.link}>💬 +90 538 313 57 20</a>
+          <a href="mailto:merhaba@gizemhoca.net" style={S.link}>✉️ merhaba@gizemhoca.net</a>
+          <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)', marginBottom: '16px' }}>📍 Beşiktaş, İstanbul</p>
+          <Link to="/iletisim" style={{ background: '#d4af37', color: '#0d1b3e', fontSize: '10px', fontWeight: 900, padding: '8px 18px', borderRadius: '999px', letterSpacing: '0.06em', display: 'inline-block' }}>
             DERS AL ✦
           </Link>
         </div>
       </div>
-      <div className="flex justify-between items-center px-8 py-4">
-        <p className="text-xs text-brand-brown">© {year} Gizem Hoca Pilates. Tüm hakları saklıdır.</p>
-        <p className="text-xs text-brand-tan">Est. 2016 · Beşiktaş, İstanbul</p>
+      <div style={S.bottom}>
+        <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.2)' }}>© {year} Gizem Hoca Pilates. Tüm hakları saklıdır.</p>
+        <p style={{ fontSize: '11px', color: 'rgba(212,175,55,0.3)' }}>Est. 2016 · Beşiktaş, İstanbul</p>
       </div>
     </footer>
   );

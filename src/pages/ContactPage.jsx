@@ -1,108 +1,108 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet';
+import { motion } from 'framer-motion';
 import { MessageCircle, Instagram, Youtube, MapPin, Mail, Send, Check } from 'lucide-react';
 
-const ContactPage = () => {
-  const [form, setForm] = useState({ name: '', phone: '', message: '' });
+const G = { bg:'#0d1b3e', dark:'#071029', gold:'#d4af37', goldFaint:'rgba(212,175,55,0.1)', goldBorder:'rgba(212,175,55,0.2)', white:'#fff', whiteMid:'rgba(255,255,255,0.5)' };
+
+export default function ContactPage() {
+  const [form, setForm] = useState({ name:'', phone:'', message:'' });
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     if (!form.name || !form.phone) return;
     setLoading(true);
-    const msg = `Merhaba Gizem Hoca! Ben ${form.name}. Telefon: ${form.phone}.${form.message ? ' Mesajım: ' + form.message : ''}`;
+    const msg = `Merhaba Gizem Hoca! Ben ${form.name}. Telefon: ${form.phone}.${form.message ? ' Mesajım: '+form.message : ''}`;
     setTimeout(() => {
       window.open(`https://wa.me/905383135720?text=${encodeURIComponent(msg)}`, '_blank');
-      setLoading(false);
-      setSent(true);
-      setForm({ name: '', phone: '', message: '' });
+      setLoading(false); setSent(true);
+      setForm({ name:'', phone:'', message:'' });
       setTimeout(() => setSent(false), 4000);
     }, 600);
   };
 
   const contacts = [
-    { icon: <MessageCircle size={16} />, label: 'WHATSAPP', value: '+90 538 313 57 20', href: 'https://wa.me/905383135720', tag: 'EN HIZLI' },
-    { icon: <Instagram size={16} />, label: 'INSTAGRAM', value: '@gizemmhoca', href: 'https://www.instagram.com/gizemmhoca/' },
-    { icon: <Youtube size={16} />, label: 'YOUTUBE', value: '@gizemmhoca', href: 'https://www.youtube.com/@gizemmhoca' },
-    { icon: <Mail size={16} />, label: 'E-POSTA', value: 'merhaba@gizemhoca.net', href: 'mailto:merhaba@gizemhoca.net' },
-    { icon: <MapPin size={16} />, label: 'STÜDYO', value: 'Beşiktaş, İstanbul', href: null },
+    { icon:<MessageCircle size={16}/>, label:'WHATSAPP', value:'+90 538 313 57 20', href:'https://wa.me/905383135720', tag:'EN HIZLI' },
+    { icon:<Instagram size={16}/>, label:'INSTAGRAM', value:'@gizemmhoca', href:'https://www.instagram.com/gizemmhoca/' },
+    { icon:<Youtube size={16}/>, label:'YOUTUBE', value:'@gizemmhoca', href:'https://www.youtube.com/@gizemmhoca' },
+    { icon:<Mail size={16}/>, label:'E-POSTA', value:'merhaba@gizemhoca.net', href:'mailto:merhaba@gizemhoca.net' },
+    { icon:<MapPin size={16}/>, label:'STÜDYO', value:'Beşiktaş, İstanbul', href:null },
   ];
+
+  const inputStyle = { width:'100%', background:G.goldFaint, border:`1px solid ${G.goldBorder}`, padding:'10px 14px', fontSize:'12px', color:'#fff', outline:'none', fontFamily:'Montserrat', borderRadius:'4px', boxSizing:'border-box' };
 
   return (
     <>
       <Helmet><title>İletişim - Gizem Hoca Pilates</title></Helmet>
-      <div className="border-b-2 border-brand-black p-8 lg:p-12">
-        <p className="text-[10px] font-black tracking-widest text-brand-black/40 mb-3">GİZEM HOCA PİLATES</p>
-        <h1 className="text-5xl md:text-7xl font-black text-brand-black leading-none tracking-tighter">İLETİŞİM</h1>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 border-b-2 border-brand-black">
-        {/* İletişim kanalları */}
-        <div className="border-b-2 md:border-b-0 md:border-r-2 border-brand-black divide-y divide-black/10">
-          {contacts.map((c, i) => (
-            <div key={i}>
-              {c.href ? (
-                <a href={c.href} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center justify-between p-6 group hover:bg-black transition-colors">
-                  <div className="flex items-center gap-4">
-                    <span className="text-brand-black/40 group-hover:text-brand-lime transition-colors">{c.icon}</span>
+      <div style={{ background:G.bg, fontFamily:'Montserrat,sans-serif', minHeight:'100vh' }}>
+        <div style={{ padding:'32px 40px', borderBottom:`1px solid ${G.goldBorder}`, display:'flex', alignItems:'center', gap:'16px' }}>
+          <div style={{ width:'32px', height:'2px', background:G.gold }} />
+          <div>
+            <p style={{ fontSize:'9px', fontWeight:900, letterSpacing:'0.2em', color:G.gold, marginBottom:'6px' }}>GİZEM HOCA PİLATES</p>
+            <h1 style={{ fontSize:'56px', fontWeight:900, color:'#fff', lineHeight:0.92, letterSpacing:'-0.03em' }}>İLETİŞİM</h1>
+          </div>
+        </div>
+
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', borderBottom:`1px solid ${G.goldBorder}` }}>
+          <div style={{ borderRight:`1px solid ${G.goldBorder}` }}>
+            {contacts.map((c, i) => (
+              <div key={i} style={{ borderBottom: i < contacts.length-1 ? `1px solid ${G.goldBorder}` : 'none' }}>
+                {c.href ? (
+                  <a href={c.href} target="_blank" rel="noopener noreferrer"
+                    style={{ display:'flex', justifyContent:'space-between', alignItems:'center', padding:'18px 28px', textDecoration:'none' }}>
+                    <div style={{ display:'flex', alignItems:'center', gap:'14px' }}>
+                      <span style={{ color:G.gold }}>{c.icon}</span>
+                      <div>
+                        <div style={{ fontSize:'8px', fontWeight:900, letterSpacing:'0.12em', color:G.whiteMid }}>{c.label}</div>
+                        <div style={{ fontSize:'13px', fontWeight:700, color:'#fff', marginTop:'2px' }}>{c.value}</div>
+                      </div>
+                    </div>
+                    {c.tag && <span style={{ fontSize:'8px', fontWeight:900, background:G.gold, color:G.bg, padding:'3px 10px', borderRadius:'999px', letterSpacing:'0.06em' }}>{c.tag}</span>}
+                  </a>
+                ) : (
+                  <div style={{ display:'flex', alignItems:'center', gap:'14px', padding:'18px 28px' }}>
+                    <span style={{ color:G.whiteMid }}>{c.icon}</span>
                     <div>
-                      <div className="text-[9px] font-black tracking-widest text-brand-black/40 group-hover:text-white/40 transition-colors">{c.label}</div>
-                      <div className="text-sm font-bold text-brand-black group-hover:text-white transition-colors">{c.value}</div>
+                      <div style={{ fontSize:'8px', fontWeight:900, letterSpacing:'0.12em', color:G.whiteMid }}>{c.label}</div>
+                      <div style={{ fontSize:'13px', fontWeight:700, color:'#fff', marginTop:'2px' }}>{c.value}</div>
                     </div>
                   </div>
-                  {c.tag && <span className="text-[9px] font-black tracking-widest bg-brand-black text-brand-lime group-hover:bg-brand-lime group-hover:text-black px-3 py-1 transition-colors">{c.tag}</span>}
-                </a>
-              ) : (
-                <div className="flex items-center gap-4 p-6">
-                  <span className="text-brand-black/30">{c.icon}</span>
-                  <div>
-                    <div className="text-[9px] font-black tracking-widest text-brand-black/40">{c.label}</div>
-                    <div className="text-sm font-bold text-black">{c.value}</div>
-                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <div style={{ padding:'32px 28px' }}>
+            <div style={{ display:'flex', alignItems:'center', gap:'10px', marginBottom:'24px' }}>
+              <div style={{ width:'20px', height:'2px', background:G.gold }} />
+              <span style={{ fontSize:'9px', fontWeight:900, letterSpacing:'0.15em', color:G.gold }}>MESAJ GÖNDER</span>
+            </div>
+            <form onSubmit={handleSubmit} style={{ display:'flex', flexDirection:'column', gap:'12px' }}>
+              <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'12px' }}>
+                <div>
+                  <label style={{ fontSize:'8px', fontWeight:900, letterSpacing:'0.1em', color:G.whiteMid, display:'block', marginBottom:'6px' }}>AD SOYAD *</label>
+                  <input type="text" required value={form.name} onChange={e=>setForm(f=>({...f,name:e.target.value}))} placeholder="Adınız" style={inputStyle} />
                 </div>
-              )}
-            </div>
-          ))}
-        </div>
-        {/* Form */}
-        <div className="p-8 lg:p-12">
-          <p className="text-[10px] font-black tracking-widest text-brand-black/40 mb-8">MESAJ GÖNDER</p>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="text-[10px] font-black tracking-widest text-brand-black/40 mb-2 block">AD SOYAD *</label>
-                <input type="text" required value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-                  placeholder="Adınız"
-                  className="w-full border-2 border-brand-black/10 focus:border-brand-black bg-brand-bg px-4 py-3 text-sm outline-none transition-all" />
+                <div>
+                  <label style={{ fontSize:'8px', fontWeight:900, letterSpacing:'0.1em', color:G.whiteMid, display:'block', marginBottom:'6px' }}>TELEFON *</label>
+                  <input type="tel" required value={form.phone} onChange={e=>setForm(f=>({...f,phone:e.target.value}))} placeholder="05xx xxx xx xx" style={inputStyle} />
+                </div>
               </div>
               <div>
-                <label className="text-[10px] font-black tracking-widest text-brand-black/40 mb-2 block">TELEFON *</label>
-                <input type="tel" required value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
-                  placeholder="05xx xxx xx xx"
-                  className="w-full border-2 border-brand-black/10 focus:border-brand-black bg-brand-bg px-4 py-3 text-sm outline-none transition-all" />
+                <label style={{ fontSize:'8px', fontWeight:900, letterSpacing:'0.1em', color:G.whiteMid, display:'block', marginBottom:'6px' }}>MESAJ</label>
+                <textarea value={form.message} onChange={e=>setForm(f=>({...f,message:e.target.value}))} placeholder="Sormak istedikleriniz..." rows={4} style={{ ...inputStyle, resize:'none' }} />
               </div>
-            </div>
-            <div>
-              <label className="text-[10px] font-black tracking-widest text-brand-black/40 mb-2 block">MESAJ</label>
-              <textarea value={form.message} onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
-                placeholder="Sormak istedikleriniz..."
-                rows={4}
-                className="w-full border-2 border-brand-black/10 focus:border-brand-black bg-brand-bg px-4 py-3 text-sm outline-none transition-all resize-none" />
-            </div>
-            <motion.button type="submit" disabled={loading || sent} whileTap={{ scale: 0.98 }}
-              className={`w-full py-4 text-[10px] font-black tracking-widest flex items-center justify-center gap-2 transition-colors ${
-                sent ? 'bg-green-600 text-white' : 'bg-black text-brand-lime hover:bg-brand-black/80'
-              }`}>
-              {sent ? <><Check size={14} /> WHATSAPP AÇILDI!</> : loading ? 'GÖNDERİLİYOR...' : <><Send size={14} /> WHATSAPP İLE GÖNDER</>}
-            </motion.button>
-            <p className="text-[10px] text-brand-black/30 text-center">Form doldurulunca WhatsApp'ta hazır mesaj açılır.</p>
-          </form>
+              <motion.button type="submit" disabled={loading||sent} whileTap={{ scale:0.97 }}
+                style={{ padding:'13px', borderRadius:'999px', fontSize:'10px', fontWeight:900, letterSpacing:'0.06em', border:'none', cursor:'pointer', fontFamily:'Montserrat', display:'flex', alignItems:'center', justifyContent:'center', gap:'8px', background: sent ? '#1a6b3c' : G.gold, color: sent ? '#fff' : G.bg }}>
+                {sent ? <><Check size={14}/> WHATSAPP AÇILDI!</> : loading ? 'GÖNDERİLİYOR...' : <><Send size={14}/> WHATSAPP İLE GÖNDER</>}
+              </motion.button>
+              <p style={{ fontSize:'10px', color:G.whiteMid, textAlign:'center' }}>Form doldurulunca WhatsApp'ta hazır mesaj açılır.</p>
+            </form>
+          </div>
         </div>
       </div>
     </>
   );
-};
-
-export default ContactPage;
+}
