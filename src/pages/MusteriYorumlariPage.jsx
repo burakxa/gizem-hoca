@@ -1,69 +1,74 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet';
-
-const pageTransition = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1, transition: { duration: 0.5 } },
-  exit: { opacity: 0, transition: { duration: 0.5 } }
-};
+import { ChevronDown } from 'lucide-react';
 
 const testimonials = [
-  { name: "Elif T.", quote: "Gizem Hoca ile dersler bir harika! Enerjisi ve profesyonelliği sayesinde kendimi hem daha güçlü hem de daha motive hissediyorum." },
-  { name: "Can D.", quote: "Sırt ağrılarım için başlamıştım ama sonuçlar beklediğimden çok daha iyi oldu. Duruşum düzeldi ve ağrılarım tamamen geçti." },
-  { name: "Selin A.", quote: "Her ders sonrası yenilenmiş hissediyorum. Sadece bir egzersiz değil, aynı zamanda bir terapi gibi geliyor. Teşekkürler Gizem Hoca!" },
+  { name: 'Elif T.', job: 'Öğretmen', tag: 'Bireysel Ders', rating: 5, date: 'Mart 2025', text: '6 aydır devam ediyorum ve fark inanılmaz. Hem güçlendim hem de kendimi çok daha iyi hissediyorum.' },
+  { name: 'Selin A.', job: 'Pazarlama Yöneticisi', tag: 'Reformer', rating: 5, date: 'Şubat 2025', text: 'Sırt ağrılarım için başlamıştım ama sonuçlar beklediğimden çok daha iyi oldu. Duruşum düzeldi.' },
+  { name: 'Neslihan K.', job: 'Avukat', tag: 'Grup Ders', rating: 5, date: 'Ocak 2025', text: 'Her ders sonrası yenilenmiş hissediyorum. Sadece egzersiz değil, tam anlamıyla bir terapi.' },
+  { name: 'Merve K.', job: 'Doktor', tag: 'Online Ders', rating: 5, date: 'Aralık 2024', text: 'Uzun çalışma saatleri sonrası enerji seviyem gözle görülür arttı. Anlayışlı ve sabırlı yaklaşımı çok değerli.' },
+  { name: 'Ayşe B.', job: 'Ev Hanımı', tag: 'Bireysel Ders', rating: 5, date: 'Kasım 2024', text: 'Doğum sonrası özel programla adım adım güçlendim. 4 ayda hem fiziksel hem psikolojik olarak çok daha iyiyim.' },
+  { name: 'Zeynep Ö.', job: 'Mimar', tag: 'Online Ders', rating: 5, date: 'Ekim 2024', text: 'Yurt dışından katılıyorum, hiç sorun yok. Sanki yanındaymış gibi pozisyonu düzeltiyor.' },
 ];
 
+const tags = ['TÜMÜ', 'BİREYSEL DERS', 'GRUP DERS', 'REFORMER', 'ONLİNE DERS'];
+const tagMap = { 'TÜMÜ': '', 'BİREYSEL DERS': 'Bireysel Ders', 'GRUP DERS': 'Grup Ders', 'REFORMER': 'Reformer', 'ONLİNE DERS': 'Online Ders' };
+
 const MusteriYorumlariPage = () => {
+  const [activeTag, setActiveTag] = useState('TÜMÜ');
+  const [visibleCount, setVisibleCount] = useState(4);
+  const filtered = activeTag === 'TÜMÜ' ? testimonials : testimonials.filter(t => t.tag === tagMap[activeTag]);
+  const visible = filtered.slice(0, visibleCount);
+
   return (
     <>
-      <Helmet>
-        <title>Müşteri Yorumları - Gizem Hoca Pilates</title>
-        <meta name="description" content="Öğrencilerimizin Gizem Hoca Pilates deneyimleri ve geri bildirimleri." />
-      </Helmet>
-      <motion.div
-        variants={pageTransition}
-        initial="initial"
-        animate="animate"
-        exit="exit"
-        className="w-full h-full flex flex-col bg-brand-lime"
-      >
-        <div className="w-full h-full md:w-1/2 md:fixed md:left-0 md:top-0 flex items-center justify-center p-8 lg:p-16">
-          <motion.div 
-            className="w-full h-full bg-cover bg-center grayscale"
-            style={{ backgroundImage: `url(https://images.unsplash.com/photo-1607962837359-5e7e89f86776)` }}
-            initial={{ scale: 1.2 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 1.2, ease: [0.43, 0.13, 0.23, 0.96] }}
-          >
+      <Helmet><title>Müşteri Yorumları - Gizem Hoca Pilates</title></Helmet>
+      <div className="border-b-2 border-black p-8 lg:p-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <p className="text-[10px] font-black tracking-widest text-black/40 mb-3">GİZEM HOCA PİLATES</p>
+          <h1 className="text-5xl md:text-7xl font-black text-black leading-none tracking-tighter">YORUMLAR</h1>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-3xl font-black text-black">5.0</span>
+          <div><div className="text-brand-lime text-sm">★★★★★</div><div className="text-[10px] text-black/40">{testimonials.length} yorum</div></div>
+        </div>
+      </div>
+      <div className="flex overflow-x-auto border-b-2 border-black">
+        {tags.map(tag => (
+          <button key={tag} onClick={() => { setActiveTag(tag); setVisibleCount(4); }}
+            className={`px-5 py-3 text-[10px] font-black tracking-widest whitespace-nowrap border-r border-black/10 transition-all ${
+              activeTag === tag ? 'bg-black text-brand-lime' : 'bg-white text-black/50 hover:text-black'
+            }`}>
+            {tag}
+          </button>
+        ))}
+      </div>
+      <div className="divide-y divide-black/10">
+        {visible.map((t, i) => (
+          <motion.div key={t.name + t.tag} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.05 }}
+            className="p-8 lg:p-12 grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div>
+              <p className="text-sm font-black text-black">{t.name}</p>
+              <p className="text-xs text-black/40 mt-1">{t.job}</p>
+              <p className="text-xs text-black/30 mt-1">{t.date}</p>
+              <span className="inline-block mt-2 text-[9px] font-black tracking-widest border border-black/20 px-2 py-0.5 text-black/50">{t.tag.toUpperCase()}</span>
+            </div>
+            <div className="md:col-span-3">
+              <div className="text-brand-lime text-sm mb-3">★★★★★</div>
+              <p className="text-lg text-black/80 leading-relaxed italic">"{t.text}"</p>
+            </div>
           </motion.div>
+        ))}
+      </div>
+      {visibleCount < filtered.length && (
+        <div className="border-t-2 border-black p-6 text-center">
+          <button onClick={() => setVisibleCount(v => v + 4)}
+            className="flex items-center gap-2 text-[10px] font-black tracking-widest text-black/50 hover:text-black transition-colors mx-auto">
+            DAHA FAZLA GÖSTER <ChevronDown size={14} />
+          </button>
         </div>
-        
-        <div className="w-full md:w-1/2 md:ml-auto bg-brand-lime p-8 lg:p-16 flex flex-col justify-center min-h-screen overflow-y-auto">
-          <motion.h1 
-            className="text-5xl md:text-6xl font-black text-brand-black leading-none tracking-tighter mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            Müşteri Yorumları
-          </motion.h1>
-          
-          <div className="space-y-10">
-            {testimonials.map((testimonial, index) => (
-              <motion.div 
-                key={testimonial.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
-              >
-                <p className="text-xl font-medium italic">"{testimonial.quote}"</p>
-                <h3 className="text-2xl font-black tracking-tight mt-3">- {testimonial.name}</h3>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.div>
+      )}
     </>
   );
 };

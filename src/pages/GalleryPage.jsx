@@ -1,155 +1,86 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet';
-import { Plus, X } from 'lucide-react';
+import { X } from 'lucide-react';
 
 const images = [
-  { id: 1, src: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b", alt: "Aydınlık pilates stüdyosu" },
-  { id: 2, src: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b", alt: "Reformer aletinde egzersiz" },
-  { id: 3, src: "https://images.unsplash.com/photo-1599402318494-082465b828a2", alt: "Mat üzerinde esneme hareketleri" },
-  { id: 4, src: "https://images.unsplash.com/photo-1518611012118-696072aa579a", alt: "Pilates topu ile denge çalışması" },
-  { id: 5, src: "https://images.unsplash.com/photo-1571942674757-c342c31345c1", alt: "Eğitmen yardımıyla pozisyon düzeltme" },
-  { id: 6, src: "https://images.unsplash.com/photo-1607962837359-5e7e89f86776", alt: "Ders sonrası mutlu öğrenciler" },
+  { id: 1, src: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800', alt: 'Mat pilates dersi', category: 'Stüdyo' },
+  { id: 2, src: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800', alt: 'Reformer çalışması', category: 'Reformer' },
+  { id: 3, src: 'https://images.unsplash.com/photo-1599402318494-082465b828a2?w=800', alt: 'Esneme hareketleri', category: 'Dersler' },
+  { id: 4, src: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800', alt: 'Pilates topu ile denge', category: 'Dersler' },
+  { id: 5, src: 'https://images.unsplash.com/photo-1571942674757-c342c31345c1?w=800', alt: 'Pozisyon düzeltme', category: 'Dersler' },
+  { id: 6, src: 'https://images.unsplash.com/photo-1607962837359-5e7e89f86776?w=800', alt: 'Grup dersi', category: 'Grup' },
+  { id: 7, src: 'https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?w=800', alt: 'Stüdyo görünümü', category: 'Stüdyo' },
+  { id: 8, src: 'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=800', alt: 'Sabah dersi', category: 'Dersler' },
+  { id: 9, src: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800', alt: 'Meditasyon', category: 'Mindfulness' },
+  { id: 10, src: 'https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?w=800', alt: 'Reformer grup', category: 'Reformer' },
+  { id: 11, src: 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=800', alt: 'Bireysel ders', category: 'Dersler' },
+  { id: 12, src: 'https://images.unsplash.com/photo-1552196563-55cd4e45efb3?w=800', alt: 'Stüdyo detay', category: 'Stüdyo' },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, scale: 0.8 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      type: "spring",
-      stiffness: 150,
-      damping: 20,
-    },
-  },
-};
-
-const pageTransition = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1, transition: { duration: 0.5 } },
-  exit: { opacity: 0, transition: { duration: 0.5 } }
-};
-
-const backdropVariants = {
-  visible: { opacity: 1 },
-  hidden: { opacity: 0 },
-};
-
-const modalVariants = {
-  hidden: { scale: 0.8, opacity: 0 },
-  visible: { scale: 1, opacity: 1, transition: { type: 'spring', stiffness: 250, damping: 25 } },
-  exit: { scale: 0.8, opacity: 0 },
-};
+const categories = ['TÜMÜ', 'STÜDYO', 'DERSLER', 'REFORMER', 'GRUP', 'MİNDFULNESS'];
+const catMap = { 'TÜMÜ': '', 'STÜDYO': 'Stüdyo', 'DERSLER': 'Dersler', 'REFORMER': 'Reformer', 'GRUP': 'Grup', 'MİNDFULNESS': 'Mindfulness' };
 
 const GalleryPage = () => {
-    const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [activeCategory, setActiveCategory] = useState('TÜMÜ');
+  const filtered = activeCategory === 'TÜMÜ' ? images : images.filter(img => img.category === catMap[activeCategory]);
 
-    return (
-        <>
-            <Helmet>
-                <title>Galeri - Gizem Hoca Pilates</title>
-                <meta name="description" content="Stüdyomuzun enerjisi, derslerimizden anlar ve mutlu öğrencilerimiz. İlham alın!" />
-            </Helmet>
-            <motion.div 
-                className="w-full h-full bg-brand-lime p-8 lg:p-16 overflow-y-auto"
-                variants={pageTransition}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-            >
-                <motion.h1 
-                    className="text-5xl md:text-7xl font-black text-brand-black leading-none tracking-tighter mb-4"
-                    initial={{ y: -20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                    Galeri
-                </motion.h1>
-                <motion.p
-                    className="text-lg md:text-xl text-brand-black/80 mb-12"
-                    initial={{ y: -20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
-                >
-                    Stüdyomuzdan ve derslerimizden ilham veren anlar.
-                </motion.p>
-                
-                <motion.div
-                  variants={containerVariants}
-                  initial="hidden"
-                  animate="visible"
-                  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
-                >
-                  {images.map((image) => (
-                    <motion.div
-                      key={image.id}
-                      variants={itemVariants}
-                      className="group relative aspect-square overflow-hidden rounded-xl shadow-lg cursor-pointer"
-                      onClick={() => setSelectedImage(image)}
-                    >
-                      <img
-                        alt={image.alt}
-                        className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
-                        src={image.src} />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent transition-all duration-300"></div>
-                      <div className="absolute inset-0 flex flex-col items-start justify-end p-6 text-white">
-                        <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-75 group-hover:scale-100">
-                          <Plus className="w-5 h-5" />
-                        </div>
-                        <p className="font-bold text-lg tracking-wide translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                          {image.alt}
-                        </p>
-                      </div>
-                    </motion.div>
-                  ))}
-                </motion.div>
+  return (
+    <>
+      <Helmet><title>Galeri - Gizem Hoca Pilates</title></Helmet>
+      <div className="border-b-2 border-black p-8 lg:p-12">
+        <p className="text-[10px] font-black tracking-widest text-black/40 mb-3">GİZEM HOCA PİLATES</p>
+        <h1 className="text-5xl md:text-7xl font-black text-black leading-none tracking-tighter">GALERİ</h1>
+      </div>
+      <div className="flex overflow-x-auto border-b-2 border-black">
+        {categories.map(cat => (
+          <button key={cat} onClick={() => setActiveCategory(cat)}
+            className={`px-5 py-3 text-[10px] font-black tracking-widest whitespace-nowrap border-r border-black/10 transition-all ${
+              activeCategory === cat ? 'bg-black text-brand-lime' : 'bg-white text-black/50 hover:text-black'
+            }`}>
+            {cat}
+          </button>
+        ))}
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <AnimatePresence>
+          {filtered.map((image, i) => (
+            <motion.div key={image.id}
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ delay: i * 0.04 }}
+              className="border-b border-r border-black/10 aspect-square overflow-hidden cursor-pointer group relative"
+              onClick={() => setSelectedImage(image)}>
+              <img src={image.src} alt={image.alt}
+                className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500" />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all" />
+              <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all">
+                <p className="text-white text-[10px] font-black tracking-wide">{image.alt.toUpperCase()}</p>
+              </div>
             </motion.div>
-
-            <AnimatePresence>
-                {selectedImage && (
-                    <motion.div
-                        className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
-                        onClick={() => setSelectedImage(null)}
-                        variants={backdropVariants}
-                        initial="hidden"
-                        animate="visible"
-                        exit="hidden"
-                    >
-                        <motion.div
-                            variants={modalVariants}
-                            onClick={(e) => e.stopPropagation()}
-                            className="relative"
-                        >
-                            <img 
-                                src={selectedImage.src} 
-                                alt={selectedImage.alt}
-                                className="max-w-[90vw] max-h-[90vh] object-contain rounded-lg shadow-2xl"
-                            />
-                            <motion.button
-                                className="absolute -top-4 -right-4 bg-white rounded-full p-2 text-black"
-                                onClick={() => setSelectedImage(null)}
-                                whileHover={{ scale: 1.1, rotate: 90 }}
-                                whileTap={{ scale: 0.9 }}
-                            >
-                                <X size={24} />
-                            </motion.button>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </>
-    );
+          ))}
+        </AnimatePresence>
+      </div>
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div className="fixed inset-0 bg-black/95 flex items-center justify-center z-50 p-4"
+            onClick={() => setSelectedImage(null)}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <motion.div onClick={e => e.stopPropagation()} className="relative max-w-4xl w-full"
+              initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}>
+              <img src={selectedImage.src} alt={selectedImage.alt} className="w-full object-contain max-h-[80vh]" />
+              <div className="mt-3 flex justify-between items-center">
+                <p className="text-white text-xs font-bold">{selectedImage.alt}</p>
+                <button onClick={() => setSelectedImage(null)}
+                  className="text-white/60 hover:text-white text-[10px] font-black tracking-widest flex items-center gap-2 transition-colors">
+                  KAPAT <X size={14} />
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
 };
 
 export default GalleryPage;
