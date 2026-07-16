@@ -2,8 +2,9 @@ import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import MainMenu from '@/components/layout/MainMenu';
+import Footer from '@/components/layout/Footer';
 import WhatsAppButton from '@/components/ui/WhatsAppButton';
-import { CountdownBanner, AnnouncementBanner } from '@/components/ui/CountdownBanner';
+import CookieBanner from '@/components/ui/CookieBanner';
 
 const pageVariants = {
   initial: { opacity: 0, y: 12 },
@@ -17,15 +18,8 @@ const PageLayout = ({ handleNotImplemented }) => {
 
   return (
     <div className="min-h-screen bg-brand-lime flex flex-col">
-      {/* Bannerlar */}
-      <CountdownBanner />
-      <AnnouncementBanner />
-
-      {/* Üst navbar */}
       <MainMenu />
-
-      {/* Sayfa içeriği */}
-      <main className="flex-1 w-full max-w-6xl mx-auto">
+      <main className="flex-1 w-full max-w-6xl mx-auto w-full">
         <AnimatePresence mode="wait">
           <motion.div
             key={location.pathname}
@@ -38,9 +32,9 @@ const PageLayout = ({ handleNotImplemented }) => {
           </motion.div>
         </AnimatePresence>
       </main>
-
-      {/* WhatsApp */}
+      <Footer />
       <WhatsAppButton phoneNumber={phoneNumber} />
+      <CookieBanner />
     </div>
   );
 };

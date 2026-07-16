@@ -20,7 +20,7 @@ import FiyatlarPage from '@/pages/FiyatlarPage';
 import ContactPage from '@/pages/ContactPage';
 import ProgramPage from '@/pages/ProgramPage';
 import SSFPage from '@/pages/SSFPage';
-import AdminPage from '@/pages/AdminPage';
+import NotFoundPage from '@/pages/NotFoundPage';
 
 function App() {
   const handleNotImplemented = (e) => {
@@ -37,10 +37,8 @@ function App() {
   return (
     <>
       <Helmet>
-        <title>Gizem Hoca - Pilates and Wellness</title>
-        <meta name="description" content="Pilates sadece bir egzersiz değil, yaşam felsefesidir. Bedeninizi güçlendirip zihninizi dinlendirin." />
-        <meta property="og:title" content="Gizem Hoca - Pilates and Wellness" />
-        <meta property="og:description" content="Pilates sadece bir egzersiz değil, yaşam felsefesidir." />
+        <title>Gizem Hoca - Pilates & Wellness | İstanbul</title>
+        <meta name="description" content="İstanbul Beşiktaş'ta profesyonel pilates dersleri. Mat pilates, reformer, hamile pilatesi ve online dersler." />
       </Helmet>
 
       <AnimatePresence mode="wait">
@@ -60,7 +58,7 @@ function App() {
             <Route path="iletisim" element={<ContactPage />} />
             <Route path="program" element={<ProgramPage />} />
             <Route path="sss" element={<SSFPage />} />
-            <Route path="admin" element={<AdminPage />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>
       </AnimatePresence>

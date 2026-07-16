@@ -1,103 +1,84 @@
 export const blogPosts = [
-  {
-    id: 1,
-    title: 'Pilatese Başlarken Bilinmesi Gerekenler',
-    date: '15 Haziran 2026',
-    category: 'Başlangıç',
-    summary: 'Pilates dünyasına ilk adımı atmadan önce bu rehbere göz atın...',
+  { 
+    id: 1, 
+    title: 'Pilatese Başlarken Bilinmesi Gerekenler', 
+    date: '12 Eylül 2025', 
+    category: 'Başlangıç', 
+    summary: 'Pilates dünyasına ilk adımı atmadan önce bu rehbere göz atın...', 
     content: `
-      <p>Pilates, Joseph Pilates tarafından geliştirilen, zihin ve beden bütünlüğünü hedefleyen bir egzersiz sistemidir. Güç, esneklik ve genel vücut farkındalığını artırır.</p>
+      <p>Pilates, Joseph Pilates tarafından geliştirilen, zihin ve beden bütünlüğünü hedefleyen bir egzersiz sistemidir. Güç, esneklik ve genel vücut farkındalığını artırır. Eğer pilatese yeni başlıyorsanız, bu yolculuğa çıkmadan önce bilmeniz gereken birkaç önemli nokta var.</p>
       <h3 class="text-2xl font-black mt-6 mb-3">Ne Giymeli?</h3>
-      <p>Rahat hareket etmenizi sağlayan, vücudunuza oturan ama sıkmayan kıyafetler tercih edin. Genellikle çıplak ayakla veya kaydırmaz çoraplarla yapılır.</p>
+      <p>Rahat hareket etmenizi sağlayan, vücudunuza oturan ama sıkmayan kıyafetler tercih edin. Eğitmeninizin duruşunuzu ve hareketlerinizi net bir şekilde görebilmesi için bol kıyafetlerden kaçının. Genellikle çıplak ayakla veya kaydırmaz çoraplarla yapılır.</p>
       <h3 class="text-2xl font-black mt-6 mb-3">İlk Dersinizde Sizi Neler Bekliyor?</h3>
-      <p>İlk ders genellikle temel prensiplere odaklanır: nefes, merkezleme, kontrol, konsantrasyon, akıcılık ve kesinlik. Kendinizi zorlamayın ve bedeninizin sinyallerini dinleyin.</p>
-      <h3 class="text-2xl font-black mt-6 mb-3">Pilatesin Faydaları</h3>
+      <p>İlk ders genellikle temel prensiplere odaklanır: nefes, merkezleme (core aktivasyonu), kontrol, konsantrasyon, akıcılık ve kesinlik. Eğitmeniniz size temel hareketleri ve doğru formları öğretecektir. Kendinizi zorlamayın ve bedeninizin sinyallerini dinleyin.</p>
+      <h3 class="text-2xl font-black mt-6 mb-3">Pilatesin Faydaları Nelerdir?</h3>
       <ul class="list-disc list-inside mt-4 space-y-2">
-        <li>Çekirdek kaslarını güçlendirir.</li>
-        <li>Duruşu iyileştirir.</li>
+        <li>Çekirdek (core) kaslarını güçlendirir.</li>
+        <li>Duruşu (postür) iyileştirir.</li>
         <li>Esnekliği ve dengeyi artırır.</li>
         <li>Stresi azaltır ve zihinsel odaklanmayı geliştirir.</li>
         <li>Sırt ve eklem ağrılarını hafifletebilir.</li>
       </ul>
+      <p class="mt-4">Unutmayın, her yolculuk ilk adımla başlar. Pilates pratiğinizde sabırlı olun ve sürecin tadını çıkarın!</p>
     `
   },
-  {
-    id: 2,
-    title: 'Reformer Pilates Neden Bu Kadar Etkili?',
-    date: '02 Haziran 2026',
-    category: 'Reformer',
-    summary: 'Reformer aletinin büyüsünü ve mat pilatese göre avantajlarını keşfedin...',
+  { 
+    id: 2, 
+    title: 'Evde Pilates Rutini İçin 5 Temel Ekipman', 
+    date: '08 Eylül 2025', 
+    category: 'Ekipman', 
+    summary: 'Evinizin konforunda etkili bir pilates pratiği için ihtiyacınız olanlar...',
     content: `
-      <p>Reformer, tekerlekli bir platform, yaylar, ipler ve makaralardan oluşan dâhiyane bir tasarımdır. Peki bu aleti bu kadar özel kılan nedir?</p>
+      <p>Stüdyoya gitmeye vaktiniz yok mu? Sorun değil! Evde de oldukça etkili bir pilates pratiği yapabilirsiniz. İşte başlamak için ihtiyacınız olan 5 temel ekipman ve bazı alternatifler.</p>
+      <h3 class="text-2xl font-black mt-6 mb-3">1. Pilates Matı</h3>
+      <p>Yoga matlarından biraz daha kalın olan pilates matları, omurganızı ve eklemlerinizi korumak için ekstra yastıklama sağlar. Eğer matınız yoksa, kalın bir battaniye veya halı üzerinde de başlayabilirsiniz.</p>
+      <h3 class="text-2xl font-black mt-6 mb-3">2. Pilates Çemberi (Magic Circle)</h3>
+      <p>Bu direnç halkası, iç ve dış bacak, kollar ve göğüs kaslarını çalıştırmak için harikadır. Direnç sağlayarak hareketlerin zorluk seviyesini artırır.</p>
+      <h3 class="text-2xl font-black mt-6 mb-3">3. Direnç Bantları</h3>
+      <p>Farklı sertlik seviyelerinde gelen bu bantlar, özellikle kol ve bacak güçlendirme egzersizleri için mükemmeldir. Ağırlık antrenmanına harika bir alternatiftir ve taşıması çok kolaydır.</p>
+      <h3 class="text-2xl font-black mt-6 mb-3">4. Pilates Topu</h3>
+      <p>Farklı boyutlarda bulunan pilates topları, dengeyi geliştirmek ve çekirdek kaslarını daha derinden çalıştırmak için kullanılır. Özellikle karın egzersizlerini bir üst seviyeye taşır.</p>
+      <h3 class="text-2xl font-black mt-6 mb-3">5. Küçük Ağırlıklar</h3>
+      <p>0.5 kg veya 1 kg gibi hafif dambıllar, kol ve omuz egzersizlerine ekstra direnç katmak için kullanılabilir. Alternatif olarak su şişeleri de kullanabilirsiniz.</p>
+      <p class="mt-4">Bu ekipmanlarla evinizin rahatlığında tam bir vücut antrenmanı yapabilir, gücünüzü ve esnekliğinizi artırabilirsiniz.</p>
+    `
+  },
+  { 
+    id: 3, 
+    title: 'Neden Herkes Reformer Pilatese Hayran?', 
+    date: '03 Eylül 2025', 
+    category: 'Reformer', 
+    summary: 'Reformer aletinin büyüsünü ve mat pilatese göre avantajlarını keşfedin.',
+    content: `
+      <p>Pilates stüdyolarının vazgeçilmezi olan Reformer aleti, tekerlekli bir platform, yaylar, ipler ve makaralardan oluşan dâhiyane bir tasarımdır. Peki, bu aleti bu kadar özel kılan nedir? İşte Reformer pilatesin popülerliğinin ardındaki sırlar.</p>
       <h3 class="text-2xl font-black mt-6 mb-3">Tam Vücut Çalışması</h3>
-      <p>Yayların sağladığı ayarlanabilir direnç sayesinde aynı anda birden fazla kas grubunu çalıştırırsınız. Bu, hem güç hem de esneklik kazanımı için son derece verimlidir.</p>
+      <p>Reformer, yayların sağladığı ayarlanabilir direnç sayesinde aynı anda birden fazla kas grubunu çalıştırmanıza olanak tanır. Bu, hem güç hem de esneklik kazanımı için son derece verimli bir yöntemdir.</p>
       <h3 class="text-2xl font-black mt-6 mb-3">Düşük Etki, Yüksek Verim</h3>
-      <p>Eklemlere binen yük minimum düzeydedir. Bu, her yaş ve fitness seviyesi için, hatta rehabilitasyon süreçleri için bile uygundur.</p>
+      <p>Yatarak veya oturarak yapılan birçok hareket sayesinde eklemlere binen yük minimum düzeydedir. Bu, onu her yaş ve fitness seviyesi için, hatta rehabilitasyon süreçleri için bile uygun hale getirir.</p>
+      <h3 class="text-2xl font-black mt-6 mb-3">Çekirdek Kaslarını Derinden Etkiler</h3>
+      <p>Hareketli platform üzerinde dengeyi korumaya çalışmak, en derindeki çekirdek kaslarınızı bile sürekli olarak aktif tutar. Bu, mat egzersizleriyle ulaşılması zor olan bir stabilizasyon gücü kazandırır.</p>
       <h3 class="text-2xl font-black mt-6 mb-3">Duruş ve Hizalanma</h3>
-      <p>Aletin yapısı, vücudunuzu doğru hizada tutmanıza yardımcı olur. Omuz destekleri ve başlık, hareketleri doğru formda yapmanızı sağlar.</p>
+      <p>Aletin yapısı, vücudunuzu doğru hizada tutmanıza yardımcı olur. Omuz destekleri ve başlık gibi parçalar, hareketleri doğru formda yapmanızı sağlayarak duruş bozukluklarının düzeltilmesine yardımcı olur.</p>
+      <p class="mt-4">Reformer, bedeninize meydan okumanın ve sınırlarınızı keşfetmenin eğlenceli ve etkili bir yoludur. Eğer denemediyseniz, ilk fırsatta bir derse katılmanızı tavsiye ederiz!</p>
     `
   },
-  {
-    id: 3,
-    title: 'Hamile Pilatesi: Güvenli Gebelik Egzersizleri',
-    date: '20 Mayıs 2026',
-    category: 'Hamilelik',
-    summary: 'Gebelik sürecinde pilates yapmanın faydaları ve dikkat edilmesi gerekenler...',
+  { 
+    id: 4, 
+    title: 'Duruşunu Düzelt: Ofis Çalışanları İçin İpuçları', 
+    date: '01 Eylül 2025', 
+    category: 'Sağlık', 
+    summary: 'Masa başında geçen uzun saatlerin etkisini azaltacak basit egzersizler.',
     content: `
-      <p>Hamilelik, vücudunuzun inanılmaz bir dönüşüm geçirdiği özel bir dönemdir. Doğru egzersizle bu süreci çok daha konforlu geçirebilirsiniz.</p>
-      <h3 class="text-2xl font-black mt-6 mb-3">Hamile Pilatesinin Faydaları</h3>
-      <ul class="list-disc list-inside mt-4 space-y-2">
-        <li>Sırt ve bel ağrılarını azaltır.</li>
-        <li>Pelvik taban kaslarını güçlendirir.</li>
-        <li>Doğum için gereken kas kontrolünü geliştirir.</li>
-        <li>Şişmeyi ve yorgunluğu azaltır.</li>
-      </ul>
-      <h3 class="text-2xl font-black mt-6 mb-3">Ne Zaman Başlayabilirsiniz?</h3>
-      <p>Doktor onayıyla hamileliğin her döneminde pilates yapılabilir. Her trimestere özel egzersiz programları mevcuttur.</p>
-    `
-  },
-  {
-    id: 4,
-    title: 'Duruşunu Düzelt: Ofis Çalışanları İçin Pilates',
-    date: '10 Mayıs 2026',
-    category: 'Sağlık',
-    summary: 'Masa başında geçen uzun saatlerin etkisini azaltacak egzersizler...',
-    content: `
-      <p>Günümüzün büyük bir kısmını masa başında geçiriyoruz. Bu durum zamanla kamburlaşma ve sırt ağrılarına yol açabilir.</p>
+      <p>Günümüzün büyük bir kısmını masa başında, bilgisayar karşısında geçiriyoruz. Bu durum zamanla kamburlaşma, omuzların öne düşmesi ve sırt ağrıları gibi duruş bozukluklarına yol açabilir. Pilates, bu sorunlarla başa çıkmak için harika bir araçtır.</p>
       <h3 class="text-2xl font-black mt-6 mb-3">Farkındalıkla Başlayın</h3>
-      <p>Gün içinde duruşunuzun farkında olun. Otururken ayaklarınızın yere tam bastığından, sırtınızın dik olduğundan emin olun. Saat başı kısa mola ve esneme büyük fark yaratır.</p>
-      <h3 class="text-2xl font-black mt-6 mb-3">Pilates ile Duruş Düzeltme</h3>
-      <p>Swan Dive, Swimming ve Chest Expansion gibi pilates egzersizleri, sırt kaslarını güçlendirerek kalıcı duruş iyileşmesi sağlar.</p>
-    `
-  },
-  {
-    id: 5,
-    title: 'Doğum Sonrası Toparlanma: Pilates ile Hızlı İyileşme',
-    date: '28 Nisan 2026',
-    category: 'Doğum Sonrası',
-    summary: 'Doğum sonrası vücudunuzu yeniden güçlendirmek için pilates programı...',
-    content: `
-      <p>Doğum sonrası dönem hem fiziksel hem duygusal açıdan zorlu olabilir. Pilates, bu süreçte güvenli ve etkili bir iyileşme yöntemi sunar.</p>
-      <h3 class="text-2xl font-black mt-6 mb-3">Ne Zaman Başlayabilirsiniz?</h3>
-      <p>Normal doğumdan 6-8 hafta, sezaryenden 8-12 hafta sonra, doktor onayıyla pilates başlanabilir.</p>
-      <h3 class="text-2xl font-black mt-6 mb-3">Diastaz Rekti Nedir?</h3>
-      <p>Hamilelik sırasında karın kaslarının ayrılması olan diastaz rekti, doğum sonrası pilates ile rehabilite edilebilir. Bu konuda uzman rehberliği çok önemlidir.</p>
-    `
-  },
-  {
-    id: 6,
-    title: 'Evde Pilates: 20 Dakikada Tam Vücut Antrenmanı',
-    date: '15 Nisan 2026',
-    category: 'Evde Pilates',
-    summary: 'Ekipmansız, sadece mat ile evde yapabileceğiniz etkili pilates rutini...',
-    content: `
-      <p>Stüdyoya gidemediğiniz günler için tasarlanmış, sadece mat gerektiren 20 dakikalık etkili rutin.</p>
-      <h3 class="text-2xl font-black mt-6 mb-3">Isınma (3 dakika)</h3>
-      <p>Sırtüstü yatın, dizlerinizi göğsünüze çekin. Yavaşça nefes alıp verin, omurganızı mat'a yerleştirin.</p>
-      <h3 class="text-2xl font-black mt-6 mb-3">The Hundred (2 dakika)</h3>
-      <p>Pilatesin klasik egzersizi. Core aktivasyonu ve nefes koordinasyonu için mükemmeldir.</p>
-      <h3 class="text-2xl font-black mt-6 mb-3">Roll Up (3 dakika)</h3>
-      <p>Omurganın esnekliğini artırır, karın kaslarını derinlemesine çalıştırır.</p>
+      <p>İlk adım, gün içinde duruşunuzun farkında olmaktır. Otururken ayaklarınızın yere tam bastığından, sırtınızın dik ve omuzlarınızın geride olduğundan emin olun. Saat başı kısa bir mola verip esnemek bile büyük fark yaratır.</p>
+      <h3 class="text-2xl font-black mt-6 mb-3">Sırt ve Omuz Güçlendiriciler</h3>
+      <p>Güçlü sırt kasları, omurgayı destekler ve doğru duruşu korumaya yardımcı olur. "Swan Dive" (Kuğu Dalışı) ve "Swimming" (Yüzme) gibi Pilates egzersizleri, sırtınızın üst kısmını ve omuz çevresi kaslarını güçlendirmek için mükemmeldir.</p>
+      <h3 class="text-2xl font-black mt-6 mb-3">Göğüs Esnetmeleri</h3>
+      <p>Sürekli öne eğilmek göğüs kaslarının kısalmasına ve sıkılaşmasına neden olur. Bu da omuzların öne çekilmesine yol açar. Bir kapı pervazında yapacağınız basit göğüs esnetmeleri veya "Chest Expansion" egzersizi bu kasları açmaya yardımcı olur.</p>
+      <h3 class="text-2xl font-black mt-6 mb-3">Çekirdek (Core) Stabilitesi</h3>
+      <p>Güçlü karın ve bel kasları, vücudun merkezini oluşturur ve bir korse gibi omurgayı destekler. "The Hundred" ve "Plank" gibi temel egzersizler, çekirdek stabilitenizi artırarak duruşunuzu temelden iyileştirir.</p>
+      <p class="mt-4">Unutmayın, iyi bir duruş sadece estetik bir mesele değil, aynı zamanda genel sağlığınız için de bir yatırımdır.</p>
     `
   },
 ];

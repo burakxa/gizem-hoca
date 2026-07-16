@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet';
-import { Star, ChevronDown } from 'lucide-react';
 
 const pageTransition = {
   initial: { opacity: 0 },
@@ -10,65 +9,12 @@ const pageTransition = {
 };
 
 const testimonials = [
-  {
-    name: 'Elif T.',
-    job: 'Öğretmen',
-    rating: 5,
-    date: 'Mart 2025',
-    text: 'Gizem Hoca ile dersler bir harika! Enerjisi ve profesyonelliği sayesinde kendimi hem daha güçlü hem de daha motive hissediyorum. 6 aydır devam ediyorum ve fark inanılmaz.',
-    tag: 'Bireysel Ders',
-  },
-  {
-    name: 'Selin A.',
-    job: 'Pazarlama Yöneticisi',
-    rating: 5,
-    date: 'Şubat 2025',
-    text: 'Sırt ağrılarım için başlamıştım ama sonuçlar beklediğimden çok daha iyi oldu. Duruşum düzeldi ve ağrılarım tamamen geçti. Masa başında çok daha rahat oturuyorum.',
-    tag: 'Reformer',
-  },
-  {
-    name: 'Neslihan K.',
-    job: 'Avukat',
-    rating: 5,
-    date: 'Ocak 2025',
-    text: 'Her ders sonrası yenilenmiş hissediyorum. Sadece bir egzersiz değil, aynı zamanda bir terapi gibi geliyor. Hem bedenime hem zihnime çok iyi geliyor. Teşekkürler Gizem Hoca!',
-    tag: 'Grup Ders',
-  },
-  {
-    name: 'Merve K.',
-    job: 'Doktor',
-    rating: 5,
-    date: 'Aralık 2024',
-    text: 'Uzun çalışma saatleri sonrası vücudum çok yoruluyordu. Pilates derslerine başladıktan sonra enerji seviyem gözle görülür şekilde arttı. Gizem Hoca\'nın anlayışlı ve sabırlı yaklaşımı çok değerli.',
-    tag: 'Online Ders',
-  },
-  {
-    name: 'Ayşe B.',
-    job: 'Ev Hanımı',
-    rating: 5,
-    date: 'Kasım 2024',
-    text: 'Doğum sonrası kendimi çok iyi hissetmiyordum. Gizem Hoca\'nın özel programıyla adım adım güçlendim. 4 ayda hem fiziksel hem de psikolojik olarak kendimi çok daha iyi hissediyorum.',
-    tag: 'Bireysel Ders',
-  },
-  {
-    name: 'Zeynep Ö.',
-    job: 'Mimar',
-    rating: 5,
-    date: 'Ekim 2024',
-    text: 'Online dersleri çok verimli. Gizem Hoca kameradan bile pozisyonu düzeltiyor, sanki yanındaymış gibi. Yurt dışından katılıyorum ve hiç sorun yaşamıyorum.',
-    tag: 'Online Ders',
-  },
+  { name: "Elif T.", quote: "Gizem Hoca ile dersler bir harika! Enerjisi ve profesyonelliği sayesinde kendimi hem daha güçlü hem de daha motive hissediyorum." },
+  { name: "Can D.", quote: "Sırt ağrılarım için başlamıştım ama sonuçlar beklediğimden çok daha iyi oldu. Duruşum düzeldi ve ağrılarım tamamen geçti." },
+  { name: "Selin A.", quote: "Her ders sonrası yenilenmiş hissediyorum. Sadece bir egzersiz değil, aynı zamanda bir terapi gibi geliyor. Teşekkürler Gizem Hoca!" },
 ];
 
-const tags = ['Tümü', 'Bireysel Ders', 'Grup Ders', 'Reformer', 'Online Ders'];
-
 const MusteriYorumlariPage = () => {
-  const [activeTag, setActiveTag] = useState('Tümü');
-  const [visibleCount, setVisibleCount] = useState(4);
-
-  const filtered = activeTag === 'Tümü' ? testimonials : testimonials.filter(t => t.tag === activeTag);
-  const visible = filtered.slice(0, visibleCount);
-
   return (
     <>
       <Helmet>
@@ -80,87 +26,43 @@ const MusteriYorumlariPage = () => {
         initial="initial"
         animate="animate"
         exit="exit"
-        className="w-full h-full bg-brand-lime p-8 lg:p-16 overflow-y-auto"
+        className="w-full h-full flex flex-col bg-brand-lime"
       >
-        <motion.h1
-          className="text-5xl md:text-7xl font-black text-brand-black leading-none tracking-tighter mb-4"
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          Yorumlar
-        </motion.h1>
-
-        {/* Özet */}
-        <motion.div
-          className="flex items-center gap-3 mb-8"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-        >
-          <div className="flex gap-1">
-            {[...Array(5)].map((_, i) => <Star key={i} size={20} fill="#000" className="text-brand-black" />)}
-          </div>
-          <span className="text-2xl font-black text-brand-black">5.0</span>
-          <span className="text-brand-black/50 text-sm">· {testimonials.length} yorum</span>
-        </motion.div>
-
-        {/* Filtreler */}
-        <motion.div
-          className="flex flex-wrap gap-2 mb-10"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-        >
-          {tags.map(tag => (
-            <button
-              key={tag}
-              onClick={() => { setActiveTag(tag); setVisibleCount(4); }}
-              className={`px-4 py-1.5 rounded-full text-sm font-bold border-2 border-brand-black transition-all duration-200 ${
-                activeTag === tag ? 'bg-brand-black text-brand-lime' : 'bg-transparent text-brand-black hover:bg-brand-black/10'
-              }`}
-            >
-              {tag}
-            </button>
-          ))}
-        </motion.div>
-
-        {/* Yorumlar */}
-        <div className="space-y-4">
-          <AnimatePresence>
-            {visible.map((t, i) => (
-              <motion.div
-                key={t.name + t.tag}
+        <div className="w-full h-full md:w-1/2 md:fixed md:left-0 md:top-0 flex items-center justify-center p-8 lg:p-16">
+          <motion.div 
+            className="w-full h-full bg-cover bg-center grayscale"
+            style={{ backgroundImage: `url(https://images.unsplash.com/photo-1607962837359-5e7e89f86776)` }}
+            initial={{ scale: 1.2 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 1.2, ease: [0.43, 0.13, 0.23, 0.96] }}
+          >
+          </motion.div>
+        </div>
+        
+        <div className="w-full md:w-1/2 md:ml-auto bg-brand-lime p-8 lg:p-16 flex flex-col justify-center min-h-screen overflow-y-auto">
+          <motion.h1 
+            className="text-5xl md:text-6xl font-black text-brand-black leading-none tracking-tighter mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            Müşteri Yorumları
+          </motion.h1>
+          
+          <div className="space-y-10">
+            {testimonials.map((testimonial, index) => (
+              <motion.div 
+                key={testimonial.name}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: i * 0.05 }}
-                className="bg-brand-black rounded-2xl p-6"
+                transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
               >
-                <div className="flex justify-between items-start mb-3">
-                  <div>
-                    <div className="font-black text-brand-lime text-lg">{t.name}</div>
-                    <div className="text-white/40 text-sm">{t.job} · {t.date}</div>
-                  </div>
-                  <span className="text-xs bg-white/10 text-white/60 px-3 py-1 rounded-full font-medium">{t.tag}</span>
-                </div>
-                <div className="flex gap-1 mb-3">
-                  {[...Array(t.rating)].map((_, i) => <Star key={i} size={12} fill="#cddc4e" className="text-brand-lime" />)}
-                </div>
-                <p className="text-white/80 leading-relaxed">"{t.text}"</p>
+                <p className="text-xl font-medium italic">"{testimonial.quote}"</p>
+                <h3 className="text-2xl font-black tracking-tight mt-3">- {testimonial.name}</h3>
               </motion.div>
             ))}
-          </AnimatePresence>
+          </div>
         </div>
-
-        {visibleCount < filtered.length && (
-          <motion.button
-            onClick={() => setVisibleCount(v => v + 4)}
-            className="mt-6 w-full py-3 border-2 border-brand-black rounded-xl font-bold text-brand-black flex items-center justify-center gap-2 hover:bg-brand-black/5 transition-colors"
-            whileTap={{ scale: 0.98 }}
-          >
-            Daha fazla göster <ChevronDown size={16} />
-          </motion.button>
-        )}
       </motion.div>
     </>
   );
