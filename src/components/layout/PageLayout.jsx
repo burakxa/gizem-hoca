@@ -15,7 +15,7 @@ const pageVariants = {
 const PageLayout = ({ handleNotImplemented }) => {
   const location = useLocation();
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-brand-bg flex flex-col">
       <MainMenu />
       <main className="flex-1 w-full">
         <AnimatePresence mode="wait">

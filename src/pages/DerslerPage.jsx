@@ -19,7 +19,7 @@ const videos = [
 ];
 
 const categories = ['TÜMÜ', 'BAŞLANGIÇ', 'CORE', 'FULL BODY', 'POSTÜR', 'REFORMER', 'ESNEKLİK', 'ÖZEL'];
-const catMap = { 'TÜMÜ': 'Tümü', 'BAŞLANGIÇ': 'Başlangıç', 'CORE': 'Core', 'FULL BODY': 'Full Body', 'POSTÜR': 'Postür', 'REFORMER': 'Reformer', 'ESNEKLİK': 'Esneklik', 'ÖZEL': 'Özel' };
+const catMap = { 'TÜMÜ': '', 'BAŞLANGIÇ': 'Başlangıç', 'CORE': 'Core', 'FULL BODY': 'Full Body', 'POSTÜR': 'Postür', 'REFORMER': 'Reformer', 'ESNEKLİK': 'Esneklik', 'ÖZEL': 'Özel' };
 
 const DerslerPage = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
@@ -33,90 +33,84 @@ const DerslerPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Dersler - Gizem Hoca Pilates</title>
-        <meta name="description" content="Her seviyeye uygun online pilates dersleri." />
-      </Helmet>
+      <Helmet><title>Dersler - Gizem Hoca Pilates</title></Helmet>
+      <div className="bg-brand-bg">
+        <div className="border-b-2 border-brand-black p-8 lg:p-12 flex items-center gap-4">
+          <div className="w-8 h-[3px] bg-brand-lime" />
+          <div>
+            <p className="text-[10px] font-black tracking-widest text-brand-lime mb-1">GİZEM HOCA PİLATES</p>
+            <h1 className="text-5xl md:text-7xl font-black text-brand-black leading-none tracking-tighter">DERSLER</h1>
+          </div>
+        </div>
 
-      {/* Başlık */}
-      <div className="border-b-2 border-black p-8 lg:p-12">
-        <p className="text-[10px] font-black tracking-widest text-black/40 mb-3">GİZEM HOCA PİLATES</p>
-        <h1 className="text-5xl md:text-7xl font-black text-black leading-none tracking-tighter">DERSLER</h1>
-      </div>
-
-      {/* Kategori filtresi */}
-      <div className="flex overflow-x-auto border-b-2 border-black">
-        {categories.map(cat => (
-          <button key={cat} onClick={() => { setActiveCategory(cat); setCurrentPage(1); }}
-            className={`px-5 py-3 text-[10px] font-black tracking-widest whitespace-nowrap border-r border-black/10 transition-all ${
-              activeCategory === cat ? 'bg-black text-brand-lime' : 'bg-white text-black/50 hover:text-black'
-            }`}>
-            {cat}
-          </button>
-        ))}
-      </div>
-
-      {/* Video Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {currentVideos.map((video, i) => (
-          <motion.div key={video.id}
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.05 }}
-            className="border-b border-r border-black/10 group cursor-pointer"
-            onClick={() => setSelectedVideo(video)}>
-            <div className="relative aspect-video overflow-hidden">
-              <img src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`} alt={video.title}
-                className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500" />
-              <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-all flex items-center justify-center">
-                <div className="w-12 h-12 bg-brand-lime rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all scale-75 group-hover:scale-100">
-                  <PlayCircle size={20} className="text-black" />
-                </div>
-              </div>
-              <span className="absolute top-3 left-3 bg-black text-brand-lime text-[9px] font-black tracking-widest px-2 py-1">
-                {video.category.toUpperCase()}
-              </span>
-            </div>
-            <div className="p-4 border-t border-black/10">
-              <h3 className="text-xs font-bold text-black leading-snug group-hover:text-black/50 transition-colors">{video.title}</h3>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Pagination */}
-      {totalPages > 1 && (
-        <div className="flex items-center justify-center gap-0 border-t-2 border-black">
-          <button onClick={() => setCurrentPage(p => p - 1)} disabled={currentPage === 1}
-            className="p-4 border-r border-black/10 disabled:opacity-30 hover:bg-black/5 transition-colors">
-            <ChevronLeft className="h-5 w-5 text-black" />
-          </button>
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map(n => (
-            <button key={n} onClick={() => setCurrentPage(n)}
-              className={`w-12 h-12 text-xs font-black border-r border-black/10 transition-all ${
-                currentPage === n ? 'bg-black text-brand-lime' : 'text-black/50 hover:bg-black/5'
+        <div className="flex overflow-x-auto border-b-2 border-brand-black">
+          {categories.map(cat => (
+            <button key={cat} onClick={() => { setActiveCategory(cat); setCurrentPage(1); }}
+              className={`px-5 py-3 text-[10px] font-black tracking-widest whitespace-nowrap border-r border-brand-tan transition-all ${
+                activeCategory === cat ? 'bg-brand-black text-brand-lime' : 'bg-brand-bg text-brand-brown hover:text-brand-black'
               }`}>
-              {n}
+              {cat}
             </button>
           ))}
-          <button onClick={() => setCurrentPage(p => p + 1)} disabled={currentPage === totalPages}
-            className="p-4 disabled:opacity-30 hover:bg-black/5 transition-colors">
-            <ChevronRight className="h-5 w-5 text-black" />
-          </button>
         </div>
-      )}
 
-      {/* Video Modal */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          {currentVideos.map((video, i) => (
+            <motion.div key={video.id}
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.05 }}
+              className="border-b border-r border-brand-tan group cursor-pointer"
+              onClick={() => setSelectedVideo(video)}>
+              <div className="relative aspect-video overflow-hidden">
+                <img src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`} alt={video.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
+                  style={{ filter: 'sepia(0.3) contrast(1.1)' }} />
+                <div className="absolute inset-0 bg-brand-black/25 group-hover:bg-brand-black/10 transition-all flex items-center justify-center">
+                  <div className="w-12 h-12 bg-brand-lime rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all scale-75 group-hover:scale-100 border-2 border-brand-black">
+                    <PlayCircle size={20} className="text-brand-black" />
+                  </div>
+                </div>
+                <span className="absolute top-3 left-3 bg-brand-black text-brand-lime text-[9px] font-black tracking-widest px-3 py-1 rounded-full">
+                  {video.category.toUpperCase()}
+                </span>
+              </div>
+              <div className="p-4 border-t border-brand-tan">
+                <h3 className="text-xs font-bold text-brand-black leading-snug group-hover:text-brand-lime transition-colors">{video.title}</h3>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {totalPages > 1 && (
+          <div className="flex items-center justify-center gap-0 border-t-2 border-brand-black">
+            <button onClick={() => setCurrentPage(p => p - 1)} disabled={currentPage === 1}
+              className="p-4 border-r border-brand-tan disabled:opacity-30 hover:bg-brand-black/5 transition-colors">
+              <ChevronLeft className="h-5 w-5 text-brand-black" />
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map(n => (
+              <button key={n} onClick={() => setCurrentPage(n)}
+                className={`w-12 h-12 text-xs font-black border-r border-brand-tan transition-all ${
+                  currentPage === n ? 'bg-brand-black text-brand-lime' : 'text-brand-brown hover:bg-brand-black/5'
+                }`}>{n}</button>
+            ))}
+            <button onClick={() => setCurrentPage(p => p + 1)} disabled={currentPage === totalPages}
+              className="p-4 disabled:opacity-30 hover:bg-brand-black/5 transition-colors">
+              <ChevronRight className="h-5 w-5 text-brand-black" />
+            </button>
+          </div>
+        )}
+      </div>
+
       <AnimatePresence>
         {selectedVideo && (
-          <motion.div className="fixed inset-0 bg-black/95 flex items-center justify-center z-50 p-4"
-            onClick={() => setSelectedVideo(null)}
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+          <motion.div className="fixed inset-0 bg-brand-black/95 flex items-center justify-center z-50 p-4"
+            onClick={() => setSelectedVideo(null)} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <motion.div onClick={e => e.stopPropagation()} className="relative w-full max-w-4xl aspect-video"
               initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}>
-              <iframe className="absolute inset-0 w-full h-full"
+              <iframe className="absolute inset-0 w-full h-full rounded-lg"
                 src={`https://www.youtube.com/embed/${selectedVideo.id}?autoplay=1`}
                 title={selectedVideo.title} frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
-              <button className="absolute -top-10 right-0 text-white/60 hover:text-white transition-colors flex items-center gap-2 text-xs font-black tracking-widest"
+              <button className="absolute -top-10 right-0 text-brand-bg/60 hover:text-brand-bg text-[10px] font-black tracking-widest flex items-center gap-2 transition-colors"
                 onClick={() => setSelectedVideo(null)}>KAPAT <X size={14} /></button>
             </motion.div>
           </motion.div>

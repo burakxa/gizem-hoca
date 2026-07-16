@@ -33,32 +33,32 @@ const ContactPage = () => {
   return (
     <>
       <Helmet><title>İletişim - Gizem Hoca Pilates</title></Helmet>
-      <div className="border-b-2 border-black p-8 lg:p-12">
-        <p className="text-[10px] font-black tracking-widest text-black/40 mb-3">GİZEM HOCA PİLATES</p>
-        <h1 className="text-5xl md:text-7xl font-black text-black leading-none tracking-tighter">İLETİŞİM</h1>
+      <div className="border-b-2 border-brand-black p-8 lg:p-12">
+        <p className="text-[10px] font-black tracking-widest text-brand-black/40 mb-3">GİZEM HOCA PİLATES</p>
+        <h1 className="text-5xl md:text-7xl font-black text-brand-black leading-none tracking-tighter">İLETİŞİM</h1>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 border-b-2 border-black">
+      <div className="grid grid-cols-1 md:grid-cols-2 border-b-2 border-brand-black">
         {/* İletişim kanalları */}
-        <div className="border-b-2 md:border-b-0 md:border-r-2 border-black divide-y divide-black/10">
+        <div className="border-b-2 md:border-b-0 md:border-r-2 border-brand-black divide-y divide-black/10">
           {contacts.map((c, i) => (
             <div key={i}>
               {c.href ? (
                 <a href={c.href} target="_blank" rel="noopener noreferrer"
                   className="flex items-center justify-between p-6 group hover:bg-black transition-colors">
                   <div className="flex items-center gap-4">
-                    <span className="text-black/40 group-hover:text-brand-lime transition-colors">{c.icon}</span>
+                    <span className="text-brand-black/40 group-hover:text-brand-lime transition-colors">{c.icon}</span>
                     <div>
-                      <div className="text-[9px] font-black tracking-widest text-black/40 group-hover:text-white/40 transition-colors">{c.label}</div>
-                      <div className="text-sm font-bold text-black group-hover:text-white transition-colors">{c.value}</div>
+                      <div className="text-[9px] font-black tracking-widest text-brand-black/40 group-hover:text-white/40 transition-colors">{c.label}</div>
+                      <div className="text-sm font-bold text-brand-black group-hover:text-white transition-colors">{c.value}</div>
                     </div>
                   </div>
-                  {c.tag && <span className="text-[9px] font-black tracking-widest bg-black text-brand-lime group-hover:bg-brand-lime group-hover:text-black px-3 py-1 transition-colors">{c.tag}</span>}
+                  {c.tag && <span className="text-[9px] font-black tracking-widest bg-brand-black text-brand-lime group-hover:bg-brand-lime group-hover:text-black px-3 py-1 transition-colors">{c.tag}</span>}
                 </a>
               ) : (
                 <div className="flex items-center gap-4 p-6">
-                  <span className="text-black/30">{c.icon}</span>
+                  <span className="text-brand-black/30">{c.icon}</span>
                   <div>
-                    <div className="text-[9px] font-black tracking-widest text-black/40">{c.label}</div>
+                    <div className="text-[9px] font-black tracking-widest text-brand-black/40">{c.label}</div>
                     <div className="text-sm font-bold text-black">{c.value}</div>
                   </div>
                 </div>
@@ -68,36 +68,36 @@ const ContactPage = () => {
         </div>
         {/* Form */}
         <div className="p-8 lg:p-12">
-          <p className="text-[10px] font-black tracking-widest text-black/40 mb-8">MESAJ GÖNDER</p>
+          <p className="text-[10px] font-black tracking-widest text-brand-black/40 mb-8">MESAJ GÖNDER</p>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="text-[10px] font-black tracking-widest text-black/40 mb-2 block">AD SOYAD *</label>
+                <label className="text-[10px] font-black tracking-widest text-brand-black/40 mb-2 block">AD SOYAD *</label>
                 <input type="text" required value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
                   placeholder="Adınız"
-                  className="w-full border-2 border-black/10 focus:border-black bg-white px-4 py-3 text-sm outline-none transition-all" />
+                  className="w-full border-2 border-brand-black/10 focus:border-brand-black bg-brand-bg px-4 py-3 text-sm outline-none transition-all" />
               </div>
               <div>
-                <label className="text-[10px] font-black tracking-widest text-black/40 mb-2 block">TELEFON *</label>
+                <label className="text-[10px] font-black tracking-widest text-brand-black/40 mb-2 block">TELEFON *</label>
                 <input type="tel" required value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
                   placeholder="05xx xxx xx xx"
-                  className="w-full border-2 border-black/10 focus:border-black bg-white px-4 py-3 text-sm outline-none transition-all" />
+                  className="w-full border-2 border-brand-black/10 focus:border-brand-black bg-brand-bg px-4 py-3 text-sm outline-none transition-all" />
               </div>
             </div>
             <div>
-              <label className="text-[10px] font-black tracking-widest text-black/40 mb-2 block">MESAJ</label>
+              <label className="text-[10px] font-black tracking-widest text-brand-black/40 mb-2 block">MESAJ</label>
               <textarea value={form.message} onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
                 placeholder="Sormak istedikleriniz..."
                 rows={4}
-                className="w-full border-2 border-black/10 focus:border-black bg-white px-4 py-3 text-sm outline-none transition-all resize-none" />
+                className="w-full border-2 border-brand-black/10 focus:border-brand-black bg-brand-bg px-4 py-3 text-sm outline-none transition-all resize-none" />
             </div>
             <motion.button type="submit" disabled={loading || sent} whileTap={{ scale: 0.98 }}
               className={`w-full py-4 text-[10px] font-black tracking-widest flex items-center justify-center gap-2 transition-colors ${
-                sent ? 'bg-green-600 text-white' : 'bg-black text-brand-lime hover:bg-black/80'
+                sent ? 'bg-green-600 text-white' : 'bg-black text-brand-lime hover:bg-brand-black/80'
               }`}>
               {sent ? <><Check size={14} /> WHATSAPP AÇILDI!</> : loading ? 'GÖNDERİLİYOR...' : <><Send size={14} /> WHATSAPP İLE GÖNDER</>}
             </motion.button>
-            <p className="text-[10px] text-black/30 text-center">Form doldurulunca WhatsApp'ta hazır mesaj açılır.</p>
+            <p className="text-[10px] text-brand-black/30 text-center">Form doldurulunca WhatsApp'ta hazır mesaj açılır.</p>
           </form>
         </div>
       </div>

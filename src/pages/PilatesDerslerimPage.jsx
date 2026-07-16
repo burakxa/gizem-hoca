@@ -33,7 +33,7 @@ const PilatesDerslerimPage = () => {
         initial="initial"
         animate="animate"
         exit="exit"
-        className="w-full h-full flex flex-col bg-brand-lime"
+        className="w-full h-full flex flex-col bg-brand-bg"
       >
         <div className="w-full h-full md:w-1/2 md:fixed md:left-0 md:top-0 flex items-center justify-center p-8 lg:p-16">
           <motion.div 
@@ -46,7 +46,7 @@ const PilatesDerslerimPage = () => {
           </motion.div>
         </div>
         
-        <div className="w-full md:w-1/2 md:ml-auto bg-brand-lime p-8 lg:p-16 flex flex-col justify-center min-h-screen overflow-y-auto">
+        <div className="w-full md:w-1/2 md:ml-auto bg-brand-bg p-8 lg:p-16 flex flex-col justify-center min-h-screen overflow-y-auto">
           <motion.h1 
             className="text-5xl md:text-6xl font-black text-brand-black leading-none tracking-tighter mb-12"
             initial={{ opacity: 0, y: 20 }}
@@ -79,7 +79,7 @@ const PilatesDerslerimPage = () => {
             <h2 className="text-3xl font-black tracking-tight mb-4">Fiyat Bilgileri</h2>
             <ul className="space-y-2">
               {fiyatlar.map((fiyat, index) => (
-                <li key={index} className="flex justify-between text-lg font-bold border-b-2 border-black pb-1">
+                <li key={index} className="flex justify-between text-lg font-bold border-b-2 border-brand-black pb-1">
                   <span>{fiyat.item}</span>
                   <span>{fiyat.price}</span>
                 </li>

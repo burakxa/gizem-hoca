@@ -17,7 +17,7 @@ const BlogPostPage = () => {
 
   if (!post) {
     return (
-      <div className="w-full h-screen flex items-center justify-center bg-brand-lime text-brand-black">
+      <div className="w-full h-screen flex items-center justify-center bg-brand-bg text-black">
         <h1 className="text-3xl font-bold">Yazı bulunamadı.</h1>
       </div>
     );
@@ -34,7 +34,7 @@ const BlogPostPage = () => {
         initial="initial"
         animate="animate"
         exit="exit"
-        className="w-full p-8 lg:p-16 flex flex-col justify-start min-h-screen overflow-y-auto bg-brand-lime"
+        className="w-full p-8 lg:p-16 flex flex-col justify-start min-h-screen overflow-y-auto bg-brand-bg"
       >
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -53,7 +53,7 @@ const BlogPostPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <p className="text-sm font-bold text-brand-black">{post.date} / {post.category}</p>
+          <p className="text-sm font-bold text-black">{post.date} / {post.category}</p>
           <h1 className="text-4xl md:text-5xl font-black text-brand-black leading-none tracking-tighter mt-2 mb-8">{post.title}</h1>
           <div 
             className="prose prose-lg max-w-none text-brand-black font-medium"

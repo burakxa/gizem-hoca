@@ -1,56 +1,46 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { blogPosts } from '@/data/blogData';
-
-const pageTransition = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1, transition: { duration: 0.5 } },
-  exit: { opacity: 0, transition: { duration: 0.5 } }
-};
+import { ArrowRight } from 'lucide-react';
+import { blogPosts as localPosts } from '@/data/blogData';
 
 const BlogPage = () => {
+  const [posts, setPosts] = useState(localPosts);
+
   return (
     <>
       <Helmet>
         <title>Blog - Gizem Hoca Pilates</title>
-        <meta name="description" content="Pilates, sağlık ve iyi yaşam üzerine en güncel yazılar, ipuçları ve motivasyon kaynakları." />
+        <meta name="description" content="Pilates, sağlık ve iyi yaşam üzerine yazılar." />
       </Helmet>
-      <motion.div
-        variants={pageTransition}
-        initial="initial"
-        animate="animate"
-        exit="exit"
-        className="w-full p-8 lg:p-16 flex flex-col justify-center min-h-screen overflow-y-auto bg-brand-lime"
-      >
-        <motion.h1 
-          className="text-5xl md:text-6xl font-black text-brand-black leading-none tracking-tighter mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          Blog
-        </motion.h1>
-        
-        <div className="space-y-10">
-          {blogPosts.map((post, index) => (
-            <motion.div 
-              key={post.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 + index * 0.15 }}
-            >
-              <Link to={`/blog/${post.id}`} className="block group">
-                <p className="text-sm font-bold text-brand-black">{post.date} / {post.category}</p>
-                <h2 className="text-3xl font-black tracking-tight mt-1 group-hover:text-white transition-colors">{post.title}</h2>
-                <p className="text-base font-medium mt-2">{post.summary}</p>
-                <span className="font-bold mt-3 inline-block group-hover:text-white transition-colors">Devamını Oku →</span>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
+
+      <div className="border-b-2 border-brand-black p-8 lg:p-12">
+        <p className="text-[10px] font-black tracking-widest text-brand-black/40 mb-3">GİZEM HOCA PİLATES</p>
+        <h1 className="text-5xl md:text-7xl font-black text-brand-black leading-none tracking-tighter">BLOG</h1>
+      </div>
+
+      <div className="divide-y-2 divide-black/10">
+        {posts.map((post, i) => (
+          <motion.div key={post.id}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.07 }}
+            className="group">
+            <Link to={`/blog/${post.id}`} className="grid grid-cols-1 md:grid-cols-4 p-8 lg:p-12 hover:bg-brand-black/[0.02] transition-colors gap-6">
+              <div className="md:col-span-1">
+                <p className="text-[10px] font-black tracking-widest text-brand-black/40">{post.date}</p>
+                <p className="text-[10px] font-black tracking-widest text-brand-black/30 mt-1">{post.category?.toUpperCase()}</p>
+              </div>
+              <div className="md:col-span-3">
+                <h2 className="text-2xl font-black text-brand-black group-hover:text-brand-black/50 transition-colors tracking-tight mb-3">{post.title}</h2>
+                <p className="text-sm text-brand-black/55 leading-relaxed mb-4">{post.summary}</p>
+                <span className="inline-flex items-center gap-2 text-[10px] font-black tracking-widest text-brand-black border-b-2 border-brand-black pb-0.5 group-hover:text-brand-black/40 transition-colors">
+                  DEVAMINI OKU <ArrowRight size={12} />
+                </span>
+              </div>
+            </Link>
+          </motion.div>
+        ))}
+      </div>
     </>
   );
 };

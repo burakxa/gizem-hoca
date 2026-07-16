@@ -29,15 +29,15 @@ const GalleryPage = () => {
   return (
     <>
       <Helmet><title>Galeri - Gizem Hoca Pilates</title></Helmet>
-      <div className="border-b-2 border-black p-8 lg:p-12">
-        <p className="text-[10px] font-black tracking-widest text-black/40 mb-3">GİZEM HOCA PİLATES</p>
-        <h1 className="text-5xl md:text-7xl font-black text-black leading-none tracking-tighter">GALERİ</h1>
+      <div className="border-b-2 border-brand-black p-8 lg:p-12">
+        <p className="text-[10px] font-black tracking-widest text-brand-black/40 mb-3">GİZEM HOCA PİLATES</p>
+        <h1 className="text-5xl md:text-7xl font-black text-brand-black leading-none tracking-tighter">GALERİ</h1>
       </div>
-      <div className="flex overflow-x-auto border-b-2 border-black">
+      <div className="flex overflow-x-auto border-b-2 border-brand-black">
         {categories.map(cat => (
           <button key={cat} onClick={() => setActiveCategory(cat)}
-            className={`px-5 py-3 text-[10px] font-black tracking-widest whitespace-nowrap border-r border-black/10 transition-all ${
-              activeCategory === cat ? 'bg-black text-brand-lime' : 'bg-white text-black/50 hover:text-black'
+            className={`px-5 py-3 text-[10px] font-black tracking-widest whitespace-nowrap border-r border-brand-black/10 transition-all ${
+              activeCategory === cat ? 'bg-black text-brand-lime' : 'bg-brand-bg text-brand-black/50 hover:text-black'
             }`}>
             {cat}
           </button>
@@ -48,11 +48,11 @@ const GalleryPage = () => {
           {filtered.map((image, i) => (
             <motion.div key={image.id}
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ delay: i * 0.04 }}
-              className="border-b border-r border-black/10 aspect-square overflow-hidden cursor-pointer group relative"
+              className="border-b border-r border-brand-black/10 aspect-square overflow-hidden cursor-pointer group relative"
               onClick={() => setSelectedImage(image)}>
               <img src={image.src} alt={image.alt}
                 className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500" />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all" />
+              <div className="absolute inset-0 bg-brand-black/0 group-hover:bg-brand-black/20 transition-all" />
               <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all">
                 <p className="text-white text-[10px] font-black tracking-wide">{image.alt.toUpperCase()}</p>
               </div>
@@ -62,7 +62,7 @@ const GalleryPage = () => {
       </div>
       <AnimatePresence>
         {selectedImage && (
-          <motion.div className="fixed inset-0 bg-black/95 flex items-center justify-center z-50 p-4"
+          <motion.div className="fixed inset-0 bg-brand-black/95 flex items-center justify-center z-50 p-4"
             onClick={() => setSelectedImage(null)}
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <motion.div onClick={e => e.stopPropagation()} className="relative max-w-4xl w-full"

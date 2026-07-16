@@ -25,22 +25,16 @@ import NotFoundPage from '@/pages/NotFoundPage';
 function App() {
   const handleNotImplemented = (e) => {
     if (e) e.preventDefault();
-    toast({
-      title: "🚧 Bu özellik henüz uygulanmadı",
-      description: "Endişelenme! Bir sonraki mesajında isteyebilirsin! 🚀",
-      duration: 3000,
-    });
+    toast({ title: "🚧 Bu özellik henüz uygulanmadı", duration: 3000 });
   };
-
   const location = useLocation();
 
   return (
     <>
       <Helmet>
         <title>Gizem Hoca - Pilates & Wellness | İstanbul</title>
-        <meta name="description" content="İstanbul Beşiktaş'ta profesyonel pilates dersleri. Mat pilates, reformer, hamile pilatesi ve online dersler." />
+        <meta name="description" content="İstanbul Beşiktaş'ta profesyonel pilates dersleri." />
       </Helmet>
-
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<PageLayout handleNotImplemented={handleNotImplemented} />}>
@@ -68,11 +62,7 @@ function App() {
 }
 
 function AppWrapper() {
-  return (
-    <Router>
-      <App />
-    </Router>
-  );
+  return <Router><App /></Router>;
 }
 
 export default AppWrapper;

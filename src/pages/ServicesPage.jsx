@@ -10,7 +10,7 @@ const ServicesPage = ({ handleNotImplemented }) => {
                 <title>Hizmetler - Gizem Hoca Pilates</title>
                 <meta name="description" content="Kişisel antrenmanlar, grup dersleri, mindfulness pilates ve online seanslarla hedeflerinize ulaşın." />
             </Helmet>
-             <div className="pt-24 bg-brand-lime">
+             <div className="pt-24 bg-brand-bg">
                 <motion.div 
                     className="section-padding bg-cover bg-center"
                     initial={{ opacity: 0 }}

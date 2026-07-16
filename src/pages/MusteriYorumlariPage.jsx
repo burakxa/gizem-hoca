@@ -24,21 +24,21 @@ const MusteriYorumlariPage = () => {
   return (
     <>
       <Helmet><title>Müşteri Yorumları - Gizem Hoca Pilates</title></Helmet>
-      <div className="border-b-2 border-black p-8 lg:p-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div className="border-b-2 border-brand-black p-8 lg:p-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <p className="text-[10px] font-black tracking-widest text-black/40 mb-3">GİZEM HOCA PİLATES</p>
-          <h1 className="text-5xl md:text-7xl font-black text-black leading-none tracking-tighter">YORUMLAR</h1>
+          <p className="text-[10px] font-black tracking-widest text-brand-black/40 mb-3">GİZEM HOCA PİLATES</p>
+          <h1 className="text-5xl md:text-7xl font-black text-brand-black leading-none tracking-tighter">YORUMLAR</h1>
         </div>
         <div className="flex items-center gap-2">
           <span className="text-3xl font-black text-black">5.0</span>
-          <div><div className="text-brand-lime text-sm">★★★★★</div><div className="text-[10px] text-black/40">{testimonials.length} yorum</div></div>
+          <div><div className="text-brand-lime text-sm">★★★★★</div><div className="text-[10px] text-brand-black/40">{testimonials.length} yorum</div></div>
         </div>
       </div>
-      <div className="flex overflow-x-auto border-b-2 border-black">
+      <div className="flex overflow-x-auto border-b-2 border-brand-black">
         {tags.map(tag => (
           <button key={tag} onClick={() => { setActiveTag(tag); setVisibleCount(4); }}
-            className={`px-5 py-3 text-[10px] font-black tracking-widest whitespace-nowrap border-r border-black/10 transition-all ${
-              activeTag === tag ? 'bg-black text-brand-lime' : 'bg-white text-black/50 hover:text-black'
+            className={`px-5 py-3 text-[10px] font-black tracking-widest whitespace-nowrap border-r border-brand-black/10 transition-all ${
+              activeTag === tag ? 'bg-black text-brand-lime' : 'bg-brand-bg text-brand-black/50 hover:text-black'
             }`}>
             {tag}
           </button>
@@ -50,21 +50,21 @@ const MusteriYorumlariPage = () => {
             className="p-8 lg:p-12 grid grid-cols-1 md:grid-cols-4 gap-6">
             <div>
               <p className="text-sm font-black text-black">{t.name}</p>
-              <p className="text-xs text-black/40 mt-1">{t.job}</p>
-              <p className="text-xs text-black/30 mt-1">{t.date}</p>
-              <span className="inline-block mt-2 text-[9px] font-black tracking-widest border border-black/20 px-2 py-0.5 text-black/50">{t.tag.toUpperCase()}</span>
+              <p className="text-xs text-brand-black/40 mt-1">{t.job}</p>
+              <p className="text-xs text-brand-black/30 mt-1">{t.date}</p>
+              <span className="inline-block mt-2 text-[9px] font-black tracking-widest border border-brand-black/20 px-2 py-0.5 text-brand-black/50">{t.tag.toUpperCase()}</span>
             </div>
             <div className="md:col-span-3">
               <div className="text-brand-lime text-sm mb-3">★★★★★</div>
-              <p className="text-lg text-black/80 leading-relaxed italic">"{t.text}"</p>
+              <p className="text-lg text-brand-black/80 leading-relaxed italic">"{t.text}"</p>
             </div>
           </motion.div>
         ))}
       </div>
       {visibleCount < filtered.length && (
-        <div className="border-t-2 border-black p-6 text-center">
+        <div className="border-t-2 border-brand-black p-6 text-center">
           <button onClick={() => setVisibleCount(v => v + 4)}
-            className="flex items-center gap-2 text-[10px] font-black tracking-widest text-black/50 hover:text-black transition-colors mx-auto">
+            className="flex items-center gap-2 text-[10px] font-black tracking-widest text-brand-black/50 hover:text-black transition-colors mx-auto">
             DAHA FAZLA GÖSTER <ChevronDown size={14} />
           </button>
         </div>
