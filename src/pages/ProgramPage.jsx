@@ -64,7 +64,7 @@ export default function ProgramPage() {
           </div>
         </div>
 
-        <div style={{ display:'flex', overflowX:'auto', borderBottom:`1px solid ${G.goldBorder}` }}>
+        <div className='day-tabs' style={{ display:'flex', overflowX:'auto', borderBottom:`1px solid ${G.goldBorder}` }}>
           {days.map(day => (
             <button key={day} onClick={() => setActiveDay(day)}
               style={{ padding:'10px 20px', fontSize:'9px', fontWeight:900, letterSpacing:'0.08em', whiteSpace:'nowrap', borderRight:`1px solid ${G.goldBorder}`, cursor:'pointer', border:'none', background: activeDay===day ? G.gold : 'transparent', color: activeDay===day ? G.bg : G.whiteMid, fontFamily:'Montserrat', borderRight:`1px solid ${G.goldBorder}` }}>
@@ -76,7 +76,7 @@ export default function ProgramPage() {
         <div>
           {(schedule[activeDay]||[]).map((lesson, i) => (
             <motion.div key={i} initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:i*0.06 }}
-              style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'20px 40px', borderBottom:`1px solid ${G.goldBorder}`, opacity: lesson.spots===0 ? 0.4 : 1 }}>
+              style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'clamp(12px,3vw,20px) clamp(16px,4vw,40px)', flexWrap:'wrap', gap:'10px', borderBottom:`1px solid ${G.goldBorder}`, opacity: lesson.spots===0 ? 0.4 : 1 }}>
               <div style={{ display:'flex', alignItems:'center', gap:'32px' }}>
                 <div style={{ display:'flex', alignItems:'center', gap:'8px', minWidth:'70px' }}>
                   <Clock size={14} style={{ color:G.gold }} />

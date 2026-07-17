@@ -2,65 +2,82 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&display=swap');
-
-@layer base {
-  :root {
-      --background: 69 64% 58%;
-      /* #cddc4e */
-      --foreground: 0 0% 0%;
-      /* siyah */
-  
-      --card: 69 64% 58%;
-      --card-foreground: 0 0% 0%;
-  
-      --popover: 69 64% 58%;
-      --popover-foreground: 0 0% 0%;
-  
-      --primary: 0 0% 0%;
-      /* siyah */
-      --primary-foreground: 69 64% 58%;
-      /* #cddc4e */
-  
-      --secondary: 0 0% 100%;
-      /* beyaz */
-      --secondary-foreground: 0 0% 0%;
-      /* siyah */
-  
-      --muted: 0 0% 95%;
-      /* çok açık gri */
-      --muted-foreground: 0 0% 40%;
-      /* koyu gri */
-  
-      --accent: 69 64% 58%;
-      /* #cddc4e */
-      --accent-foreground: 0 0% 0%;
-      /* siyah */
-  
-      --destructive: 0 84.2% 60.2%;
-      /* kırmızı */
-      --destructive-foreground: 0 0% 100%;
-      /* beyaz */
-  
-      --border: 0 0% 0%;
-      /* siyah */
-      --input: 0 0% 0%;
-      /* siyah */
-      --ring: 69 64% 58%;
-      /* #cddc4e */
-    }
+:root {
+  --gold: #d4af37;
+  --navy: #0d1b3e;
+  --navy-dark: #071029;
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-brand-black font-sans;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  html {
-    scroll-behavior: smooth;
-  }
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: #0d1b3e;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Smooth scrolling */
+html { scroll-behavior: smooth; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #071029; }
+::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(212,175,55,0.6); }
+
+/* Selection */
+::selection { background: rgba(212,175,55,0.25); color: #fff; }
+
+/* Mobile base */
+@media (max-width: 768px) {
+  .mobile-stack { flex-direction: column !important; }
+  .mobile-full { width: 100% !important; grid-template-columns: 1fr !important; }
+  .mobile-hide { display: none !important; }
+  .mobile-text-sm { font-size: 40px !important; }
+  .mobile-pad { padding: 24px 16px !important; }
+}
+
+/* ===== SAYFA MOBİL RESPONSIVE ===== */
+@media (max-width: 768px) {
+  /* Sayfa başlıkları */
+  h1 { font-size: clamp(36px, 10vw, 56px) !important; }
+
+  /* Grid'ler */
+  .page-split { grid-template-columns: 1fr !important; }
+  .page-3col { grid-template-columns: 1fr !important; }
+  .page-4col { grid-template-columns: 1fr 1fr !important; }
+
+  /* Padding */
+  .page-pad { padding: 20px 16px !important; }
+  .section-pad { padding: 24px 16px !important; }
+
+  /* Video grid */
+  .video-grid { grid-template-columns: 1fr !important; }
+  .video-grid-3 { grid-template-columns: 1fr 1fr !important; }
+
+  /* Galeri */
+  .gallery-grid { grid-template-columns: 1fr 1fr !important; }
+
+  /* Fiyat kartları */
+  .price-grid { grid-template-columns: 1fr !important; }
+
+  /* Program tab bar */
+  .day-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  /* İletişim split */
+  .contact-split { grid-template-columns: 1fr !important; }
+
+  /* Blog liste */
+  .blog-row { grid-template-columns: 1fr !important; }
+
+  /* CTA butonlar */
+  .cta-btns { flex-direction: column; width: 100%; }
+  .cta-btns > * { width: 100% !important; text-align: center !important; }
+}
+
+@media (max-width: 480px) {
+  .page-4col { grid-template-columns: 1fr !important; }
+  .gallery-grid { grid-template-columns: 1fr 1fr !important; }
 }

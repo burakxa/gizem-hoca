@@ -44,7 +44,7 @@ export default function DerslerPage() {
           </div>
         </div>
 
-        <div style={{ display:'flex', overflowX:'auto', borderBottom:`1px solid ${G.goldBorder}` }}>
+        <div className='day-tabs' style={{ display:'flex', overflowX:'auto', borderBottom:`1px solid ${G.goldBorder}` }}>
           {cats.map(c => (
             <button key={c} onClick={() => { setCat(c); setPage(1); }}
               style={{ padding:'10px 18px', fontSize:'9px', fontWeight:900, letterSpacing:'0.08em', whiteSpace:'nowrap', borderRight:`1px solid ${G.goldBorder}`, cursor:'pointer', border:'none', background: cat===c ? G.gold : 'transparent', color: cat===c ? G.bg : G.whiteMid, fontFamily:'Montserrat', borderRight:`1px solid ${G.goldBorder}` }}>
@@ -53,7 +53,7 @@ export default function DerslerPage() {
           ))}
         </div>
 
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr' }}>
+        <div className='video-grid-3' style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)' }}>
           {current.map((v, i) => (
             <motion.div key={v.id} initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:i*0.05 }}
               style={{ borderBottom:`1px solid ${G.goldBorder}`, borderRight:`1px solid ${G.goldBorder}`, cursor:'pointer' }}

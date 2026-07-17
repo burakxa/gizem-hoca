@@ -45,7 +45,7 @@ export default function ContactPage() {
           </div>
         </div>
 
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', borderBottom:`1px solid ${G.goldBorder}` }}>
+        <div className='contact-split' style={{ display:'grid', gridTemplateColumns:'1fr 1fr', borderBottom:`1px solid ${G.goldBorder}` }}>
           <div style={{ borderRight:`1px solid ${G.goldBorder}` }}>
             {contacts.map((c, i) => (
               <div key={i} style={{ borderBottom: i < contacts.length-1 ? `1px solid ${G.goldBorder}` : 'none' }}>

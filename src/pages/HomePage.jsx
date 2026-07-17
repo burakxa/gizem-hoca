@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ChevronRight, PlayCircle, X, Sparkles, Users, Monitor, Dumbbell } from 'lucide-react';
+import { ArrowRight, ChevronRight, PlayCircle, X, Users, Monitor, Dumbbell, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const PHOTO = 'https://horizons-cdn.hostinger.com/451c65e3-9af7-4c36-9235-9b5c17a191ce/71e533503d331149fe73f8e165f13f5b.png';
@@ -19,10 +19,10 @@ const videos = [
 ];
 
 const services = [
-  { icon: Users, t: 'Bireysel Ders', d: 'Size özel program, en hızlı ilerleme.' },
-  { icon: Sparkles, t: 'Grup Dersi', d: 'Küçük gruplar, büyük motivasyon.' },
-  { icon: Monitor, t: 'Online Ders', d: 'Nerede olursanız olun, esnek seans.' },
-  { icon: Dumbbell, t: 'Reformer', d: 'Profesyonel alet eğitimi.', accent: true },
+  { Icon: Users, t: 'Bireysel Ders', d: 'Size özel program.' },
+  { Icon: Sparkles, t: 'Grup Dersi', d: 'Max 4 kişi.' },
+  { Icon: Monitor, t: 'Online Ders', d: 'Her yerden.' },
+  { Icon: Dumbbell, t: 'Reformer', d: 'Alet eğitimi.', accent: true },
 ];
 
 const AnimNum = ({ n, s }) => {
@@ -35,32 +35,15 @@ const AnimNum = ({ n, s }) => {
   return <>{c}{s}</>;
 };
 
-const HoverCard = ({ children, style, onClick }) => {
-  const [h, setH] = useState(false);
-  return (
-    <motion.div
-      onHoverStart={() => setH(true)} onHoverEnd={() => setH(false)}
-      onClick={onClick}
-      animate={{ y: h ? -3 : 0 }}
-      transition={{ duration: 0.2 }}
-      style={{ cursor: onClick ? 'pointer' : 'default', ...style,
-        border: `1px solid ${h ? 'rgba(212,175,55,0.4)' : G.goldBorder}`,
-        boxShadow: h ? '0 8px 32px rgba(212,175,55,0.15)' : 'none',
-        transition: 'border-color 0.2s, box-shadow 0.2s',
-      }}>
-      {children}
-    </motion.div>
-  );
-};
-
-const GoldBtn = ({ to, children, outline }) => {
+const GoldBtn = ({ to, children, outline, fullWidth }) => {
   const [h, setH] = useState(false);
   const el = (
     <span onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
       style={{
-        display: 'inline-flex', alignItems: 'center', gap: '6px',
-        padding: '12px 24px', borderRadius: '999px', fontSize: '10px', fontWeight: 900, letterSpacing: '0.06em',
-        cursor: 'pointer', transition: 'all 0.2s', fontFamily: 'Montserrat',
+        display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+        padding: '12px 24px', borderRadius: '999px', fontSize: '11px', fontWeight: 900,
+        letterSpacing: '0.06em', cursor: 'pointer', transition: 'all 0.2s', fontFamily: 'Montserrat',
+        width: fullWidth ? '100%' : 'auto',
         background: outline ? 'transparent' : h ? '#c49b2a' : G.gold,
         color: outline ? (h ? G.gold : G.whiteMid) : G.bg,
         border: outline ? `1.5px solid ${h ? G.gold : G.whiteLow}` : 'none',
@@ -70,126 +53,141 @@ const GoldBtn = ({ to, children, outline }) => {
       {children}
     </span>
   );
-  return to ? <Link to={to} style={{ textDecoration: 'none' }}>{el}</Link> : el;
+  return to ? <Link to={to} style={{ textDecoration: 'none', display: fullWidth ? 'block' : 'inline-block' }}>{el}</Link> : el;
 };
 
 export default function HomePage() {
   const [selVideo, setSelVideo] = useState(null);
   const [statsVis, setStatsVis] = useState(false);
-  const [hovService, setHovService] = useState(null);
-  const [hovTestimonial, setHovTestimonial] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   return (
     <div style={{ background: G.bg, fontFamily: 'Montserrat, sans-serif' }}>
+      <style>{`
+        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; min-height: 88vh; border-bottom: 1px solid rgba(212,175,55,0.2); }
+        .hero-photo { position: relative; overflow: hidden; min-height: 300px; }
+        .services-grid { display: grid; grid-template-columns: repeat(4,1fr); border-bottom: 1px solid rgba(212,175,55,0.2); }
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid rgba(212,175,55,0.2); }
+        .testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+        .hero-btns { display: flex; gap: 12px; }
+        @media (max-width: 768px) {
+          .hero-grid { grid-template-columns: 1fr !important; min-height: auto !important; }
+          .hero-photo { min-height: 280px !important; order: -1; }
+          .services-grid { grid-template-columns: 1fr 1fr !important; }
+          .content-grid { grid-template-columns: 1fr !important; }
+          .testimonials-grid { grid-template-columns: 1fr !important; }
+          .stats-grid { grid-template-columns: repeat(3,1fr) !important; }
+          .hero-btns { flex-direction: column !important; }
+          .hero-btns > * { width: 100% !important; }
+          .hero-left { padding: 32px 20px !important; }
+          .cta-section { flex-direction: column !important; text-align: center !important; align-items: center !important; }
+          .video-list-item { padding: 8px !important; }
+        }
+        @media (max-width: 480px) {
+          .services-grid { grid-template-columns: 1fr 1fr !important; }
+        }
+      `}</style>
 
       {/* HERO */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: '88vh', borderBottom: `1px solid ${G.goldBorder}` }}>
-        <motion.div style={{ padding: '52px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderRight: `1px solid ${G.goldBorder}`, position: 'relative', overflow: 'hidden' }}
+      <div className="hero-grid">
+        <motion.div className="hero-left"
+          style={{ padding: '48px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderRight: `1px solid ${G.goldBorder}`, position: 'relative', overflow: 'hidden' }}
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
-          {/* Dekoratif daireler */}
+          {/* Dekoratif */}
           <div style={{ position: 'absolute', bottom: '-80px', left: '-50px', width: '320px', height: '320px', borderRadius: '50%', background: G.gold, opacity: 0.04, pointerEvents: 'none' }} />
-          <div style={{ position: 'absolute', top: '-40px', right: '-40px', width: '140px', height: '140px', borderRadius: '50%', border: `2px solid ${G.gold}`, opacity: 0.08, pointerEvents: 'none' }} />
-          <div style={{ position: 'absolute', top: '40px', right: '20px', width: '60px', height: '60px', borderRadius: '50%', border: `1px solid ${G.gold}`, opacity: 0.05, pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', top: '-40px', right: '-40px', width: '140px', height: '140px', borderRadius: '50%', border: `2px solid ${G.gold}`, opacity: 0.07, pointerEvents: 'none' }} />
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ width: '36px', height: '2px', background: G.gold }} />
-            <span style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.22em', color: G.gold }}>PİLATES EĞİTMENİ · EST. 2016</span>
+            <div style={{ width: '32px', height: '2px', background: G.gold, flexShrink: 0 }} />
+            <span style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.18em', color: G.gold }}>PİLATES EĞİTMENİ · EST. 2016</span>
           </div>
 
           <div>
-            <motion.h1 style={{ fontSize: '64px', fontWeight: 900, color: '#fff', lineHeight: 0.9, letterSpacing: '-0.03em', marginBottom: '20px' }}
+            <motion.h1
+              style={{ fontSize: 'clamp(40px, 6vw, 64px)', fontWeight: 900, color: '#fff', lineHeight: 0.92, letterSpacing: '-0.03em', marginBottom: '18px' }}
               initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.7 }}>
               Move.<br />Breathe.<br /><span style={{ color: G.gold }}>Thrive.</span>
             </motion.h1>
-            <motion.p style={{ fontSize: '14px', color: G.whiteMid, lineHeight: 1.75, maxWidth: '300px', marginBottom: '28px' }}
+            <motion.p
+              style={{ fontSize: '13px', color: G.whiteMid, lineHeight: 1.75, maxWidth: '300px', marginBottom: '24px' }}
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
               Hareketin dönüştürücü gücüne inanıyorum. Her öğrencimin potansiyelini ortaya çıkarmasına yardım ediyorum.
             </motion.p>
-            <motion.div style={{ display: 'flex', gap: '12px' }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
-              <GoldBtn to="/fiyatlar">DERS AL <ArrowRight size={14} /></GoldBtn>
-              <GoldBtn to="/hakkimda" outline>HAKKIMDA</GoldBtn>
+            <motion.div className="hero-btns" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
+              <GoldBtn to="/fiyatlar" fullWidth={isMobile}>DERS AL <ArrowRight size={14} /></GoldBtn>
+              <GoldBtn to="/hakkimda" outline fullWidth={isMobile}>HAKKIMDA</GoldBtn>
             </motion.div>
           </div>
 
-          <motion.div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px', paddingTop: '28px', borderTop: `1px solid ${G.goldBorder}` }}
+          <motion.div className="stats-grid"
+            style={{ paddingTop: '24px', borderTop: `1px solid ${G.goldBorder}`, marginTop: '24px' }}
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }}
             onViewportEnter={() => setStatsVis(true)}>
             {[{ n: 500, s: '+', l: 'ÖĞRENCİ' }, { n: 8, s: '+', l: 'YIL' }, { n: 4, s: '', l: 'SERTİFİKA' }].map((st, i) => (
               <motion.div key={i} whileHover={{ y: -2 }}
-                style={{ background: G.goldFaint, border: `1px solid ${G.goldBorder}`, borderRadius: '12px', padding: '16px', textAlign: 'center', cursor: 'default', transition: 'all 0.2s' }}>
-                <div style={{ fontSize: '26px', fontWeight: 900, color: G.gold, lineHeight: 1 }}>
+                style={{ background: G.goldFaint, border: `1px solid ${G.goldBorder}`, borderRadius: '12px', padding: '14px 10px', textAlign: 'center' }}>
+                <div style={{ fontSize: 'clamp(20px, 3vw, 26px)', fontWeight: 900, color: G.gold, lineHeight: 1 }}>
                   {statsVis ? <AnimNum n={st.n} s={st.s} /> : `0${st.s}`}
                 </div>
-                <div style={{ fontSize: '8px', fontWeight: 900, letterSpacing: '0.12em', color: G.whiteLow, marginTop: '5px' }}>{st.l}</div>
+                <div style={{ fontSize: '8px', fontWeight: 900, letterSpacing: '0.1em', color: G.whiteLow, marginTop: '5px' }}>{st.l}</div>
               </motion.div>
             ))}
           </motion.div>
         </motion.div>
 
         {/* Fotoğraf */}
-        <motion.div style={{ position: 'relative', overflow: 'hidden', minHeight: '400px' }}
+        <motion.div className="hero-photo"
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.1 }}>
           <img src={PHOTO} alt="Gizem Hoca"
             style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0, filter: 'grayscale(0.2) brightness(0.65) sepia(0.15)' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(7,16,41,0.75) 0%, rgba(7,16,41,0.1) 50%, transparent 100%)' }} />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(13,27,62,0.3) 0%, transparent 100%)' }} />
-
-          {/* Badge üst sol */}
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}
-            style={{ position: 'absolute', top: '20px', left: '20px', background: G.gold, color: G.bg, fontSize: '9px', fontWeight: 900, padding: '7px 16px', borderRadius: '999px', letterSpacing: '0.06em', boxShadow: '0 4px 12px rgba(212,175,55,0.4)' }}>
+            style={{ position: 'absolute', top: '16px', left: '16px', background: G.gold, color: G.bg, fontSize: '9px', fontWeight: 900, padding: '6px 14px', borderRadius: '999px', letterSpacing: '0.06em' }}>
             ✦ 500+ MUTLU ÖĞRENCİ
           </motion.div>
-
-          {/* Badge sağ alt */}
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1 }}
-            style={{ position: 'absolute', bottom: '20px', right: '20px', background: 'rgba(7,16,41,0.85)', border: `1px solid ${G.gold}`, color: G.gold, fontSize: '9px', fontWeight: 900, padding: '7px 16px', borderRadius: '999px', backdropFilter: 'blur(4px)' }}>
+            style={{ position: 'absolute', bottom: '16px', right: '16px', background: 'rgba(7,16,41,0.85)', border: `1px solid ${G.gold}`, color: G.gold, fontSize: '9px', fontWeight: 900, padding: '6px 14px', borderRadius: '999px' }}>
             8+ Yıl Deneyim
           </motion.div>
         </motion.div>
       </div>
 
       {/* HİZMETLER */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', borderBottom: `1px solid ${G.goldBorder}` }}>
+      <div className="services-grid">
         {services.map((s, i) => {
-          const Icon = s.icon;
-          const isH = hovService === i;
+          const { Icon } = s;
           return (
             <motion.div key={i}
-              onHoverStart={() => setHovService(i)} onHoverEnd={() => setHovService(null)}
               initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-              style={{
-                padding: '24px 20px', borderRight: i < 3 ? `1px solid ${G.goldBorder}` : 'none',
-                background: s.accent ? (isH ? 'rgba(212,175,55,0.18)' : G.goldFaint) : isH ? 'rgba(212,175,55,0.06)' : 'transparent',
-                transition: 'background 0.2s', cursor: 'default',
-              }}>
-              <div style={{
-                width: '40px', height: '40px', borderRadius: '10px', marginBottom: '14px',
-                background: s.accent ? G.gold : G.goldFaint,
-                border: `1px solid ${s.accent ? 'transparent' : G.goldBorder}`,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                transition: 'all 0.2s',
-                boxShadow: isH ? '0 4px 12px rgba(212,175,55,0.25)' : 'none',
-              }}>
-                <Icon size={18} style={{ color: s.accent ? G.bg : G.gold }} />
+              style={{ padding: '20px 16px', borderRight: i < services.length - 1 ? `1px solid ${G.goldBorder}` : 'none', borderBottom: `1px solid ${G.goldBorder}`, background: s.accent ? G.goldFaint : 'transparent', transition: 'background 0.2s', cursor: 'default' }}
+              whileHover={{ background: s.accent ? 'rgba(212,175,55,0.15)' : 'rgba(212,175,55,0.05)' }}>
+              <div style={{ width: '38px', height: '38px', borderRadius: '10px', marginBottom: '12px', background: s.accent ? G.gold : G.goldFaint, border: `1px solid ${s.accent ? 'transparent' : G.goldBorder}`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Icon size={17} style={{ color: s.accent ? G.bg : G.gold }} />
               </div>
-              <div style={{ fontSize: '11px', fontWeight: 900, letterSpacing: '0.06em', color: s.accent ? G.gold : '#fff', marginBottom: '6px' }}>{s.t}</div>
-              <div style={{ fontSize: '12px', color: G.whiteMid, lineHeight: 1.55 }}>{s.d}</div>
+              <div style={{ fontSize: '11px', fontWeight: 900, letterSpacing: '0.04em', color: s.accent ? G.gold : '#fff', marginBottom: '5px' }}>{s.t}</div>
+              <div style={{ fontSize: '11px', color: G.whiteMid, lineHeight: 1.5 }}>{s.d}</div>
             </motion.div>
           );
         })}
       </div>
 
       {/* VİDEO + BİYO */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', borderBottom: `1px solid ${G.goldBorder}` }}>
-        {/* Video */}
-        <div style={{ padding: '40px', borderRight: `1px solid ${G.goldBorder}` }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '22px' }}>
-            <div style={{ width: '24px', height: '2px', background: G.gold }} />
+      <div className="content-grid">
+        <div style={{ padding: 'clamp(24px, 4vw, 40px)', borderRight: `1px solid ${G.goldBorder}`, borderBottom: `1px solid ${G.goldBorder}` }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px' }}>
+            <div style={{ width: '22px', height: '2px', background: G.gold }} />
             <span style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.15em', color: G.gold }}>ÖNE ÇIKAN DERSLER</span>
           </div>
-
-          <HoverCard style={{ borderRadius: '10px', overflow: 'hidden', aspectRatio: '16/9', marginBottom: '16px', position: 'relative' }}
-            onClick={() => setSelVideo(videos[0])}>
+          <motion.div style={{ position: 'relative', aspectRatio: '16/9', borderRadius: '10px', overflow: 'hidden', border: `1px solid ${G.goldBorder}`, cursor: 'pointer', marginBottom: '14px' }}
+            onClick={() => setSelVideo(videos[0])} whileHover={{ scale: 1.01 }}>
             <img src={`https://img.youtube.com/vi/${videos[0].id}/hqdefault.jpg`} alt={videos[0].title}
               style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.55)' }} />
             <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -198,105 +196,87 @@ export default function HomePage() {
                 <PlayCircle size={24} style={{ color: G.bg }} />
               </motion.div>
             </div>
-            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '16px 14px', background: 'linear-gradient(to top, rgba(7,16,41,0.95) 0%, transparent 100%)' }}>
-              <p style={{ color: '#fff', fontSize: '12px', fontWeight: 700, marginBottom: '2px' }}>{videos[0].title}</p>
-              <p style={{ color: G.gold, fontSize: '10px' }}>{videos[0].dur}</p>
+            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '14px', background: 'linear-gradient(to top, rgba(7,16,41,0.95) 0%, transparent 100%)' }}>
+              <p style={{ color: '#fff', fontSize: '12px', fontWeight: 700 }}>{videos[0].title}</p>
+              <p style={{ color: G.gold, fontSize: '10px', marginTop: '2px' }}>{videos[0].dur}</p>
             </div>
-          </HoverCard>
-
-          {videos.slice(1).map(v => {
-            const [vh, setVh] = useState(false);
-            return (
-              <div key={v.id} onClick={() => setSelVideo(v)}
-                onMouseEnter={() => setVh(true)} onMouseLeave={() => setVh(false)}
-                style={{ display: 'flex', gap: '12px', alignItems: 'center', cursor: 'pointer', padding: '10px', borderRadius: '8px', background: vh ? G.goldFaint : 'transparent', border: `1px solid ${vh ? G.goldBorder : 'transparent'}`, marginBottom: '8px', transition: 'all 0.2s' }}>
-                <div style={{ width: '64px', height: '40px', borderRadius: '5px', overflow: 'hidden', flexShrink: 0, border: `1px solid ${G.goldBorder}` }}>
-                  <img src={`https://img.youtube.com/vi/${v.id}/default.jpg`} alt={v.title}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.65)' }} />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <p style={{ fontSize: '11px', fontWeight: 700, color: vh ? G.gold : '#fff', transition: 'color 0.2s', lineHeight: 1.3 }}>{v.title}</p>
-                  <p style={{ fontSize: '10px', color: G.gold, marginTop: '3px' }}>{v.dur}</p>
-                </div>
-                <PlayCircle size={16} style={{ color: vh ? G.gold : 'transparent', transition: 'color 0.2s', flexShrink: 0 }} />
+          </motion.div>
+          {videos.slice(1).map(v => (
+            <motion.div key={v.id} className="video-list-item" onClick={() => setSelVideo(v)} whileHover={{ background: G.goldFaint }}
+              style={{ display: 'flex', gap: '10px', alignItems: 'center', cursor: 'pointer', padding: '10px', borderRadius: '8px', marginBottom: '6px', border: '1px solid transparent', transition: 'all 0.2s' }}>
+              <div style={{ width: '60px', height: '38px', borderRadius: '5px', overflow: 'hidden', flexShrink: 0, border: `1px solid ${G.goldBorder}` }}>
+                <img src={`https://img.youtube.com/vi/${v.id}/default.jpg`} alt={v.title} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.65)' }} />
               </div>
-            );
-          })}
-
-          <Link to="/dersler"
-            style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.1em', color: G.gold, display: 'inline-flex', alignItems: 'center', gap: '5px', marginTop: '8px', textDecoration: 'none', borderBottom: `2px solid ${G.gold}`, paddingBottom: '2px' }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <p style={{ fontSize: '11px', fontWeight: 700, color: '#fff', lineHeight: 1.3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{v.title}</p>
+                <p style={{ fontSize: '10px', color: G.gold, marginTop: '2px' }}>{v.dur}</p>
+              </div>
+              <PlayCircle size={16} style={{ color: G.gold, flexShrink: 0 }} />
+            </motion.div>
+          ))}
+          <Link to="/dersler" style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.1em', color: G.gold, display: 'inline-flex', alignItems: 'center', gap: '5px', marginTop: '10px', textDecoration: 'none', borderBottom: `2px solid ${G.gold}`, paddingBottom: '2px' }}>
             TÜM DERSLER <ArrowRight size={12} />
           </Link>
         </div>
 
-        {/* Biyografi */}
-        <div style={{ padding: '40px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '22px' }}>
-            <div style={{ width: '24px', height: '2px', background: G.gold }} />
+        <div style={{ padding: 'clamp(24px, 4vw, 40px)', borderBottom: `1px solid ${G.goldBorder}` }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px' }}>
+            <div style={{ width: '22px', height: '2px', background: G.gold }} />
             <span style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.15em', color: G.gold }}>HAKKIMDA</span>
           </div>
-          <div style={{ borderRadius: '10px', overflow: 'hidden', aspectRatio: '4/3', marginBottom: '22px', border: `1px solid ${G.goldBorder}` }}>
+          <div style={{ borderRadius: '10px', overflow: 'hidden', aspectRatio: '4/3', marginBottom: '20px', border: `1px solid ${G.goldBorder}` }}>
             <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800" alt="Pilates"
               style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.6) sepia(0.15)', transition: 'transform 0.5s' }}
               onMouseEnter={e => e.target.style.transform = 'scale(1.04)'}
               onMouseLeave={e => e.target.style.transform = 'scale(1)'} />
           </div>
-          <blockquote style={{ fontSize: '19px', fontWeight: 900, color: '#fff', lineHeight: 1.15, marginBottom: '14px', fontStyle: 'italic' }}>
+          <blockquote style={{ fontSize: 'clamp(15px, 2vw, 19px)', fontWeight: 900, color: '#fff', lineHeight: 1.2, marginBottom: '12px', fontStyle: 'italic' }}>
             "Pilates bir egzersiz değil, yaşam felsefesidir."
           </blockquote>
-          <p style={{ fontSize: '13px', color: G.whiteMid, lineHeight: 1.75, marginBottom: '18px' }}>
+          <p style={{ fontSize: '13px', color: G.whiteMid, lineHeight: 1.75, marginBottom: '16px' }}>
             Hareketin ve sağlığın hayatımızdaki dönüştürücü gücüne her zaman inandım.
           </p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '7px', marginBottom: '22px' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '20px' }}>
             {['Balanced Body®', 'Reformer', 'Hamile Pilatesi', 'Postür'].map(c => (
               <motion.span key={c} whileHover={{ borderColor: G.gold, color: '#fff' }}
-                style={{ fontSize: '9px', fontWeight: 900, border: `1px solid ${G.goldBorder}`, color: G.gold, padding: '5px 12px', borderRadius: '999px', cursor: 'default', transition: 'all 0.2s' }}>
+                style={{ fontSize: '9px', fontWeight: 900, border: `1px solid ${G.goldBorder}`, color: G.gold, padding: '4px 10px', borderRadius: '999px', transition: 'all 0.2s' }}>
                 {c}
               </motion.span>
             ))}
           </div>
-          <Link to="/hakkimda"
-            style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.1em', color: G.gold, display: 'inline-flex', alignItems: 'center', gap: '5px', textDecoration: 'none', borderBottom: `2px solid ${G.gold}`, paddingBottom: '2px' }}>
+          <Link to="/hakkimda" style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.1em', color: G.gold, display: 'inline-flex', alignItems: 'center', gap: '5px', textDecoration: 'none', borderBottom: `2px solid ${G.gold}`, paddingBottom: '2px' }}>
             DAHA FAZLA <ArrowRight size={12} />
           </Link>
         </div>
       </div>
 
       {/* YORUMLAR */}
-      <div style={{ padding: '48px 40px', borderBottom: `1px solid ${G.goldBorder}`, background: G.dark }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '28px' }}>
+      <div style={{ padding: 'clamp(28px, 5vw, 48px) clamp(16px, 4vw, 40px)', borderBottom: `1px solid ${G.goldBorder}`, background: G.dark }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <div style={{ width: '24px', height: '2px', background: G.gold }} />
+            <div style={{ width: '22px', height: '2px', background: G.gold }} />
             <span style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.15em', color: G.gold }}>ÖĞRENCİLER NE DİYOR?</span>
           </div>
-          <Link to="/musteri-yorumlari"
-            style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.08em', color: 'rgba(212,175,55,0.45)', display: 'flex', alignItems: 'center', gap: '4px', textDecoration: 'none', transition: 'color 0.2s' }}
+          <Link to="/musteri-yorumlari" style={{ fontSize: '9px', fontWeight: 900, color: 'rgba(212,175,55,0.4)', display: 'flex', alignItems: 'center', gap: '4px', textDecoration: 'none', transition: 'color 0.2s' }}
             onMouseEnter={e => e.currentTarget.style.color = G.gold}
-            onMouseLeave={e => e.currentTarget.style.color = 'rgba(212,175,55,0.45)'}>
+            onMouseLeave={e => e.currentTarget.style.color = 'rgba(212,175,55,0.4)'}>
             TÜMÜ <ChevronRight size={13} />
           </Link>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '14px' }}>
+        <div className="testimonials-grid">
           {testimonials.map((t, i) => (
             <motion.div key={i}
-              onHoverStart={() => setHovTestimonial(i)} onHoverEnd={() => setHovTestimonial(null)}
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-              animate={{ y: hovTestimonial === i ? -4 : 0 }}
-              style={{
-                border: `1px solid ${hovTestimonial === i ? 'rgba(212,175,55,0.4)' : G.goldBorder}`,
-                borderRadius: '12px', padding: '22px',
-                background: hovTestimonial === i ? 'rgba(212,175,55,0.08)' : G.goldFaint,
-                transition: 'all 0.2s', cursor: 'default',
-                boxShadow: hovTestimonial === i ? '0 8px 28px rgba(212,175,55,0.12)' : 'none',
-              }}>
-              <div style={{ color: G.gold, fontSize: '13px', marginBottom: '12px', letterSpacing: '2px' }}>★★★★★</div>
-              <p style={{ fontSize: '13px', color: G.white, lineHeight: 1.7, fontStyle: 'italic', marginBottom: '16px' }}>"{t.text}"</p>
+              whileHover={{ y: -4, borderColor: 'rgba(212,175,55,0.4)', boxShadow: '0 8px 28px rgba(212,175,55,0.12)' }}
+              style={{ border: `1px solid ${G.goldBorder}`, borderRadius: '12px', padding: '20px', background: G.goldFaint, transition: 'all 0.2s' }}>
+              <div style={{ color: G.gold, fontSize: '13px', marginBottom: '10px', letterSpacing: '2px' }}>★★★★★</div>
+              <p style={{ fontSize: '13px', color: G.white, lineHeight: 1.65, fontStyle: 'italic', marginBottom: '14px' }}>"{t.text}"</p>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
                 <div>
                   <p style={{ fontSize: '11px', fontWeight: 900, color: G.gold }}>— {t.name}</p>
                   <p style={{ fontSize: '10px', color: G.whiteLow, marginTop: '2px' }}>{t.job}</p>
                 </div>
-                <span style={{ fontSize: '8px', fontWeight: 900, color: 'rgba(212,175,55,0.3)', letterSpacing: '0.08em', border: '1px solid rgba(212,175,55,0.15)', padding: '3px 8px', borderRadius: '999px' }}>{t.tag}</span>
+                <span style={{ fontSize: '8px', fontWeight: 900, color: 'rgba(212,175,55,0.3)', border: '1px solid rgba(212,175,55,0.15)', padding: '3px 8px', borderRadius: '999px' }}>{t.tag}</span>
               </div>
             </motion.div>
           ))}
@@ -304,12 +284,12 @@ export default function HomePage() {
       </div>
 
       {/* CTA */}
-      <div style={{ padding: '48px 40px', borderBottom: `1px solid ${G.goldBorder}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(212,175,55,0.07)' }}>
+      <div className="cta-section" style={{ padding: 'clamp(28px, 5vw, 48px) clamp(16px, 4vw, 40px)', borderBottom: `1px solid ${G.goldBorder}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '20px', background: 'rgba(212,175,55,0.06)' }}>
         <div>
-          <h2 style={{ fontSize: '36px', fontWeight: 900, color: '#fff', letterSpacing: '-0.02em' }}>Başlamaya hazır mısın?</h2>
-          <p style={{ fontSize: '14px', color: G.whiteMid, marginTop: '8px' }}>İlk ders için hemen iletişime geç.</p>
+          <h2 style={{ fontSize: 'clamp(24px, 4vw, 36px)', fontWeight: 900, color: '#fff', letterSpacing: '-0.02em' }}>Başlamaya hazır mısın?</h2>
+          <p style={{ fontSize: '13px', color: G.whiteMid, marginTop: '6px' }}>İlk ders için hemen iletişime geç.</p>
         </div>
-        <div style={{ display: 'flex', gap: '12px' }}>
+        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' }}>
           <GoldBtn to="/fiyatlar">PAKETLERİ GÖR <ArrowRight size={14} /></GoldBtn>
           <GoldBtn to="/iletisim" outline>İLETİŞİM</GoldBtn>
         </div>

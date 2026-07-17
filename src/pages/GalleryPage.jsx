@@ -47,7 +47,7 @@ export default function GalleryPage() {
             </button>
           ))}
         </div>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)' }}>
+        <div className='gallery-grid' style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)' }}>
           <AnimatePresence>
             {filtered.map((img, i) => (
               <motion.div key={img.id} initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }} transition={{ delay:i*0.04 }}

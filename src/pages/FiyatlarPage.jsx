@@ -44,7 +44,7 @@ export default function FiyatlarPage() {
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', borderBottom: `1px solid ${G.goldBorder}` }}>
+        <div className='price-grid' style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', borderBottom: `1px solid ${G.goldBorder}` }}>
           {plans.map((plan, i) => (
             <motion.div key={plan.name}
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}
