@@ -1,28 +1,37 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle } from 'lucide-react';
 
 function WhatsAppButton({ phoneNumber }) {
- const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent("Merhaba, Pilates dersleri hakkında bilgi almak istiyorum.")}`;
+  const [hovered, setHovered] = useState(false);
+  const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent('Merhaba, Pilates dersleri hakkında bilgi almak istiyorum.')}`;
 
   return (
-    <motion.a
-      href={whatsappUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      initial={{ scale: 0, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ delay: 1, type: 'spring', stiffness: 100 }}
-      whileHover={{ scale: 1.1 }}
-      className="fixed bottom-6 right-6 z-50 bg-brand-black text-brand-lime rounded-full h-16 w-16 flex items-center justify-center shadow-lg group"
-      aria-label="WhatsApp ile İletişime Geçin"
-    >
-        <span className="absolute bottom-1/2 translate-y-1/2 right-full mr-3 px-3 py-1.5 bg-brand-black text-brand-lime text-sm font-semibold rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-            Hemen Mesaj At
-            <svg className="absolute text-brand-black h-2 w-full left-0 top-full" x="0px" y="0px" viewBox="0 0 255 255" xmlSpace="preserve"><polygon className="fill-current" points="0,0 127.5,127.5 255,0"/></svg>
-        </span>
-      <MessageCircle className="h-8 w-8" />
-    </motion.a>
+    <motion.div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 50, display: 'flex', alignItems: 'center', gap: '10px' }}
+      initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 1.2, type: 'spring', stiffness: 120 }}>
+
+      <AnimatePresence>
+        {hovered && (
+          <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 10 }}
+            style={{ background: '#071029', border: '1px solid rgba(212,175,55,0.35)', borderRadius: '999px', padding: '8px 16px', whiteSpace: 'nowrap' }}>
+            <span style={{ fontSize: '11px', fontWeight: 700, color: '#d4af37', letterSpacing: '0.04em' }}>Hemen Mesaj At</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <motion.a href={url} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"
+        onHoverStart={() => setHovered(true)} onHoverEnd={() => setHovered(false)}
+        whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}
+        style={{
+          width: '58px', height: '58px', borderRadius: '50%',
+          background: 'linear-gradient(135deg, #d4af37 0%, #b8960f 100%)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          boxShadow: '0 4px 20px rgba(212,175,55,0.4)',
+          border: '2px solid rgba(212,175,55,0.6)',
+        }}>
+        <MessageCircle size={26} style={{ color: '#0d1b3e' }} fill="none" strokeWidth={2} />
+      </motion.a>
+    </motion.div>
   );
 }
 
