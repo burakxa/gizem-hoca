@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTheme } from '@/contexts/ThemeContext';
 import { Instagram, Youtube, Facebook, ArrowUpRight } from 'lucide-react';
 
 const G = { dark: '#071029', gold: '#d4af37', goldBorder: 'rgba(212,175,55,0.2)', whiteMid: 'rgba(255,255,255,0.4)' };
@@ -15,11 +16,15 @@ const HoverLink = ({ to, children }) => {
 };
 
 const Footer = () => {
+  const { isMessi } = useTheme();
   const year = new Date().getFullYear();
+  const footerBg = isMessi ? '#071220' : G.dark;
+  const accentColor = isMessi ? '#75aadb' : G.gold;
+  const borderCol = isMessi ? 'rgba(117,170,219,0.2)' : G.goldBorder;
   return (
-    <footer style={{ background: G.dark, borderTop: `1px solid ${G.goldBorder}` }}>
+    <footer style={{ background: footerBg, borderTop: `1px solid ${borderCol}` }}>
       {/* Desktop: 4 kolon, Mobil: stack */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', borderBottom: `1px solid ${G.goldBorder}` }}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', borderBottom: `1px solid ${borderCol}` }}
         className="footer-grid">
         <style>{`
           @media (max-width: 768px) {
@@ -52,21 +57,21 @@ const Footer = () => {
         </div>
 
         <div className="footer-cell" style={{ padding: '28px', borderRight: `1px solid ${G.goldBorder}` }}>
-          <div style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.15em', color: G.gold, marginBottom: '16px' }}>SAYFALAR</div>
+          <div style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.15em', color: accentColor, marginBottom: '16px' }}>SAYFALAR</div>
           {[['/', 'Anasayfa'], ['/dersler', 'Dersler'], ['/program', 'Program'], ['/fiyatlar', 'Fiyatlar'], ['/galeri', 'Galeri']].map(([p, l]) => (
             <HoverLink key={p} to={p}>{l}</HoverLink>
           ))}
         </div>
 
         <div className="footer-cell" style={{ padding: '28px', borderRight: `1px solid ${G.goldBorder}` }}>
-          <div style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.15em', color: G.gold, marginBottom: '16px' }}>DAHA FAZLA</div>
+          <div style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.15em', color: accentColor, marginBottom: '16px' }}>DAHA FAZLA</div>
           {[['/blog', 'Blog'], ['/hakkimda', 'Hakkımda'], ['/musteri-yorumlari', 'Yorumlar'], ['/sss', 'SSS'], ['/iletisim', 'İletişim']].map(([p, l]) => (
             <HoverLink key={p} to={p}>{l}</HoverLink>
           ))}
         </div>
 
         <div className="footer-cell" style={{ padding: '28px', background: 'rgba(212,175,55,0.05)' }}>
-          <div style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.15em', color: G.gold, marginBottom: '16px' }}>İLETİŞİM</div>
+          <div style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.15em', color: accentColor, marginBottom: '16px' }}>İLETİŞİM</div>
           {[
             { href: 'https://wa.me/905383135720', text: '💬 +90 538 313 57 20' },
             { href: 'mailto:merhaba@gizemhoca.net', text: '✉️ merhaba@gizemhoca.net' },

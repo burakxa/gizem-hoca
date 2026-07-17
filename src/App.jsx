@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import { Toaster } from '@/components/ui/toaster';
 import { toast } from '@/components/ui/use-toast';
 import { AnimatePresence } from 'framer-motion';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 
 import PageLayout from '@/components/layout/PageLayout';
 import HomePage from '@/pages/HomePage';
@@ -25,7 +26,7 @@ import NotFoundPage from '@/pages/NotFoundPage';
 function App() {
   const handleNotImplemented = (e) => {
     if (e) e.preventDefault();
-    toast({ title: "🚧 Bu özellik henüz uygulanmadı", duration: 3000 });
+    toast({ title: '🚧 Bu özellik henüz uygulanmadı', duration: 3000 });
   };
   const location = useLocation();
 
@@ -62,7 +63,13 @@ function App() {
 }
 
 function AppWrapper() {
-  return <Router><App /></Router>;
+  return (
+    <Router>
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
+    </Router>
+  );
 }
 
 export default AppWrapper;

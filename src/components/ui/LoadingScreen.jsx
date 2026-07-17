@@ -2,10 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function LoadingScreen() {
-  const [done, setDone] = useState(false);
+  const [done, setDone] = useState(() => {
+    // Daha önce gösterildiyse bir daha gösterme
+    return sessionStorage.getItem('loading_shown') === 'true';
+  });
 
   useEffect(() => {
-    const t = setTimeout(() => setDone(true), 2200);
+    if (done) return;
+    const t = setTimeout(() => {
+      setDone(true);
+      sessionStorage.setItem('loading_shown', 'true');
+    }, 2200);
     return () => clearTimeout(t);
   }, []);
 
@@ -27,7 +34,6 @@ export default function LoadingScreen() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           />
-          {/* Altın çizgi animasyonu */}
           <div style={{ width: '180px', height: '2px', background: 'rgba(212,175,55,0.15)', borderRadius: '999px', overflow: 'hidden' }}>
             <motion.div
               style={{ height: '100%', background: '#d4af37', borderRadius: '999px' }}
