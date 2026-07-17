@@ -7,6 +7,7 @@ import WhatsAppButton from '@/components/ui/WhatsAppButton';
 import CookieBanner from '@/components/ui/CookieBanner';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import ChatBot from '@/components/ui/ChatBot';
+import MessiSplash from '@/components/ui/MessiSplash';
 import { useTheme } from '@/contexts/ThemeContext';
 
 const pageVariants = {
@@ -22,6 +23,7 @@ const PageLayout = ({ handleNotImplemented }) => {
   return (
     <>
       <LoadingScreen />
+      <MessiSplash />
 
       {/* Messi modu global CSS */}
       {isMessi && (
