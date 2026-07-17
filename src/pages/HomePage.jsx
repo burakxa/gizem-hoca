@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, ChevronRight, PlayCircle, X, Users, Monitor, Dumbbell, Sparkles } from 'lucide-react';
+import Marquee from '@/components/ui/Marquee';
+import BeforeAfterSlider from '@/components/ui/BeforeAfterSlider';
 import { Link } from 'react-router-dom';
 
 const PHOTO = 'https://horizons-cdn.hostinger.com/451c65e3-9af7-4c36-9235-9b5c17a191ce/71e533503d331149fe73f8e165f13f5b.png';
@@ -60,6 +62,9 @@ export default function HomePage() {
   const [selVideo, setSelVideo] = useState(null);
   const [statsVis, setStatsVis] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const { scrollY } = useScroll();
+  const heroImgY = useTransform(scrollY, [0, 500], [0, 80]);
+  const heroTextY = useTransform(scrollY, [0, 400], [0, -40]);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -160,6 +165,9 @@ export default function HomePage() {
         </motion.div>
       </div>
 
+      {/* MARQUEE */}
+      <Marquee />
+
       {/* HİZMETLER */}
       <div className="services-grid">
         {services.map((s, i) => {
@@ -250,6 +258,33 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* ÖNCE / SONRA */}
+      <div style={{ padding: 'clamp(28px,5vw,48px) clamp(16px,4vw,40px)', borderBottom: `1px solid ${G.goldBorder}` }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px' }}>
+          <div style={{ width: '22px', height: '2px', background: G.gold }} />
+          <span style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.15em', color: G.gold }}>DÖNÜŞÜM HİKAYELERİ</span>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '16px' }} className="content-grid">
+          <BeforeAfterSlider
+            before="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800"
+            after="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800"
+            beforeLabel="BAŞLANGIÇ"
+            afterLabel="3 AY SONRA"
+          />
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '16px', padding: '8px' }}>
+            <h3 style={{ fontSize: 'clamp(18px,2.5vw,24px)', fontWeight: 900, color: '#fff', lineHeight: 1.2 }}>
+              Sadece 3 ayda<br /><span style={{ color: G.gold }}>inanılmaz dönüşüm</span>
+            </h3>
+            <p style={{ fontSize: '13px', color: G.whiteMid, lineHeight: 1.75 }}>
+              Düzenli pilates pratiği ile öğrencilerimiz hem fiziksel hem zihinsel olarak güçleniyor. Fotoğrafı sürükleyerek farkı kendiniz görün.
+            </p>
+            <Link to="/musteri-yorumlari" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '10px', fontWeight: 900, letterSpacing: '0.1em', color: G.gold, textDecoration: 'none', borderBottom: `2px solid ${G.gold}`, paddingBottom: '2px', alignSelf: 'flex-start' }}>
+              BAŞARILI HİKAYELER <ArrowRight size={12} />
+            </Link>
+          </div>
+        </div>
+      </div>
+
       {/* YORUMLAR */}
       <div style={{ padding: 'clamp(28px, 5vw, 48px) clamp(16px, 4vw, 40px)', borderBottom: `1px solid ${G.goldBorder}`, background: G.dark }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
@@ -319,3 +354,7 @@ export default function HomePage() {
     </div>
   );
 }
+
+// Marquee + BeforeAfter anasayfaya eklendi — ayrı import'lar ile kullanılıyor
+// Import'lar dosyanın başına eklenmeli ama dosya zaten büyük, 
+// bunun yerine MusteriYorumlariPage'de referans verelim
