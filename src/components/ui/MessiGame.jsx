@@ -235,7 +235,17 @@ export default function MessiGame({ onClose }) {
       B.vx += g.spin * 0.055;
       B.rot += B.vx * 0.07;
       B.size = Math.max(7, 14 + B.z * 0.12);
-      if (B.z <= 0 && B.y < GOAL.y + GOAL.h + 20) resolveShot(g);
+      // Top kale çizgisine (y bazlı) ulaştı mı?
+    if (B.y <= GOAL.y + GOAL.h && B.y >= GOAL.y - 10 && B.x > GOAL.x - 20 && B.x < GOAL.x + GOAL.w + 20 && g._shotResolved !== true) {
+      g._shotResolved = true;
+      resolveShot(g);
+    }
+    // Ya da z sıfırlandı (yere düştü) — açık gitti
+    if (B.z <= 0 && !g._shotResolved) {
+      g._shotResolved = true;
+      g.ball.z = 0;
+      resolveShot(g);
+    }
     }
 
     // Top gölgesi
@@ -807,17 +817,22 @@ export default function MessiGame({ onClose }) {
     const g=gsRef.current;
     if(!g||g.phase!=='aim') return;
     const normX = (g.aimX - GW/2) / (GOAL.w/2);
-    const normY = (g.aimY - (GOAL.y+GOAL.h/2)) / (GOAL.h/2);
-    g.power = 75 + Math.abs(normX)*15 + Math.abs(normY)*10;
-    g.spin  = normX * 0.6;
+    g.spin = normX * 0.45;
 
-    const cfg=DIFF[g.diff];
     const tx=g.aimX, ty=g.aimY;
-    const spd=(g.power/100)*22+7;
-    const frames=Math.max(14,Math.hypot(tx-BALL0.x,ty-BALL0.y)/spd);
-    g.ball={x:BALL0.x,y:BALL0.y,z:0,
-      vx:(tx-BALL0.x)/frames, vy:(ty-BALL0.y)/frames,
-      vz:(g.power/100)*9+3, rot:0, size:14};
+    // Kaç frame'de hedefe ulaşacağını hesapla
+    const frames = 22;
+    const vx = (tx - BALL0.x) / frames;
+    const vy = (ty - BALL0.y) / frames;
+    // vz: top frames frame sonunda z=0 olmalı
+    // z(t) = vz*t - 0.5*g*t^2 = 0 => vz = 0.5*g*frames
+    // ama biz z'nin en yüksekte olmasını istiyoruz yarı yolda
+    // basit: vz = gravity * frames / 2
+    const gravity = 0.24;
+    const vz = gravity * frames / 2; // bu şekilde tam yay çizer
+
+    g.ball={x:BALL0.x, y:BALL0.y, z:0,
+      vx, vy, vz, rot:0, size:14};
     g.phase='flying'; g.kickAnim=1;
     setUiPhase('flying');
 
@@ -841,6 +856,7 @@ export default function MessiGame({ onClose }) {
     // State güncelle
     g.round=nr; g.phase='aim'; g.result=null; g.resultTimer=0;
     g.ball={x:BALL0.x,y:BALL0.y,z:0,vx:0,vy:0,vz:0,rot:0,size:14};
+    g._shotResolved=false;
     g.keeper={x:KEEP0.x,y:KEEP0.y,tx:KEEP0.x,frame:0,diving:false};
     g.particles=[]; g.netShake=0; g.kickAnim=0;
     g.aimX=GW/2; g.aimY=GOAL.y+GOAL.h/2;
