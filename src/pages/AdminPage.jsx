@@ -1,599 +1,240 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Helmet } from 'react-helmet';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { supabase } from '@/lib/supabase';
-import {
-  Lock, LogOut, Save, Plus, Trash2, Edit2, Check, X,
-  Bell, Calendar, MessageSquare, BookOpen, Clock, Eye, EyeOff, RefreshCw
-} from 'lucide-react';
+import { Send, Bot, User, Loader, LogOut, Sparkles } from 'lucide-react';
+import { useAdmin } from '@/contexts/AdminContext';
 
-// ── küçük yardımcılar ──────────────────────────────────────
-const Toggle = ({ value, onChange }) => (
-  <div onClick={() => onChange(!value)}
-    className={`w-12 h-6 rounded-full cursor-pointer transition-colors ${value ? 'bg-brand-black' : 'bg-brand-black/20'}`}>
-    <div className={`w-5 h-5 bg-brand-lime rounded-full shadow m-0.5 transition-transform ${value ? 'translate-x-6' : ''}`} />
-  </div>
-);
+const G = { bg: '#0d1b3e', dark: '#071029', gold: '#d4af37', goldBorder: 'rgba(212,175,55,0.2)', goldFaint: 'rgba(212,175,55,0.08)' };
 
-const Input = ({ label, ...props }) => (
-  <div>
-    {label && <label className="text-xs font-bold text-brand-black/50 mb-1.5 block">{label}</label>}
-    <input className="w-full bg-white/60 border-2 border-brand-black/10 focus:border-brand-black rounded-xl px-4 py-2.5 text-sm font-medium outline-none transition-all" {...props} />
-  </div>
-);
+const ADMIN_SYSTEM = `Sen Gizem Hoca Pilates stüdyosunun akıllı site yönetim asistanısın. Türkçe konuşuyorsun.
 
-const Textarea = ({ label, ...props }) => (
-  <div>
-    {label && <label className="text-xs font-bold text-brand-black/50 mb-1.5 block">{label}</label>}
-    <textarea className="w-full bg-white/60 border-2 border-brand-black/10 focus:border-brand-black rounded-xl px-4 py-2.5 text-sm font-medium outline-none transition-all resize-none" {...props} />
-  </div>
-);
+Yapabileceklerin:
+- Blog yazısı oluştur (başlık, içerik, kategori)
+- Program güncellemesi öner (gün, saat, ders türü)
+- Fiyat paketi taslağı hazırla
+- SSS cevabı yaz
+- Sosyal medya paylaşımı oluştur (Instagram, Facebook)
+- E-posta taslağı hazırla
+- Duyuru metni yaz
+- Öğrenci motivasyon mesajı oluştur
 
-const SaveBtn = ({ onClick, saved, loading }) => (
-  <motion.button onClick={onClick} whileTap={{ scale: 0.97 }}
-    className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-black text-sm transition-all ${saved ? 'bg-green-500 text-white' : 'bg-brand-black text-brand-lime'}`}>
-    {loading ? <RefreshCw size={15} className="animate-spin" /> : saved ? <Check size={15} /> : <Save size={15} />}
-    {saved ? 'Kaydedildi!' : loading ? 'Kaydediliyor...' : 'Kaydet'}
-  </motion.button>
-);
+Konu: Pilates, wellness, sağlıklı yaşam, egzersiz
 
-// ── Tab bileşenleri ────────────────────────────────────────
+Yanıtlarını her zaman şu formatta ver:
+1. Ne yaptığını kısaca açıkla
+2. İçeriği net ve kullanıma hazır ver
+3. Gerekirse ek öneri sun
 
-const SettingsTab = () => {
-  const [countdown, setCountdown] = useState({ enabled: false, title: 'Sonraki Grup Dersine', date: '', subtitle: 'Yerini ayırt!', link: '/program' });
-  const [announcement, setAnnouncement] = useState({ enabled: false, text: '', link: '', linkText: 'Detaylar' });
-  const [saved, setSaved] = useState({ countdown: false, announcement: false });
-  const [loading, setLoading] = useState({ countdown: false, announcement: false });
+Profesyonel ama sıcak bir ton kullan. Gizem Hoca'nın markasına uygun yaz.`;
 
-  useEffect(() => {
-    supabase.from('settings').select('*').then(({ data }) => {
-      data?.forEach(row => {
-        if (row.key === 'countdown') setCountdown(row.value);
-        if (row.key === 'announcement') setAnnouncement(row.value);
-      });
-    });
-  }, []);
+const SUGGESTIONS = [
+  { icon: '📝', label: 'Blog Yaz', prompt: 'Pilatesin duruş bozukluklarına etkisi hakkında 300 kelimelik bir blog yazısı yaz.' },
+  { icon: '📱', label: 'Instagram Postu', prompt: 'Bu haftaki Mat Pilates dersi için Instagram postu ve 10 hashtag yaz.' },
+  { icon: '📅', label: 'Haftalık Duyuru', prompt: 'Bu haftaki ders programı için kısa ve çekici bir duyuru metni yaz.' },
+  { icon: '💌', label: 'Hoş Geldin E-postası', prompt: 'Yeni öğrencilere gönderilecek sıcak bir hoş geldin e-postası yaz.' },
+  { icon: '❓', label: 'SSS Cevabı', prompt: '"Pilates başlamak için ideal yaş var mı?" sorusuna profesyonel bir cevap yaz.' },
+  { icon: '🎯', label: 'Motivasyon Mesajı', prompt: 'Öğrencilere düzenli pratik yapmaları için motive edici kısa bir mesaj yaz.' },
+];
 
-  const save = async (key, value, field) => {
-    setLoading(l => ({ ...l, [field]: true }));
-    await supabase.from('settings').upsert({ key, value, updated_at: new Date().toISOString() });
-    setLoading(l => ({ ...l, [field]: false }));
-    setSaved(s => ({ ...s, [field]: true }));
-    setTimeout(() => setSaved(s => ({ ...s, [field]: false })), 2500);
-  };
-
-  return (
-    <div className="space-y-6">
-      {/* Geri sayım */}
-      <div className="bg-brand-black/5 rounded-2xl p-6 space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-lg font-black text-brand-black">⏱ Geri Sayım Sayacı</h2>
-          <Toggle value={countdown.enabled} onChange={v => setCountdown(c => ({ ...c, enabled: v }))} />
-        </div>
-        <div className="grid grid-cols-2 gap-3">
-          <Input label="BAŞLIK" value={countdown.title} onChange={e => setCountdown(c => ({ ...c, title: e.target.value }))} />
-          <Input label="TARİH & SAAT" type="datetime-local" value={countdown.date} onChange={e => setCountdown(c => ({ ...c, date: e.target.value }))} />
-          <Input label="ALT YAZI" value={countdown.subtitle} onChange={e => setCountdown(c => ({ ...c, subtitle: e.target.value }))} />
-          <Input label="BUTON LİNKİ" value={countdown.link} onChange={e => setCountdown(c => ({ ...c, link: e.target.value }))} />
-        </div>
-        <SaveBtn onClick={() => save('countdown', countdown, 'countdown')} saved={saved.countdown} loading={loading.countdown} />
-      </div>
-
-      {/* Duyuru */}
-      <div className="bg-brand-black/5 rounded-2xl p-6 space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-lg font-black text-brand-black">📢 Duyuru Banner'ı</h2>
-          <Toggle value={announcement.enabled} onChange={v => setAnnouncement(a => ({ ...a, enabled: v }))} />
-        </div>
-        <Textarea label="DUYURU METNİ" rows={2} value={announcement.text} onChange={e => setAnnouncement(a => ({ ...a, text: e.target.value }))} placeholder="🎉 Bu ay ilk derse gelenler için %20 indirim!" />
-        <div className="grid grid-cols-2 gap-3">
-          <Input label="BUTON LİNKİ" value={announcement.link} onChange={e => setAnnouncement(a => ({ ...a, link: e.target.value }))} placeholder="/fiyatlar" />
-          <Input label="BUTON METNİ" value={announcement.linkText} onChange={e => setAnnouncement(a => ({ ...a, linkText: e.target.value }))} placeholder="Detaylar" />
-        </div>
-        {announcement.text && (
-          <div className="bg-brand-black rounded-xl px-4 py-2.5 flex items-center justify-between gap-3">
-            <p className="text-brand-lime text-sm flex-1">{announcement.text}</p>
-            <span className="text-xs bg-brand-lime text-brand-black px-3 py-1 rounded-full font-black">{announcement.linkText}</span>
-          </div>
-        )}
-        <SaveBtn onClick={() => save('announcement', announcement, 'announcement')} saved={saved.announcement} loading={loading.announcement} />
-      </div>
-    </div>
-  );
-};
-
-const TestimonialsTab = () => {
-  const [list, setList] = useState([]);
-  const [form, setForm] = useState({ name: '', job: '', tag: 'Bireysel Ders', rating: 5, text: '', date: '' });
-  const [editing, setEditing] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [showForm, setShowForm] = useState(false);
-
-  const load = useCallback(async () => {
-    const { data } = await supabase.from('testimonials').select('*').order('created_at', { ascending: false });
-    if (data) setList(data);
-  }, []);
-
-  useEffect(() => { load(); }, [load]);
-
-  const save = async () => {
-    setLoading(true);
-    if (editing) {
-      await supabase.from('testimonials').update(form).eq('id', editing);
-    } else {
-      await supabase.from('testimonials').insert(form);
-    }
-    setLoading(false);
-    setForm({ name: '', job: '', tag: 'Bireysel Ders', rating: 5, text: '', date: '' });
-    setEditing(null);
-    setShowForm(false);
-    load();
-  };
-
-  const del = async (id) => {
-    if (!confirm('Silmek istediğine emin misin?')) return;
-    await supabase.from('testimonials').delete().eq('id', id);
-    load();
-  };
-
-  const togglePublish = async (id, current) => {
-    await supabase.from('testimonials').update({ published: !current }).eq('id', id);
-    load();
-  };
-
-  const startEdit = (t) => {
-    setForm({ name: t.name, job: t.job || '', tag: t.tag || 'Bireysel Ders', rating: t.rating || 5, text: t.text, date: t.date || '' });
-    setEditing(t.id);
-    setShowForm(true);
-  };
-
-  const tags = ['Bireysel Ders', 'Grup Ders', 'Reformer', 'Online Ders', 'Hamile Pilatesi'];
-
-  return (
-    <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <p className="text-sm text-brand-black/50">{list.length} yorum</p>
-        <button onClick={() => { setShowForm(true); setEditing(null); setForm({ name: '', job: '', tag: 'Bireysel Ders', rating: 5, text: '', date: '' }); }}
-          className="flex items-center gap-2 bg-brand-black text-brand-lime px-4 py-2 rounded-xl font-black text-sm">
-          <Plus size={15} /> Yeni Yorum
-        </button>
-      </div>
-
-      <AnimatePresence>
-        {showForm && (
-          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-            className="bg-brand-black/5 rounded-2xl p-5 space-y-3">
-            <h3 className="font-black text-brand-black">{editing ? 'Yorumu Düzenle' : 'Yeni Yorum Ekle'}</h3>
-            <div className="grid grid-cols-2 gap-3">
-              <Input label="AD SOYAD" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="Elif T." />
-              <Input label="MESLEK" value={form.job} onChange={e => setForm(f => ({ ...f, job: e.target.value }))} placeholder="Öğretmen" />
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="text-xs font-bold text-brand-black/50 mb-1.5 block">KATEGORİ</label>
-                <select value={form.tag} onChange={e => setForm(f => ({ ...f, tag: e.target.value }))}
-                  className="w-full bg-white/60 border-2 border-brand-black/10 focus:border-brand-black rounded-xl px-4 py-2.5 text-sm font-medium outline-none">
-                  {tags.map(t => <option key={t}>{t}</option>)}
-                </select>
-              </div>
-              <Input label="TARİH" value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))} placeholder="Mart 2025" />
-            </div>
-            <Textarea label="YORUM METNİ" rows={3} value={form.text} onChange={e => setForm(f => ({ ...f, text: e.target.value }))} placeholder="Müşteri yorumu..." />
-            <div className="flex gap-3">
-              <motion.button onClick={save} whileTap={{ scale: 0.97 }}
-                className="flex items-center gap-2 bg-brand-black text-brand-lime px-5 py-2.5 rounded-xl font-black text-sm">
-                {loading ? <RefreshCw size={15} className="animate-spin" /> : <Save size={15} />}
-                {editing ? 'Güncelle' : 'Kaydet'}
-              </motion.button>
-              <button onClick={() => { setShowForm(false); setEditing(null); }}
-                className="px-5 py-2.5 rounded-xl border-2 border-brand-black/20 font-bold text-sm text-brand-black/60">
-                İptal
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <div className="space-y-3">
-        {list.map(t => (
-          <div key={t.id} className={`bg-brand-black rounded-2xl p-4 ${!t.published ? 'opacity-50' : ''}`}>
-            <div className="flex justify-between items-start mb-2">
-              <div>
-                <span className="font-black text-brand-lime text-sm">{t.name}</span>
-                <span className="text-white/40 text-xs ml-2">{t.job} · {t.date}</span>
-              </div>
-              <div className="flex gap-2">
-                <button onClick={() => togglePublish(t.id, t.published)} className="p-1.5 rounded-lg bg-white/10 text-white/60 hover:text-white transition-colors">
-                  <Eye size={14} />
-                </button>
-                <button onClick={() => startEdit(t)} className="p-1.5 rounded-lg bg-white/10 text-white/60 hover:text-white transition-colors">
-                  <Edit2 size={14} />
-                </button>
-                <button onClick={() => del(t.id)} className="p-1.5 rounded-lg bg-red-500/20 text-red-400 hover:text-red-300 transition-colors">
-                  <Trash2 size={14} />
-                </button>
-              </div>
-            </div>
-            <p className="text-white/70 text-xs line-clamp-2">"{t.text}"</p>
-            <span className="text-xs bg-white/10 text-white/50 px-2 py-0.5 rounded-full mt-2 inline-block">{t.tag}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const BlogTab = () => {
-  const [list, setList] = useState([]);
-  const [form, setForm] = useState({ title: '', summary: '', content: '', category: 'Genel', date: '', published: true });
-  const [editing, setEditing] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [showForm, setShowForm] = useState(false);
-
-  const load = useCallback(async () => {
-    const { data } = await supabase.from('blog_posts').select('*').order('created_at', { ascending: false });
-    if (data) setList(data);
-  }, []);
-
-  useEffect(() => { load(); }, [load]);
-
-  const save = async () => {
-    setLoading(true);
-    if (editing) {
-      await supabase.from('blog_posts').update(form).eq('id', editing);
-    } else {
-      await supabase.from('blog_posts').insert(form);
-    }
-    setLoading(false);
-    setForm({ title: '', summary: '', content: '', category: 'Genel', date: '', published: true });
-    setEditing(null);
-    setShowForm(false);
-    load();
-  };
-
-  const del = async (id) => {
-    if (!confirm('Silmek istediğine emin misin?')) return;
-    await supabase.from('blog_posts').delete().eq('id', id);
-    load();
-  };
-
-  const startEdit = (p) => {
-    setForm({ title: p.title, summary: p.summary || '', content: p.content || '', category: p.category || 'Genel', date: p.date || '', published: p.published });
-    setEditing(p.id);
-    setShowForm(true);
-  };
-
-  const cats = ['Genel', 'Başlangıç', 'Reformer', 'Hamilelik', 'Sağlık', 'Doğum Sonrası', 'Evde Pilates'];
-
-  return (
-    <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <p className="text-sm text-brand-black/50">{list.length} yazı</p>
-        <button onClick={() => { setShowForm(true); setEditing(null); setForm({ title: '', summary: '', content: '', category: 'Genel', date: '', published: true }); }}
-          className="flex items-center gap-2 bg-brand-black text-brand-lime px-4 py-2 rounded-xl font-black text-sm">
-          <Plus size={15} /> Yeni Yazı
-        </button>
-      </div>
-
-      <AnimatePresence>
-        {showForm && (
-          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-            className="bg-brand-black/5 rounded-2xl p-5 space-y-3">
-            <h3 className="font-black text-brand-black">{editing ? 'Yazıyı Düzenle' : 'Yeni Blog Yazısı'}</h3>
-            <div className="grid grid-cols-2 gap-3">
-              <Input label="BAŞLIK" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} placeholder="Yazı başlığı" />
-              <Input label="TARİH" value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))} placeholder="15 Haziran 2026" />
-            </div>
-            <div>
-              <label className="text-xs font-bold text-brand-black/50 mb-1.5 block">KATEGORİ</label>
-              <select value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))}
-                className="w-full bg-white/60 border-2 border-brand-black/10 focus:border-brand-black rounded-xl px-4 py-2.5 text-sm font-medium outline-none">
-                {cats.map(c => <option key={c}>{c}</option>)}
-              </select>
-            </div>
-            <Textarea label="ÖZET" rows={2} value={form.summary} onChange={e => setForm(f => ({ ...f, summary: e.target.value }))} placeholder="Kısa özet..." />
-            <Textarea label="İÇERİK (HTML desteklenir)" rows={6} value={form.content} onChange={e => setForm(f => ({ ...f, content: e.target.value }))} placeholder="<p>Yazı içeriği...</p>" />
-            <div className="flex items-center gap-3">
-              <Toggle value={form.published} onChange={v => setForm(f => ({ ...f, published: v }))} />
-              <span className="text-sm font-bold text-brand-black/60">{form.published ? 'Yayında' : 'Taslak'}</span>
-            </div>
-            <div className="flex gap-3">
-              <motion.button onClick={save} whileTap={{ scale: 0.97 }}
-                className="flex items-center gap-2 bg-brand-black text-brand-lime px-5 py-2.5 rounded-xl font-black text-sm">
-                {loading ? <RefreshCw size={15} className="animate-spin" /> : <Save size={15} />}
-                {editing ? 'Güncelle' : 'Yayınla'}
-              </motion.button>
-              <button onClick={() => { setShowForm(false); setEditing(null); }}
-                className="px-5 py-2.5 rounded-xl border-2 border-brand-black/20 font-bold text-sm text-brand-black/60">
-                İptal
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <div className="space-y-3">
-        {list.map(p => (
-          <div key={p.id} className={`bg-brand-black/5 rounded-2xl p-4 ${!p.published ? 'opacity-50' : ''}`}>
-            <div className="flex justify-between items-start">
-              <div className="flex-1 min-w-0">
-                <span className={`text-xs px-2 py-0.5 rounded-full font-bold mr-2 ${p.published ? 'bg-green-100 text-green-700' : 'bg-brand-black/10 text-brand-black/50'}`}>
-                  {p.published ? 'Yayında' : 'Taslak'}
-                </span>
-                <span className="text-xs text-brand-black/40">{p.date} · {p.category}</span>
-                <h3 className="font-black text-brand-black mt-1 text-sm">{p.title}</h3>
-                {p.summary && <p className="text-xs text-brand-black/50 mt-0.5 line-clamp-1">{p.summary}</p>}
-              </div>
-              <div className="flex gap-2 ml-3 flex-shrink-0">
-                <button onClick={() => startEdit(p)} className="p-1.5 rounded-lg bg-brand-black/8 text-brand-black/60 hover:text-brand-black transition-colors">
-                  <Edit2 size={14} />
-                </button>
-                <button onClick={() => del(p.id)} className="p-1.5 rounded-lg bg-red-50 text-red-400 hover:text-red-600 transition-colors">
-                  <Trash2 size={14} />
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const ScheduleTab = () => {
-  const [list, setList] = useState([]);
-  const [form, setForm] = useState({ day: 'Pazartesi', time: '', title: '', type: 'Grup', spots: 4, active: true });
-  const [editing, setEditing] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [showForm, setShowForm] = useState(false);
-  const [activeDay, setActiveDay] = useState('Pazartesi');
-
-  const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
-  const types = ['Grup', 'Bireysel', 'Online'];
-
-  const load = useCallback(async () => {
-    const { data } = await supabase.from('schedule').select('*').order('time');
-    if (data) setList(data);
-  }, []);
-
-  useEffect(() => { load(); }, [load]);
-
-  const save = async () => {
-    setLoading(true);
-    if (editing) {
-      await supabase.from('schedule').update(form).eq('id', editing);
-    } else {
-      await supabase.from('schedule').insert(form);
-    }
-    setLoading(false);
-    setForm({ day: activeDay, time: '', title: '', type: 'Grup', spots: 4, active: true });
-    setEditing(null);
-    setShowForm(false);
-    load();
-  };
-
-  const del = async (id) => {
-    if (!confirm('Silmek istediğine emin misin?')) return;
-    await supabase.from('schedule').delete().eq('id', id);
-    load();
-  };
-
-  const startEdit = (s) => {
-    setForm({ day: s.day, time: s.time, title: s.title, type: s.type, spots: s.spots, active: s.active });
-    setEditing(s.id);
-    setShowForm(true);
-  };
-
-  const dayList = list.filter(s => s.day === activeDay);
-
-  return (
-    <div className="space-y-4">
-      {/* Gün seçimi */}
-      <div className="flex gap-2 overflow-x-auto pb-1">
-        {days.map(d => (
-          <button key={d} onClick={() => setActiveDay(d)}
-            className={`px-3 py-1.5 rounded-xl text-xs font-black whitespace-nowrap border-2 transition-all ${activeDay === d ? 'bg-brand-black text-brand-lime border-brand-black' : 'border-brand-black/15 text-brand-black/60'}`}>
-            {d}
-          </button>
-        ))}
-      </div>
-
-      <div className="flex justify-between items-center">
-        <p className="text-sm text-brand-black/50">{activeDay} · {dayList.length} ders</p>
-        <button onClick={() => { setShowForm(true); setEditing(null); setForm({ day: activeDay, time: '', title: '', type: 'Grup', spots: 4, active: true }); }}
-          className="flex items-center gap-2 bg-brand-black text-brand-lime px-4 py-2 rounded-xl font-black text-sm">
-          <Plus size={15} /> Ders Ekle
-        </button>
-      </div>
-
-      <AnimatePresence>
-        {showForm && (
-          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-            className="bg-brand-black/5 rounded-2xl p-5 space-y-3">
-            <h3 className="font-black text-brand-black">{editing ? 'Dersi Düzenle' : 'Yeni Ders'}</h3>
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="text-xs font-bold text-brand-black/50 mb-1.5 block">GÜN</label>
-                <select value={form.day} onChange={e => setForm(f => ({ ...f, day: e.target.value }))}
-                  className="w-full bg-white/60 border-2 border-brand-black/10 focus:border-brand-black rounded-xl px-4 py-2.5 text-sm font-medium outline-none">
-                  {days.map(d => <option key={d}>{d}</option>)}
-                </select>
-              </div>
-              <Input label="SAAT" type="time" value={form.time} onChange={e => setForm(f => ({ ...f, time: e.target.value }))} />
-              <Input label="DERS ADI" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} placeholder="Mat Pilates" />
-              <div>
-                <label className="text-xs font-bold text-brand-black/50 mb-1.5 block">TÜRÜ</label>
-                <select value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value }))}
-                  className="w-full bg-white/60 border-2 border-brand-black/10 focus:border-brand-black rounded-xl px-4 py-2.5 text-sm font-medium outline-none">
-                  {types.map(t => <option key={t}>{t}</option>)}
-                </select>
-              </div>
-              <Input label="KONTENJAN" type="number" min="0" max="20" value={form.spots} onChange={e => setForm(f => ({ ...f, spots: parseInt(e.target.value) }))} />
-            </div>
-            <div className="flex gap-3">
-              <motion.button onClick={save} whileTap={{ scale: 0.97 }}
-                className="flex items-center gap-2 bg-brand-black text-brand-lime px-5 py-2.5 rounded-xl font-black text-sm">
-                {loading ? <RefreshCw size={15} className="animate-spin" /> : <Save size={15} />}
-                {editing ? 'Güncelle' : 'Ekle'}
-              </motion.button>
-              <button onClick={() => { setShowForm(false); setEditing(null); }}
-                className="px-5 py-2.5 rounded-xl border-2 border-brand-black/20 font-bold text-sm text-brand-black/60">
-                İptal
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <div className="space-y-2">
-        {dayList.length === 0 && (
-          <div className="text-center py-8 text-brand-black/30">
-            <Clock size={32} className="mx-auto mb-2 opacity-30" />
-            <p className="font-bold text-sm">Bu gün için ders yok</p>
-          </div>
-        )}
-        {dayList.map(s => (
-          <div key={s.id} className={`flex items-center justify-between bg-brand-black/5 rounded-xl px-4 py-3 ${!s.active ? 'opacity-40' : ''}`}>
-            <div className="flex items-center gap-4">
-              <span className="font-black text-brand-black text-base w-12">{s.time}</span>
-              <div>
-                <div className="font-bold text-brand-black text-sm">{s.title}</div>
-                <div className="text-xs text-brand-black/40">{s.type} · {s.spots === 0 ? 'Dolu' : `${s.spots} kontenjan`}</div>
-              </div>
-            </div>
-            <div className="flex gap-2">
-              <button onClick={() => startEdit(s)} className="p-1.5 rounded-lg bg-brand-black/8 text-brand-black/60 hover:text-brand-black transition-colors">
-                <Edit2 size={14} />
-              </button>
-              <button onClick={() => del(s.id)} className="p-1.5 rounded-lg bg-red-50 text-red-400 hover:text-red-600 transition-colors">
-                <Trash2 size={14} />
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-// ── Ana Admin Sayfası ──────────────────────────────────────
-const AdminPage = () => {
-  const [session, setSession] = useState(null);
-  const [email, setEmail] = useState('');
+export default function AdminPage() {
+  const { isAdmin, login, logout } = useAdmin();
   const [password, setPassword] = useState('');
-  const [showPw, setShowPw] = useState(false);
-  const [error, setError] = useState('');
-  const [loginLoading, setLoginLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState('settings');
+  const [loginError, setLoginError] = useState('');
+  const [msgs, setMsgs] = useState([
+    { role: 'assistant', text: 'Merhaba! 👋 Ben site yönetim asistanınım. Blog yazısı, sosyal medya postu, duyuru metni veya istediğin her içeriği hazırlayabilirim. Ne yapalım?' }
+  ]);
+  const [input, setInput] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [copied, setCopied] = useState(null);
+  const endRef = useRef(null);
+  const inputRef = useRef(null);
 
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => setSession(data.session));
-    const { data: listener } = supabase.auth.onAuthStateChange((_e, s) => setSession(s));
-    return () => listener.subscription.unsubscribe();
-  }, []);
+  useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [msgs]);
 
-  const login = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-    setLoginLoading(true);
-    setError('');
-    const { error: err } = await supabase.auth.signInWithPassword({ email, password });
-    setLoginLoading(false);
-    if (err) setError('E-posta veya şifre hatalı!');
+    if (login(password)) { setLoginError(''); }
+    else { setLoginError('Şifre yanlış!'); }
   };
 
-  const logout = async () => {
-    await supabase.auth.signOut();
-    setSession(null);
+  const sendMsg = async (text) => {
+    const q = (text || input).trim();
+    if (!q || loading) return;
+    setInput('');
+    const newMsgs = [...msgs, { role: 'user', text: q }];
+    setMsgs(newMsgs);
+    setLoading(true);
+
+    try {
+      const history = newMsgs.slice(1).map(m => ({
+        role: m.role === 'assistant' ? 'assistant' : 'user',
+        content: m.text,
+      }));
+
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-6',
+          max_tokens: 1000,
+          system: ADMIN_SYSTEM,
+          messages: history,
+        }),
+      });
+
+      const data = await res.json();
+      const reply = data.content?.[0]?.text || 'Bir hata oluştu, tekrar deneyin.';
+      setMsgs(m => [...m, { role: 'assistant', text: reply }]);
+    } catch {
+      setMsgs(m => [...m, { role: 'assistant', text: 'Bağlantı hatası oluştu. Lütfen tekrar deneyin.' }]);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const tabs = [
-    { id: 'settings', label: 'Duyuru & Sayaç', icon: <Bell size={15} /> },
-    { id: 'testimonials', label: 'Yorumlar', icon: <MessageSquare size={15} /> },
-    { id: 'blog', label: 'Blog', icon: <BookOpen size={15} /> },
-    { id: 'schedule', label: 'Program', icon: <Clock size={15} /> },
-  ];
+  const copyText = (text, idx) => {
+    navigator.clipboard.writeText(text);
+    setCopied(idx);
+    setTimeout(() => setCopied(null), 2000);
+  };
 
-  if (!session) {
-    return (
-      <>
-        <Helmet><title>Admin Girişi - Gizem Hoca</title></Helmet>
-        <div className="w-full min-h-screen bg-brand-lime flex items-center justify-center p-8">
-          <motion.div className="w-full max-w-sm" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <div className="flex items-center gap-3 mb-8">
-              <div className="bg-brand-black rounded-full p-3"><Lock size={20} className="text-brand-lime" /></div>
-              <div>
-                <h1 className="text-2xl font-black text-brand-black">Admin Paneli</h1>
-                <p className="text-sm text-brand-black/50">Gizem Hoca Pilates</p>
-              </div>
-            </div>
-            <form onSubmit={login} className="space-y-3">
-              <Input label="E-POSTA" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="admin@gizemhoca.net" />
-              <div className="relative">
-                <label className="text-xs font-bold text-brand-black/50 mb-1.5 block">ŞİFRE</label>
-                <input
-                  type={showPw ? 'text' : 'password'}
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="w-full bg-white/60 border-2 border-brand-black/10 focus:border-brand-black rounded-xl px-4 py-2.5 pr-12 text-sm font-medium outline-none transition-all"
-                />
-                <button type="button" onClick={() => setShowPw(s => !s)}
-                  className="absolute right-3 bottom-2.5 text-brand-black/40">
-                  {showPw ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
-              </div>
-              {error && <p className="text-red-600 text-sm font-bold">{error}</p>}
-              <motion.button type="submit" whileTap={{ scale: 0.97 }}
-                className="w-full bg-brand-black text-brand-lime py-3 rounded-xl font-black text-sm flex items-center justify-center gap-2">
-                {loginLoading ? <RefreshCw size={15} className="animate-spin" /> : <Lock size={15} />}
-                {loginLoading ? 'Giriş yapılıyor...' : 'Giriş Yap'}
-              </motion.button>
-            </form>
-          </motion.div>
-        </div>
-      </>
-    );
-  }
-
-  return (
-    <>
-      <Helmet><title>Admin Paneli - Gizem Hoca</title></Helmet>
-      <div className="w-full min-h-screen bg-brand-lime p-6 lg:p-10 overflow-y-auto">
-        {/* Üst bar */}
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-black text-brand-black tracking-tight">Admin Paneli</h1>
-            <p className="text-xs text-brand-black/40 mt-1">{session.user.email}</p>
+  // ── GİRİŞ EKRANI
+  if (!isAdmin) return (
+    <div style={{ minHeight: '100vh', background: G.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Montserrat,sans-serif' }}>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+        style={{ width: '100%', maxWidth: '360px', padding: '40px', background: G.dark, border: `1px solid ${G.goldBorder}`, borderRadius: '16px', boxShadow: '0 24px 60px rgba(0,0,0,0.4)' }}>
+        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+          <div style={{ width: '52px', height: '52px', borderRadius: '14px', background: G.goldFaint, border: `1px solid ${G.goldBorder}`, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
+            <Bot size={24} style={{ color: G.gold }} />
           </div>
-          <button onClick={logout}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl border-2 border-brand-black/20 text-brand-black/60 text-sm font-bold hover:border-brand-black/50 transition-colors">
-            <LogOut size={15} /> Çıkış
-          </button>
+          <h1 style={{ fontSize: '20px', fontWeight: 900, color: '#fff', letterSpacing: '-0.02em' }}>Admin Paneli</h1>
+          <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)', marginTop: '6px' }}>AI Site Yönetim Asistanı</p>
         </div>
 
-        {/* Tabs */}
-        <div className="flex gap-2 mb-8 overflow-x-auto pb-1">
-          {tabs.map(tab => (
-            <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold border-2 transition-all whitespace-nowrap ${
-                activeTab === tab.id ? 'bg-brand-black text-brand-lime border-brand-black' : 'border-brand-black/15 text-brand-black/60 hover:border-brand-black/30'
-              }`}>
-              {tab.icon} {tab.label}
-            </button>
-          ))}
-        </div>
-
-        <AnimatePresence mode="wait">
-          <motion.div key={activeTab} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
-            {activeTab === 'settings' && <SettingsTab />}
-            {activeTab === 'testimonials' && <TestimonialsTab />}
-            {activeTab === 'blog' && <BlogTab />}
-            {activeTab === 'schedule' && <ScheduleTab />}
-          </motion.div>
-        </AnimatePresence>
-      </div>
-    </>
+        <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <input type="password" value={password} onChange={e => setPassword(e.target.value)}
+            placeholder="Şifre"
+            style={{ background: G.goldFaint, border: `1px solid ${loginError ? '#ff4444' : G.goldBorder}`, borderRadius: '10px', padding: '12px 16px', fontSize: '13px', color: '#fff', outline: 'none', fontFamily: 'Montserrat', width: '100%' }} />
+          {loginError && <p style={{ fontSize: '11px', color: '#ff4444', margin: 0 }}>{loginError}</p>}
+          <motion.button type="submit" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+            style={{ background: G.gold, color: G.bg, fontSize: '12px', fontWeight: 900, padding: '12px', borderRadius: '10px', border: 'none', cursor: 'pointer', fontFamily: 'Montserrat', letterSpacing: '0.06em' }}>
+            GİRİŞ YAP ✦
+          </motion.button>
+        </form>
+      </motion.div>
+    </div>
   );
-};
 
-export default AdminPage;
+  // ── ADMIN EKRANI
+  return (
+    <div style={{ minHeight: '100vh', background: G.bg, display: 'flex', flexDirection: 'column', fontFamily: 'Montserrat,sans-serif' }}>
+
+      {/* Header */}
+      <div style={{ background: G.dark, borderBottom: `1px solid ${G.goldBorder}`, padding: '14px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: G.goldFaint, border: `1px solid ${G.goldBorder}`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Sparkles size={18} style={{ color: G.gold }} />
+          </div>
+          <div>
+            <div style={{ fontSize: '13px', fontWeight: 900, color: '#fff' }}>AI Site Asistanı</div>
+            <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.35)', marginTop: '1px' }}>Gizem Hoca Pilates · Admin</div>
+          </div>
+        </div>
+        <button onClick={logout}
+          style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'rgba(255,255,255,0.06)', border: `1px solid ${G.goldBorder}`, borderRadius: '8px', padding: '7px 14px', color: 'rgba(255,255,255,0.5)', fontSize: '11px', fontWeight: 700, cursor: 'pointer', fontFamily: 'Montserrat', transition: 'all 0.2s' }}
+          onMouseEnter={e => e.currentTarget.style.color = '#fff'}
+          onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.5)'}>
+          <LogOut size={13} /> Çıkış
+        </button>
+      </div>
+
+      <div style={{ flex: 1, display: 'flex', maxWidth: '960px', width: '100%', margin: '0 auto', padding: '24px', gap: '20px' }}>
+
+        {/* Sol: Öneriler */}
+        <div style={{ width: '200px', flexShrink: 0 }}>
+          <div style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.15em', color: G.gold, marginBottom: '12px' }}>HAZIR ŞABLONLAR</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            {SUGGESTIONS.map((s, i) => (
+              <motion.button key={i} onClick={() => sendMsg(s.prompt)}
+                whileHover={{ x: 4, background: 'rgba(212,175,55,0.12)' }}
+                style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 12px', borderRadius: '10px', background: G.goldFaint, border: `1px solid ${G.goldBorder}`, cursor: 'pointer', fontFamily: 'Montserrat', textAlign: 'left', transition: 'all 0.15s' }}>
+                <span style={{ fontSize: '16px' }}>{s.icon}</span>
+                <span style={{ fontSize: '11px', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>{s.label}</span>
+              </motion.button>
+            ))}
+          </div>
+        </div>
+
+        {/* Sağ: Chat */}
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: G.dark, border: `1px solid ${G.goldBorder}`, borderRadius: '16px', overflow: 'hidden' }}>
+
+          {/* Mesajlar */}
+          <div style={{ flex: 1, overflowY: 'auto', padding: '20px', display: 'flex', flexDirection: 'column', gap: '16px', minHeight: 0, maxHeight: 'calc(100vh - 280px)' }}>
+            {msgs.map((msg, i) => (
+              <div key={i} style={{ display: 'flex', gap: '10px', justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start' }}>
+                {msg.role === 'assistant' && (
+                  <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: G.goldFaint, border: `1px solid ${G.goldBorder}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
+                    <Bot size={13} style={{ color: G.gold }} />
+                  </div>
+                )}
+                <div style={{ maxWidth: '80%' }}>
+                  <div style={{
+                    padding: '12px 16px', fontSize: '13px', lineHeight: 1.7,
+                    borderRadius: msg.role === 'user' ? '14px 14px 0 14px' : '14px 14px 14px 0',
+                    background: msg.role === 'user' ? G.gold : G.goldFaint,
+                    border: msg.role === 'user' ? 'none' : `1px solid ${G.goldBorder}`,
+                    color: msg.role === 'user' ? G.bg : 'rgba(255,255,255,0.88)',
+                    whiteSpace: 'pre-wrap',
+                  }}>
+                    {msg.text}
+                  </div>
+                  {msg.role === 'assistant' && i > 0 && (
+                    <button onClick={() => copyText(msg.text, i)}
+                      style={{ marginTop: '5px', fontSize: '10px', color: copied === i ? '#00e87a' : 'rgba(212,175,55,0.4)', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'Montserrat', fontWeight: 600, padding: '2px 0', transition: 'color 0.2s' }}>
+                      {copied === i ? '✓ Kopyalandı!' : '⎘ Kopyala'}
+                    </button>
+                  )}
+                </div>
+                {msg.role === 'user' && (
+                  <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: G.gold, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
+                    <User size={13} style={{ color: G.bg }} />
+                  </div>
+                )}
+              </div>
+            ))}
+
+            {loading && (
+              <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: G.goldFaint, border: `1px solid ${G.goldBorder}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <Loader size={13} style={{ color: G.gold, animation: 'spin 1s linear infinite' }} />
+                </div>
+                <div style={{ padding: '12px 16px', background: G.goldFaint, border: `1px solid ${G.goldBorder}`, borderRadius: '14px 14px 14px 0', display: 'flex', gap: '4px', alignItems: 'center' }}>
+                  {[0,1,2].map(i => (
+                    <motion.div key={i} animate={{ y: [0,-5,0] }} transition={{ duration: 0.6, delay: i*0.15, repeat: Infinity }}
+                      style={{ width: '6px', height: '6px', borderRadius: '50%', background: G.gold }} />
+                  ))}
+                </div>
+              </div>
+            )}
+            <div ref={endRef} />
+          </div>
+
+          {/* Input */}
+          <div style={{ padding: '16px', borderTop: `1px solid ${G.goldBorder}`, display: 'flex', gap: '10px' }}>
+            <textarea ref={inputRef} value={input} onChange={e => setInput(e.target.value)}
+              onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); } }}
+              placeholder="Ne yazmamı istersin? Örn: 'Hamile pilatesi hakkında blog yaz' veya 'Cuma dersi için Instagram postu'"
+              rows={2}
+              style={{ flex: 1, background: G.goldFaint, border: `1px solid ${G.goldBorder}`, borderRadius: '12px', padding: '12px 16px', fontSize: '13px', color: '#fff', outline: 'none', fontFamily: 'Montserrat', resize: 'none', lineHeight: 1.5 }} />
+            <motion.button onClick={() => sendMsg()} disabled={loading || !input.trim()}
+              whileHover={input.trim() ? { scale: 1.05 } : {}} whileTap={input.trim() ? { scale: 0.97 } : {}}
+              style={{ width: '44px', height: '44px', borderRadius: '12px', background: input.trim() ? G.gold : G.goldFaint, border: `1px solid ${input.trim() ? 'transparent' : G.goldBorder}`, cursor: input.trim() ? 'pointer' : 'default', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, transition: 'all 0.2s', alignSelf: 'flex-end' }}>
+              <Send size={16} style={{ color: input.trim() ? G.bg : 'rgba(212,175,55,0.3)' }} />
+            </motion.button>
+          </div>
+        </div>
+      </div>
+
+      <style>{`@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
+    </div>
+  );
+}

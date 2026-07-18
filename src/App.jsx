@@ -5,6 +5,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { toast } from '@/components/ui/use-toast';
 import { AnimatePresence } from 'framer-motion';
 import { ThemeProvider } from '@/contexts/ThemeContext';
+import { AdminProvider } from '@/contexts/AdminContext';
 
 import PageLayout from '@/components/layout/PageLayout';
 import HomePage from '@/pages/HomePage';
@@ -22,6 +23,7 @@ import ContactPage from '@/pages/ContactPage';
 import ProgramPage from '@/pages/ProgramPage';
 import SSFPage from '@/pages/SSFPage';
 import NotFoundPage from '@/pages/NotFoundPage';
+import AdminPage from '@/pages/AdminPage';
 
 function App() {
   const handleNotImplemented = (e) => {
@@ -53,6 +55,7 @@ function App() {
             <Route path="iletisim" element={<ContactPage />} />
             <Route path="program" element={<ProgramPage />} />
             <Route path="sss" element={<SSFPage />} />
+            <Route path="admin" element={<AdminPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>
@@ -66,7 +69,9 @@ function AppWrapper() {
   return (
     <Router>
       <ThemeProvider>
+        <AdminProvider>
         <App />
+        </AdminProvider>
       </ThemeProvider>
     </Router>
   );
