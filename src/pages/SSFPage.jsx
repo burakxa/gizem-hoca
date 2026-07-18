@@ -22,7 +22,10 @@ export default function SSFPage() {
 
   return (
     <>
-      <Helmet><title>SSS - Gizem Hoca Pilates</title></Helmet>
+      <Helmet>
+        <title>Sıkça Sorulan Sorular | Pilates Hakkında | Gizem Hoca</title>
+        <meta name="description" content="Pilates hakkında merak edilen sorular ve cevapları. Başlangıç, fiyatlar, program ve daha fazlası." />
+      </Helmet>
       <div style={{ background:G.bg, fontFamily:'Montserrat,sans-serif', minHeight:'100vh' }}>
         <div style={{ padding:'32px 40px', borderBottom:`1px solid ${G.goldBorder}`, display:'flex', alignItems:'center', gap:'16px' }}>
           <div style={{ width:'32px', height:'2px', background:G.gold }} />

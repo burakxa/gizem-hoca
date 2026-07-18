@@ -34,7 +34,10 @@ export default function DerslerPage() {
 
   return (
     <>
-      <Helmet><title>Dersler - Gizem Hoca Pilates</title></Helmet>
+      <Helmet>
+        <title>Pilates Dersleri | Mat, Reformer, Hamile Pilatesi | Gizem Hoca</title>
+        <meta name="description" content="İstanbul Beşiktaş'ta mat pilates, reformer pilates, hamile pilatesi ve postür düzeltme dersleri. Bireysel ve grup seçenekleri. Online ders imkanı." />
+      </Helmet>
       <div style={{ background: G.bg, fontFamily:'Montserrat,sans-serif', minHeight:'100vh' }}>
         <div style={{ padding:'32px 40px', borderBottom:`1px solid ${G.goldBorder}`, display:'flex', alignItems:'center', gap:'16px' }}>
           <div style={{ width:'32px', height:'2px', background:G.gold }} />

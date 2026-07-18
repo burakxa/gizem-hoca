@@ -30,7 +30,10 @@ export default function GalleryPage() {
 
   return (
     <>
-      <Helmet><title>Galeri - Gizem Hoca Pilates</title></Helmet>
+      <Helmet>
+        <title>Galeri | Pilates Stüdyo Fotoğrafları | Gizem Hoca</title>
+        <meta name="description" content="Gizem Hoca pilates stüdyosundan fotoğraflar. Reformer aleti, mat pilates dersleri ve stüdyo ortamı." />
+      </Helmet>
       <div style={{ background:G.bg, fontFamily:'Montserrat,sans-serif', minHeight:'100vh' }}>
         <div style={{ padding:'32px 40px', borderBottom:`1px solid ${G.goldBorder}`, display:'flex', alignItems:'center', gap:'16px' }}>
           <div style={{ width:'32px', height:'2px', background:G.gold }} />

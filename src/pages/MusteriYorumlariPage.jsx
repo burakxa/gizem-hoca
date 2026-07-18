@@ -25,7 +25,10 @@ export default function MusteriYorumlariPage() {
 
   return (
     <>
-      <Helmet><title>Müşteri Yorumları - Gizem Hoca Pilates</title></Helmet>
+      <Helmet>
+        <title>Öğrenci Yorumları | Gizem Hoca Pilates Beşiktaş</title>
+        <meta name="description" content="500+ öğrencinin Gizem Hoca pilates deneyimleri. Gerçek yorumlar ve dönüşüm hikayeleri." />
+      </Helmet>
       <div style={{ background:G.bg, fontFamily:'Montserrat,sans-serif', minHeight:'100vh' }}>
         <div style={{ padding:'32px 40px', borderBottom:`1px solid ${G.goldBorder}`, display:'flex', justifyContent:'space-between', alignItems:'flex-end' }}>
           <div style={{ display:'flex', alignItems:'center', gap:'16px' }}>

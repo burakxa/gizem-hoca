@@ -144,7 +144,21 @@ export default function MainMenu() {
           </div>
         </div>
 
-        {/* Messi modunda arjantin şerit */}
+  
+      {/* ÜCRETSIZ DERS TOP BAR */}
+      <div style={{ background: G.gold, padding: '6px 24px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', flexWrap: 'wrap' }}>
+        <span style={{ fontSize: '10px', fontWeight: 900, color: G.bg, letterSpacing: '0.06em' }}>
+          🎁 İLK TANITMA SEANSI ÜCRETSİZ
+        </span>
+        <span style={{ fontSize: '9px', color: 'rgba(13,27,62,0.6)' }}>·</span>
+        <a href="https://wa.me/905383135720?text=Ücretsiz%20tanışma%20seansı%20istiyorum"
+          target="_blank" rel="noopener noreferrer"
+          style={{ fontSize: '10px', fontWeight: 900, color: G.bg, textDecoration: 'underline', letterSpacing: '0.04em' }}>
+          Hemen Rezervasyon Yap →
+        </a>
+      </div>
+
+      {/* Messi modunda arjantin şerit */}
         {isMessi && (
           <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} style={{ height: '3px', background: `linear-gradient(90deg, ${M.blue} 33%, #fff 33%, #fff 66%, ${M.blue} 66%)` }} />
         )}

@@ -1,9 +1,11 @@
+import { Helmet } from 'react-helmet';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, ChevronRight, PlayCircle, X, Users, Monitor, Dumbbell, Sparkles } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
 import Marquee from '@/components/ui/Marquee';
 import BeforeAfterSlider from '@/components/ui/BeforeAfterSlider';
+import GoogleReviews from '@/components/ui/GoogleReviews';
 import { Link } from 'react-router-dom';
 
 const PHOTO = 'https://horizons-cdn.hostinger.com/451c65e3-9af7-4c36-9235-9b5c17a191ce/71e533503d331149fe73f8e165f13f5b.png';
@@ -127,13 +129,21 @@ export default function HomePage() {
               {isMessi ? <>GÜÇLEN.<br />ESNE.<br /><span style={{ color: M.yellow }}>ŞAMPIYON OL.</span></> : <>Move.<br />Breathe.<br /><span style={{ color: G.gold }}>Thrive.</span></>}
             </motion.h1>
             <motion.p
-              style={{ fontSize: '13px', color: G.whiteMid, lineHeight: 1.75, maxWidth: '300px', marginBottom: '24px' }}
+              style={{ fontSize: '13px', color: G.whiteMid, lineHeight: 1.75, maxWidth: '300px', marginBottom: '16px' }}
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
               Hareketin dönüştürücü gücüne inanıyorum. Her öğrencimin potansiyelini ortaya çıkarmasına yardım ediyorum.
             </motion.p>
+
+            {/* İLK DERS ÜCRETSİZ BADGE */}
+            <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.45 }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(212,175,55,0.12)', border: '1px solid rgba(212,175,55,0.4)', borderRadius: '999px', padding: '7px 16px', marginBottom: '20px' }}>
+              <span style={{ fontSize: '14px' }}>🎁</span>
+              <span style={{ fontSize: '11px', fontWeight: 900, color: G.gold, letterSpacing: '0.04em' }}>İLK TANITMA SEANSI ÜCRETSİZ</span>
+            </motion.div>
+
             <motion.div className="hero-btns" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
-              <GoldBtn to="/fiyatlar" fullWidth={isMobile}>DERS AL <ArrowRight size={14} /></GoldBtn>
-              <GoldBtn to="/hakkimda" outline fullWidth={isMobile}>HAKKIMDA</GoldBtn>
+              <GoldBtn to="/iletisim" fullWidth={isMobile}>ÜCRETSİZ DERS AL <ArrowRight size={14} /></GoldBtn>
+              <GoldBtn to="/fiyatlar" outline fullWidth={isMobile}>FİYATLAR</GoldBtn>
             </motion.div>
           </div>
 
@@ -289,6 +299,8 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+
+      <GoogleReviews />
 
       {/* YORUMLAR */}
       <div style={{ padding: 'clamp(28px, 5vw, 48px) clamp(16px, 4vw, 40px)', borderBottom: `1px solid ${G.goldBorder}`, background: G.dark }}>

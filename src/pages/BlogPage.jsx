@@ -10,7 +10,10 @@ const G = { bg:'#0d1b3e', gold:'#d4af37', goldBorder:'rgba(212,175,55,0.2)', whi
 export default function BlogPage() {
   return (
     <>
-      <Helmet><title>Blog - Gizem Hoca Pilates</title></Helmet>
+      <Helmet>
+        <title>Pilates Blog | Wellness İpuçları | Gizem Hoca</title>
+        <meta name="description" content="Pilates, sağlıklı yaşam ve wellness hakkında faydalı içerikler. Postür, core güçlendirme, hamile pilatesi ve daha fazlası." />
+      </Helmet>
       <div style={{ background:G.bg, fontFamily:'Montserrat,sans-serif', minHeight:'100vh' }}>
         <div style={{ padding:'32px 40px', borderBottom:`1px solid ${G.goldBorder}`, display:'flex', alignItems:'center', gap:'16px' }}>
           <div style={{ width:'32px', height:'2px', background:G.gold }} />

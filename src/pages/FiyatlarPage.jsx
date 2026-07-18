@@ -24,7 +24,27 @@ export default function FiyatlarPage() {
 
   return (
     <>
-      <Helmet><title>Fiyatlar - Gizem Hoca Pilates</title></Helmet>
+      <Helmet>
+        <title>Pilates Fiyatları 2025 | Uygun Paketler | Gizem Hoca Beşiktaş</title>
+        <meta name="description" content="Beşiktaş pilates ders ücretleri ve paketleri. Bireysel, grup ve online pilates fiyatları. İlk tanışma seansı ücretsiz. Esnek ödeme seçenekleri." />
+      </Helmet>
+  
+      {/* ÜCRETSİZ DERS BANNER */}
+      <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
+        style={{ margin: '0', padding: 'clamp(16px,3vw,20px) clamp(16px,4vw,40px)', background: 'linear-gradient(135deg, rgba(212,175,55,0.15), rgba(212,175,55,0.08))', borderBottom: '1px solid rgba(212,175,55,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <span style={{ fontSize: '24px' }}>🎁</span>
+          <div>
+            <div style={{ fontSize: '14px', fontWeight: 900, color: '#d4af37' }}>İlk Tanışma Seansı Tamamen Ücretsiz!</div>
+            <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.5)', marginTop: '2px' }}>Paket almadan önce pilatesle tanış. Hiçbir taahhüt yok.</div>
+          </div>
+        </div>
+        <a href="https://wa.me/905383135720?text=Merhaba!%20Ücretsiz%20tanışma%20seansı%20almak%20istiyorum." target="_blank" rel="noopener noreferrer"
+          style={{ background: '#d4af37', color: '#0d1b3e', fontSize: '11px', fontWeight: 900, padding: '10px 22px', borderRadius: '999px', textDecoration: 'none', letterSpacing: '0.06em', whiteSpace: 'nowrap' }}>
+          ÜCRETSİZ DERS AL →
+        </a>
+      </motion.div>
+
       <div style={{ background: G.bg, fontFamily: 'Montserrat,sans-serif', minHeight: '100vh' }}>
         <div style={{ padding: '32px 40px', borderBottom: `1px solid ${G.goldBorder}`, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>

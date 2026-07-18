@@ -35,7 +35,10 @@ export default function ContactPage() {
 
   return (
     <>
-      <Helmet><title>İletişim - Gizem Hoca Pilates</title></Helmet>
+      <Helmet>
+        <title>İletişim | Gizem Hoca Pilates Beşiktaş İstanbul</title>
+        <meta name="description" content="Gizem Hoca pilates stüdyosu iletişim bilgileri. Beşiktaş İstanbul. WhatsApp: 0538 313 57 20. Randevu ve bilgi için ulaşın." />
+      </Helmet>
       <div style={{ background:G.bg, fontFamily:'Montserrat,sans-serif', minHeight:'100vh' }}>
         <div style={{ padding:'32px 40px', borderBottom:`1px solid ${G.goldBorder}`, display:'flex', alignItems:'center', gap:'16px' }}>
           <div style={{ width:'32px', height:'2px', background:G.gold }} />
@@ -103,6 +106,31 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
+
+      {/* GOOGLE MAPS */}
+      <div style={{ borderBottom: `1px solid ${G.goldBorder}` }}>
+        <div style={{ padding: 'clamp(20px,4vw,32px) clamp(16px,4vw,40px)', borderBottom: `1px solid ${G.goldBorder}` }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div style={{ width: '22px', height: '2px', background: G.gold }} />
+            <span style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.15em', color: G.gold }}>KONUM</span>
+          </div>
+        </div>
+        <div style={{ position: 'relative', paddingBottom: '35%', minHeight: '280px' }}>
+          <iframe
+            title="Gizem Hoca Pilates Konum - Beşiktaş İstanbul"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.5!2d29.0044!3d41.0439!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zQmXFn2lrdGHFnw!5e0!3m2!1str!2str!4v1234567890"
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none', filter: 'grayscale(1) invert(0.85) hue-rotate(180deg)' }}
+            allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
+          />
+          <div style={{ position: 'absolute', bottom: '16px', right: '16px' }}>
+            <a href="https://maps.google.com/?q=Beşiktaş+İstanbul" target="_blank" rel="noopener noreferrer"
+              style={{ background: G.gold, color: G.bg, fontSize: '10px', fontWeight: 900, padding: '8px 16px', borderRadius: '999px', textDecoration: 'none', letterSpacing: '0.06em' }}>
+              Yol Tarifi Al →
+            </a>
+          </div>
+        </div>
+      </div>
+
     </>
   );
 }

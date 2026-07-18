@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Award, Star, Users, Calendar } from 'lucide-react';
+import CertBadges from '@/components/ui/CertBadges';
 
 const G = { bg: '#0d1b3e', dark: '#071029', gold: '#d4af37', goldFaint: 'rgba(212,175,55,0.1)', goldBorder: 'rgba(212,175,55,0.2)', white: 'rgba(255,255,255,0.9)', whiteMid: 'rgba(255,255,255,0.5)' };
 const PHOTO = 'https://horizons-cdn.hostinger.com/451c65e3-9af7-4c36-9235-9b5c17a191ce/71e533503d331149fe73f8e165f13f5b.png';
@@ -24,7 +25,10 @@ const stats = [
 export default function AboutPage() {
   return (
     <>
-      <Helmet><title>Hakkımda - Gizem Hoca Pilates</title></Helmet>
+      <Helmet>
+        <title>Hakkımda | Gizem Hoca - Certified Pilates Eğitmeni Beşiktaş</title>
+        <meta name="description" content="Balanced Body® sertifikalı pilates eğitmeni Gizem Hoca hakkında. 8+ yıl deneyim, Reformer ve Mat pilates uzmanlığı, İstanbul Beşiktaş'ta stüdyo." />
+      </Helmet>
       <div style={{ background: G.bg, fontFamily: 'Montserrat,sans-serif', minHeight: '100vh' }}>
         <style>{`
           @media (max-width: 768px) {
