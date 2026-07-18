@@ -19,8 +19,8 @@ export default function MessiGame({ onClose }) {
 
   const [screen,   setScreen]   = useState('menu');
   const [uiPhase,  setUiPhase]  = useState('aim');
-  const [power,    setPower]    = useState(0);
-  const [spin,     setSpin]     = useState(0);
+  const [_power, _setPower] = useState(0); // unused
+  const [_spin, _setSpin] = useState(0); // unused
   const [result,   setResult]   = useState(null);
   const [score,    setScore]    = useState({ g:0, s:0 });
   const [round,    setRound]    = useState(0);
@@ -411,100 +411,33 @@ export default function MessiGame({ onClose }) {
   }
 
   // ─── CANVAS LOOP ──────────────────────────────────────────────────────────
-  useEffect(() => {
-    if (screen !== 'game') return;
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let running = true;
-    const loop = () => {
-      if (!running) return;
-      drawFrame(ctx);
-      rafRef.current = requestAnimationFrame(loop);
-    };
-    rafRef.current = requestAnimationFrame(loop);
-    return () => { running=false; cancelAnimationFrame(rafRef.current); };
-  }, [screen]);
+  // power bar removed
 
-  // ─── MOUSE ────────────────────────────────────────────────────────────────
-  const onMouseMove = useCallback(e => {
-    const g=gs.current;
-    if (!g||g.phase!=='aim') return;
-    const rect=canvasRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    const sx=GW/rect.width, sy=GH/rect.height;
-    const x=(e.clientX-rect.left)*sx, y=(e.clientY-rect.top)*sy;
-    const G=GOAL;
-    if (x>G.x-10&&x<G.x+G.w+10&&y>G.y-10&&y<G.y+G.h+10) {
-      g.aimX=Math.min(G.x+G.w-5,Math.max(G.x+5,x));
-      g.aimY=Math.min(G.y+G.h-5,Math.max(G.y+5,y));
-    }
-  },[]);
-
-  const onTouch = useCallback(e => {
-    const g=gs.current;
-    if (!g||g.phase!=='aim') return;
-    const t=e.touches[0];
-    const rect=canvasRef.current?.getBoundingClientRect();
-    if(!rect) return;
-    const sx=GW/rect.width,sy=GH/rect.height;
-    const x=(t.clientX-rect.left)*sx,y=(t.clientY-rect.top)*sy;
-    const G=GOAL;
-    if(x>G.x-10&&x<G.x+G.w+10&&y>G.y-10&&y<G.y+G.h+10) {
-      g.aimX=Math.min(G.x+G.w-5,Math.max(G.x+5,x));
-      g.aimY=Math.min(G.y+G.h-5,Math.max(G.y+5,y));
-    }
-  },[]);
-
-  // ─── GÜÇ / SPİN BAR ───────────────────────────────────────────────────────
-  useEffect(() => {
-    if (uiPhase==='power') {
-      pDir.current=1; setPower(0);
-      powerIv.current=setInterval(()=>setPower(p=>{
-        const n=p+pDir.current*2.8;
-        if(n>=100){pDir.current=-1;return 100;}
-        if(n<=0){pDir.current=1;return 0;}
-        return n;
-      }),24);
-    } else clearInterval(powerIv.current);
-    return ()=>clearInterval(powerIv.current);
-  },[uiPhase]);
-
-  useEffect(()=>{
-    if(uiPhase==='spin'){
-      sDir.current=1; setSpin(0);
-      spinIv.current=setInterval(()=>setSpin(s=>{
-        const n=s+sDir.current*0.032;
-        if(n>=1){sDir.current=-1;return 1;}
-        if(n<=-1){sDir.current=1;return -1;}
-        return n;
-      }),24);
-    } else clearInterval(spinIv.current);
-    return ()=>clearInterval(spinIv.current);
-  },[uiPhase]);
+  // spin bar removed
 
   // ─── TIKLA ────────────────────────────────────────────────────────────────
   const onClick = useCallback(()=>{
     const g=gs.current; if(!g) return;
     if (g.phase==='aim') {
-      g.phase='power'; g.power=0; setUiPhase('power');
-    } else if (g.phase==='power') {
-      clearInterval(powerIv.current);
-      g.power=power; g.phase='spin'; setUiPhase('spin');
-    } else if (g.phase==='spin') {
-      clearInterval(spinIv.current);
-      g.spin=spin; launch(g);
+      // Direkt şut! — güç ve spin otomatik
+      const distX = g.aimX - GW/2;
+      const normX = distX / (GOAL.w/2); // -1..1
+      // Köşe hedeflendiyse otomatik spin ver
+      g.power = 72 + Math.abs(normX)*18; // köşeye güç
+      g.spin  = normX * 0.55;            // hedefe göre hafif kavis
+      launch(g);
     }
-  },[power,spin]);
+  },[]);
 
   function launch(g) {
     const cfg=DIFF[g.diff];
     const tx=g.aimX, ty=g.aimY;
-    const frames=Math.max(18, Math.hypot(tx-BALL0.x,ty-BALL0.y) / ((g.power/100)*20*cfg.accuracy+8));
+    const spd = (g.power/100)*20 + 8;
+    const frames=Math.max(16, Math.hypot(tx-BALL0.x,ty-BALL0.y) / spd);
     g.ball={x:BALL0.x,y:BALL0.y,z:0,
       vx:(tx-BALL0.x)/frames, vy:(ty-BALL0.y)/frames,
       vz:(g.power/100)*9+2.5, rot:0, size:16};
-    g.spin=spin; g.phase='flying'; g.kickAnim=1;
+    g.phase='flying'; g.kickAnim=1;
     setUiPhase('flying');
 
     // CR7 atla
@@ -604,9 +537,6 @@ export default function MessiGame({ onClose }) {
   );
 
   // ── OYUN EKRANI
-  const pc = power>75?'#ff4444': power>45?'#f8d000':'#75aadb';
-  const sc2 = Math.abs(spin)>0.3?(spin<0?'#75aadb':'#f8d000'):'rgba(255,255,255,0.25)';
-
   return (
     <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}
       style={{position:'fixed',inset:0,zIndex:9985,background:'#071220',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',fontFamily:'Montserrat,sans-serif'}}>
@@ -622,40 +552,11 @@ export default function MessiGame({ onClose }) {
       <div style={{width:'min(800px,100vw)',background:'rgba(0,0,0,0.72)',backdropFilter:'blur(12px)',borderTop:'1px solid rgba(255,255,255,0.07)',padding:'10px 20px 14px',minHeight:58}}>
         {uiPhase==='aim' && (
           <div style={{textAlign:'center'}}>
-            <div style={{fontSize:11,fontWeight:900,letterSpacing:'0.1em',color:'rgba(255,255,255,0.4)',marginBottom:2}}>🎯 FAREYİ HAREKET ETTİR — KALEYE TIKLA → GÜÇ AŞAMASI</div>
-            <div style={{fontSize:9,color:'rgba(255,255,255,0.18)',letterSpacing:'0.06em'}}>Köşeleri hedefle! CR7 akıllı kaleci</div>
+            <div style={{fontSize:11,fontWeight:900,letterSpacing:'0.1em',color:'rgba(255,255,255,0.4)',marginBottom:2}}>🎯 FAREYİ HAREKET ETTİR — TIKLA → ŞUT!</div>
+            <div style={{fontSize:9,color:'rgba(255,255,255,0.18)',letterSpacing:'0.06em'}}>Köşeleri hedefle, CR7'ye şans verme!</div>
           </div>
         )}
-        {uiPhase==='power' && (
-          <div style={{display:'flex',alignItems:'center',gap:12}}>
-            <div style={{fontSize:10,fontWeight:900,color:pc,whiteSpace:'nowrap'}}>⚡ GÜÇ</div>
-            <div style={{flex:1,background:'rgba(255,255,255,0.06)',borderRadius:'999px',height:14,overflow:'hidden',cursor:'pointer',position:'relative'}} onClick={onClick}>
-              <div style={{height:'100%',width:`${power}%`,background:`linear-gradient(90deg,#75aadb,${pc})`,borderRadius:'999px',transition:'none'}} />
-              {power>85 && <div style={{position:'absolute',inset:0,background:'repeating-linear-gradient(90deg,transparent,transparent 6px,rgba(255,50,50,0.2) 6px,rgba(255,50,50,0.2) 10px)'}} />}
-            </div>
-            <div style={{fontSize:15,fontWeight:900,color:pc,minWidth:40,textAlign:'right'}}>{Math.round(power)}%</div>
-            <div style={{fontSize:9,color:'rgba(255,255,255,0.25)',whiteSpace:'nowrap'}}>TIKLA → SPİN</div>
-          </div>
-        )}
-        {uiPhase==='spin' && (
-          <div style={{display:'flex',alignItems:'center',gap:12}}>
-            <div style={{fontSize:10,fontWeight:900,color:'#75aadb',whiteSpace:'nowrap'}}>🌀 EFEKT</div>
-            <div style={{flex:1,background:'rgba(255,255,255,0.06)',borderRadius:'999px',height:14,overflow:'hidden',cursor:'pointer',position:'relative'}} onClick={onClick}>
-              <div style={{position:'absolute',left:'50%',top:0,bottom:0,width:2,background:'rgba(255,255,255,0.25)',transform:'translateX(-50%)'}} />
-              <div style={{
-                position:'absolute',height:'100%',
-                left:spin<0?`${50+spin*50}%`:'50%',
-                width:`${Math.abs(spin)*50}%`,
-                background:spin<0?'linear-gradient(90deg,#75aadb,rgba(117,170,219,0.3))':'linear-gradient(90deg,rgba(248,208,0,0.3),#f8d000)',
-                borderRadius:'999px',
-              }} />
-            </div>
-            <div style={{fontSize:12,fontWeight:900,color:sc2,minWidth:52,textAlign:'right',whiteSpace:'nowrap'}}>
-              {spin<-0.3?'← Sol':spin>0.3?'Sağ →':'▲ Düz'}
-            </div>
-            <div style={{fontSize:9,color:'rgba(255,255,255,0.25)',whiteSpace:'nowrap'}}>TIKLA → ŞUT!</div>
-          </div>
-        )}
+        
         {uiPhase==='flying' && (
           <div style={{textAlign:'center',fontSize:14,fontWeight:900,color:'#f8d000',letterSpacing:'0.1em'}}>⚡ TOP FIRLADI!</div>
         )}
