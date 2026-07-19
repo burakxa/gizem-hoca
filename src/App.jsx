@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet';
 import { Toaster } from '@/components/ui/toaster';
 import { toast } from '@/components/ui/use-toast';
 import { AnimatePresence } from 'framer-motion';
-import { ThemeProvider } from '@/contexts/ThemeContext';
 import { AdminProvider } from '@/contexts/AdminContext';
 
 import PageLayout from '@/components/layout/PageLayout';
@@ -68,11 +67,9 @@ function App() {
 function AppWrapper() {
   return (
     <Router>
-      <ThemeProvider>
-        <AdminProvider>
+      <AdminProvider>
         <App />
-        </AdminProvider>
-      </ThemeProvider>
+      </AdminProvider>
     </Router>
   );
 }

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useTheme } from '@/contexts/ThemeContext';
 import { Instagram, Youtube, Facebook, ArrowUpRight } from 'lucide-react';
 
 const G = { dark: '#071029', gold: '#d4af37', goldBorder: 'rgba(212,175,55,0.2)', whiteMid: 'rgba(255,255,255,0.4)' };
@@ -16,11 +15,10 @@ const HoverLink = ({ to, children }) => {
 };
 
 const Footer = () => {
-  const { isMessi } = useTheme();
   const year = new Date().getFullYear();
-  const footerBg = isMessi ? '#071220' : G.dark;
-  const accentColor = isMessi ? '#75aadb' : G.gold;
-  const borderCol = isMessi ? 'rgba(117,170,219,0.2)' : G.goldBorder;
+  const footerBg = G.dark;
+  const accentColor = G.gold;
+  const borderCol = G.goldBorder;
   return (
     <footer style={{ background: footerBg, borderTop: `1px solid ${borderCol}` }}>
       {/* Desktop: 4 kolon, Mobil: stack */}
