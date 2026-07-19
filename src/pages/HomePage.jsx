@@ -2,7 +2,6 @@ import { Helmet } from 'react-helmet';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, ChevronRight, PlayCircle, X, Users, Monitor, Dumbbell, Sparkles } from 'lucide-react';
-import { useTheme } from '@/contexts/ThemeContext';
 import Marquee from '@/components/ui/Marquee';
 import BeforeAfterSlider from '@/components/ui/BeforeAfterSlider';
 import GoogleReviews from '@/components/ui/GoogleReviews';
@@ -62,10 +61,6 @@ const GoldBtn = ({ to, children, outline, fullWidth }) => {
 };
 
 export default function HomePage() {
-  const { isMessi } = useTheme();
-  const M = { bg:'#0a1628', blue:'#75aadb', yellow:'#f8d000', dark:'#071220' };
-  const theme = isMessi ? { bg: M.bg, dark: M.dark, gold: M.blue, goldFaint: 'rgba(117,170,219,0.1)', goldBorder: 'rgba(117,170,219,0.2)', white: 'rgba(255,255,255,0.9)', whiteMid: 'rgba(255,255,255,0.5)', whiteLow: 'rgba(255,255,255,0.15)' } : G;
-  const selVideo_ = null;
   const [selVideo, setSelVideo] = useState(null);
   const [statsVis, setStatsVis] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -111,7 +106,7 @@ export default function HomePage() {
       {/* HERO */}
       <div className="hero-grid">
         <motion.div className="hero-left"
-          style={{ padding: '48px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderRight: `1px solid ${theme.goldBorder}`, position: 'relative', overflow: 'hidden' }}
+          style={{ padding: '48px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderRight: `1px solid ${G.goldBorder}`, position: 'relative', overflow: 'hidden' }}
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
           {/* Dekoratif */}
           <div style={{ position: 'absolute', bottom: '-80px', left: '-50px', width: '320px', height: '320px', borderRadius: '50%', background: G.gold, opacity: 0.04, pointerEvents: 'none' }} />
@@ -126,7 +121,7 @@ export default function HomePage() {
             <motion.h1
               style={{ fontSize: 'clamp(40px, 6vw, 64px)', fontWeight: 900, color: '#fff', lineHeight: 0.92, letterSpacing: '-0.03em', marginBottom: '18px' }}
               initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.7 }}>
-              {isMessi ? <>GÜÇLEN.<br />ESNE.<br /><span style={{ color: M.yellow }}>ŞAMPIYON OL.</span></> : <>Move.<br />Breathe.<br /><span style={{ color: G.gold }}>Thrive.</span></>}
+              <>Move.<br />Breathe.<br /><span style={{ color: G.gold }}>Thrive.</span></>
             </motion.h1>
             <motion.p
               style={{ fontSize: '13px', color: G.whiteMid, lineHeight: 1.75, maxWidth: '300px', marginBottom: '16px' }}

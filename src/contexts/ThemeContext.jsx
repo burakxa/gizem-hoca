@@ -1,13 +1,11 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext } from 'react';
 
 const ThemeContext = createContext(null);
 export const useTheme = () => useContext(ThemeContext);
 
 export const ThemeProvider = ({ children }) => {
-  const [isMessi, setIsMessi] = useState(false);
-  const toggleMessi = () => setIsMessi(m => !m);
   return (
-    <ThemeContext.Provider value={{ isMessi, toggleMessi }}>
+    <ThemeContext.Provider value={{ isMessi: false, toggleMessi: () => {} }}>
       {children}
     </ThemeContext.Provider>
   );

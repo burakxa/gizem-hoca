@@ -7,9 +7,7 @@ import WhatsAppButton from '@/components/ui/WhatsAppButton';
 import CookieBanner from '@/components/ui/CookieBanner';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import ChatBot from '@/components/ui/ChatBot';
-import MessiSplash from '@/components/ui/MessiSplash';
 import FloatingBookBtn from '@/components/ui/FloatingBookBtn';
-import { useTheme } from '@/contexts/ThemeContext';
 
 const pageVariants = {
   initial: { opacity: 0, y: 8 },
@@ -19,36 +17,10 @@ const pageVariants = {
 
 const PageLayout = ({ handleNotImplemented }) => {
   const location = useLocation();
-  const { isMessi } = useTheme();
-
   return (
     <>
       <LoadingScreen />
-      <MessiSplash />
-
-      {/* Messi modu global CSS */}
-      {isMessi && (
-        <style>{`
-          :root {
-            --messi-blue: #75aadb;
-            --messi-yellow: #f8d000;
-            --messi-bg: #0a1628;
-            --messi-dark: #071220;
-          }
-          body { background: #0a1628 !important; }
-          /* Tüm altın renkleri mavi yap */
-          [style*="color: #d4af37"], [style*="color:#d4af37"] { color: #75aadb !important; }
-          [style*="background: #d4af37"], [style*="background:#d4af37"] { background: #f8d000 !important; }
-          [style*="background: #0d1b3e"], [style*="background:#0d1b3e"] { background: #0a1628 !important; }
-          [style*="background: #071029"], [style*="background:#071029"] { background: #071220 !important; }
-          [style*="border.*d4af37"] { border-color: rgba(117,170,219,0.3) !important; }
-          /* Scrollbar Arjantin mavisi */
-          ::-webkit-scrollbar-thumb { background: rgba(117,170,219,0.4) !important; }
-          ::selection { background: rgba(117,170,219,0.3) !important; }
-        `}</style>
-      )}
-
-      <div style={{ minHeight: '100vh', background: isMessi ? '#0a1628' : '#0d1b3e', display: 'flex', flexDirection: 'column', transition: 'background 0.5s' }}>
+      <div style={{ minHeight: '100vh', background: '#0d1b3e', display: 'flex', flexDirection: 'column' }}>
         <MainMenu />
         <main style={{ flex: 1 }}>
           <AnimatePresence mode="wait">
@@ -59,8 +31,8 @@ const PageLayout = ({ handleNotImplemented }) => {
         </main>
         <Footer />
         <WhatsAppButton phoneNumber="905383135720" />
-        <ChatBot />
         <FloatingBookBtn />
+        <ChatBot />
         <CookieBanner />
       </div>
     </>
