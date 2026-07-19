@@ -1,240 +1,320 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Bot, User, Loader, LogOut, Sparkles } from 'lucide-react';
+import { Send, Bot, User, Loader, LogOut, Sparkles, Plus, BookOpen, Calendar, DollarSign, HelpCircle, Star, Megaphone, Instagram, Mail, Copy, Check, ChevronDown, ChevronUp, Zap } from 'lucide-react';
 import { useAdmin } from '@/contexts/AdminContext';
 
-const G = { bg: '#0d1b3e', dark: '#071029', gold: '#d4af37', goldBorder: 'rgba(212,175,55,0.2)', goldFaint: 'rgba(212,175,55,0.08)' };
+const G = { bg:'#0d1b3e', dark:'#071029', gold:'#d4af37', goldBorder:'rgba(212,175,55,0.2)', goldFaint:'rgba(212,175,55,0.08)', white:'rgba(255,255,255,0.92)', whiteMid:'rgba(255,255,255,0.65)' };
 
-const ADMIN_SYSTEM = `Sen Gizem Hoca Pilates stüdyosunun akıllı site yönetim asistanısın. Türkçe konuşuyorsun.
+const SYSTEM = `Sen Gizem Hoca Pilates stüdyosunun akıllı site yönetim asistanısın. Türkçe konuşuyorsun.
 
-Yapabileceklerin:
-- Blog yazısı oluştur (başlık, içerik, kategori)
-- Program güncellemesi öner (gün, saat, ders türü)
-- Fiyat paketi taslağı hazırla
-- SSS cevabı yaz
-- Sosyal medya paylaşımı oluştur (Instagram, Facebook)
-- E-posta taslağı hazırla
-- Duyuru metni yaz
-- Öğrenci motivasyon mesajı oluştur
+SITEYE EKLEME YAPMA YETKİN:
+Kullanıcı senden bir şey eklenmesini istediğinde, tam ve kullanıma hazır JSX/JSON kodu veya içerik üret.
 
-Konu: Pilates, wellness, sağlıklı yaşam, egzersiz
+Blog yazısı ekle → allBlogPosts dizisine eklenecek tam nesneyi ver:
+{
+  id: [sonraki id],
+  title: "...",
+  date: "... 2026",
+  category: "...",
+  summary: "...",
+  image: "https://images.unsplash.com/photo-...",
+  readTime: [sayı],
+  tags: ["...", "..."],
+  content: \`<p>...</p><h3>...</h3><p>...</p>\`
+}
 
-Yanıtlarını her zaman şu formatta ver:
-1. Ne yaptığını kısaca açıkla
-2. İçeriği net ve kullanıma hazır ver
-3. Gerekirse ek öneri sun
+Program dersi ekle → schedule nesnesine eklenecek ders:
+{ time:"HH:MM", title:"...", type:"Grup|Bireysel|Online", spots:[sayı], duration:50, level:"..." }
 
-Profesyonel ama sıcak bir ton kullan. Gizem Hoca'nın markasına uygun yaz.`;
+SSS sorusu ekle → items dizisine:
+{ q:"?", a:"...", tags:["..."] }
 
-const SUGGESTIONS = [
-  { icon: '📝', label: 'Blog Yaz', prompt: 'Pilatesin duruş bozukluklarına etkisi hakkında 300 kelimelik bir blog yazısı yaz.' },
-  { icon: '📱', label: 'Instagram Postu', prompt: 'Bu haftaki Mat Pilates dersi için Instagram postu ve 10 hashtag yaz.' },
-  { icon: '📅', label: 'Haftalık Duyuru', prompt: 'Bu haftaki ders programı için kısa ve çekici bir duyuru metni yaz.' },
-  { icon: '💌', label: 'Hoş Geldin E-postası', prompt: 'Yeni öğrencilere gönderilecek sıcak bir hoş geldin e-postası yaz.' },
-  { icon: '❓', label: 'SSS Cevabı', prompt: '"Pilates başlamak için ideal yaş var mı?" sorusuna profesyonel bir cevap yaz.' },
-  { icon: '🎯', label: 'Motivasyon Mesajı', prompt: 'Öğrencilere düzenli pratik yapmaları için motive edici kısa bir mesaj yaz.' },
+Fiyat paketi → plans dizisine:
+{ name:"...", emoji:"...", sub:"...", price:{b:"...",g:"..."}, sessions:"...", period:"ay", features:["..."], color:"..." }
+
+KURALLAR:
+- Her zaman Türkçe yaz
+- Pilates/wellness tonunu koru  
+- Kodu hemen ver, açıklaması kısa olsun
+- Hangi dosyaya nereye ekleneceğini söyle
+- SEO için anahtar kelime ekle
+- Gizem Hoca'nın sesini kullan (samimi, uzman, motive edici)`;
+
+const quickActions = [
+  {
+    category: 'Blog',
+    icon: BookOpen,
+    color: '#00e87a',
+    items: [
+      { label:'Yeni Blog Yazısı', prompt:'Pilates ve hamilelik hakkında SEO uyumlu tam bir blog yazısı oluştur. allBlogPosts için hazır JSON formatında ver.' },
+      { label:'Instagram Caption', prompt:'Bu haftaki pilates dersini tanıtan, emoji kullanan, 150 kelimelik Instagram gönderisi yaz.' },
+      { label:'Motivasyon Metni', prompt:'Pilatese yeni başlamak isteyen ama çekinen birine özel kısa ve motive edici bir metin yaz.' },
+    ]
+  },
+  {
+    category: 'Program',
+    icon: Calendar,
+    color: '#75aadb',
+    items: [
+      { label:'Yeni Ders Ekle', prompt:'Salı saat 14:00\'te "Akşam Mat Pilates" grup dersi ekle. ProgramPage schedule nesnesine hazır format ver.' },
+      { label:'Program Duyurusu', prompt:'Yeni eklenen Salı 14:00 Mat Pilates dersini duyuran WhatsApp/Instagram mesajı yaz.' },
+      { label:'Sezon Programı', prompt:'Yaz sezonu için yeni ders programı öner. Sabah erken ve akşam geç saatler ekle.' },
+    ]
+  },
+  {
+    category: 'Fiyat',
+    icon: DollarSign,
+    color: G.gold,
+    items: [
+      { label:'Yeni Paket Ekle', prompt:'Öğrenci indirimi paketi oluştur — 8 ders, %20 indirimli. FiyatlarPage plans dizisine hazır format.' },
+      { label:'Kampanya Metni', prompt:'Yaz kampanyası duyurusu için WhatsApp ve Instagram metni yaz. 2 ay %15 indirim.' },
+      { label:'Fiyat Güncelle', prompt:'Tüm paketlerin yeni fiyatlarını belirlememe yardım et. Mevcut: Başlangıç ₺800, Düzenli ₺1400, Yoğun ₺2200.' },
+    ]
+  },
+  {
+    category: 'SSS',
+    icon: HelpCircle,
+    color: '#ff9fd4',
+    items: [
+      { label:'Yeni SSS Ekle', prompt:'"Pilates için yaş sınırı var mı?" sorusunu SSFPage için hazır format olarak ekle.' },
+      { label:'SSS Kategorisi', prompt:'"Online Dersler" kategorisi için 5 yeni SSS sorusu ve cevabı yaz. SSFPage formatında.' },
+      { label:'SSS Güncelle', prompt:'Mevcut SSS listesini gözden geçir ve eksik olabilecek 3 önemli soru öner.' },
+    ]
+  },
+  {
+    category: 'İçerik',
+    icon: Megaphone,
+    color: '#ffd166',
+    items: [
+      { label:'WhatsApp Mesajı', prompt:'Haftalık ders hatırlatma mesajı yaz. Kısa, samimi, emoji içersin.' },
+      { label:'Email Bülteni', prompt:'Aylık pilates bülteni taslağı oluştur. Başlık, ipucu, yeni ders, motivasyon bölümleri içersin.' },
+      { label:'Duyuru Metni', prompt:'Stüdyoda yapılan yenileme çalışmasını duyuran kısa ve heyecanlı bir metin yaz.' },
+    ]
+  },
 ];
 
+function CopyButton({ text }) {
+  const [copied, setCopied] = useState(false);
+  const copy = () => {
+    navigator.clipboard?.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+  return (
+    <button onClick={copy} style={{ display:'flex', alignItems:'center', gap:'5px', background:'rgba(212,175,55,0.1)', border:`1px solid ${G.goldBorder}`, color:copied?'#00e87a':G.gold, fontSize:'11px', fontWeight:700, padding:'5px 12px', borderRadius:'999px', cursor:'pointer', fontFamily:'Montserrat', transition:'all 0.2s' }}>
+      {copied ? <><Check size={12}/> Kopyalandı!</> : <><Copy size={12}/> Kopyala</>}
+    </button>
+  );
+}
+
+function Message({ msg }) {
+  const isBot = msg.role === 'assistant';
+  return (
+    <motion.div initial={{ opacity:0, y:8 }} animate={{ opacity:1, y:0 }}
+      style={{ display:'flex', gap:'12px', alignItems:'flex-start', justifyContent:isBot?'flex-start':'flex-end', marginBottom:'16px' }}>
+      {isBot && (
+        <div style={{ width:'32px', height:'32px', borderRadius:'10px', background:'rgba(212,175,55,0.15)', border:`1px solid ${G.goldBorder}`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+          <Bot size={15} style={{ color:G.gold }} />
+        </div>
+      )}
+      <div style={{ maxWidth:'82%' }}>
+        <div style={{ background:isBot?'rgba(13,27,62,0.7)':'rgba(212,175,55,0.12)', backdropFilter:'blur(8px)', border:`1px solid ${isBot?G.goldBorder:'rgba(212,175,55,0.3)'}`, borderRadius:isBot?'4px 14px 14px 14px':'14px 4px 14px 14px', padding:'13px 16px' }}>
+          <pre style={{ fontSize:'13px', color:G.white, lineHeight:1.75, whiteSpace:'pre-wrap', fontFamily:'Montserrat', margin:0 }}>
+            {msg.content}
+          </pre>
+        </div>
+        {isBot && (
+          <div style={{ marginTop:'6px' }}>
+            <CopyButton text={msg.content} />
+          </div>
+        )}
+      </div>
+      {!isBot && (
+        <div style={{ width:'32px', height:'32px', borderRadius:'10px', background:'rgba(212,175,55,0.2)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+          <User size={15} style={{ color:G.gold }} />
+        </div>
+      )}
+    </motion.div>
+  );
+}
+
 export default function AdminPage() {
-  const { isAdmin, login, logout } = useAdmin();
-  const [password, setPassword] = useState('');
-  const [loginError, setLoginError] = useState('');
-  const [msgs, setMsgs] = useState([
-    { role: 'assistant', text: 'Merhaba! 👋 Ben site yönetim asistanınım. Blog yazısı, sosyal medya postu, duyuru metni veya istediğin her içeriği hazırlayabilirim. Ne yapalım?' }
+  const { isLoggedIn, login, logout } = useAdmin();
+  const [pass, setPass] = useState('');
+  const [messages, setMessages] = useState([
+    { role:'assistant', content:'Merhaba! 👋 Ben Gizem Hoca\'nın site asistanıyım.\n\nBenden şunları isteyebilirsin:\n• "Blog yaz: [konu]" → Hazır JSON formatında blog yazısı\n• "Program ekle: [gün saat ders]" → Hazır ders objesi\n• "SSS ekle: [soru]" → SSFPage için hazır format\n• "Fiyat paketi oluştur: [detay]" → FiyatlarPage için\n• "Instagram metni yaz: [konu]" → Sosyal medya içeriği\n\nSol panelden hızlı şablonları kullanabilir ya da direkt yazabilirsin. 🚀' }
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
-  const [copied, setCopied] = useState(null);
-  const endRef = useRef(null);
-  const inputRef = useRef(null);
+  const [openCat, setOpenCat] = useState('Blog');
+  const messagesEndRef = useRef(null);
 
-  useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [msgs]);
+  useEffect(() => { messagesEndRef.current?.scrollIntoView({ behavior:'smooth' }); }, [messages]);
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    if (login(password)) { setLoginError(''); }
-    else { setLoginError('Şifre yanlış!'); }
-  };
-
-  const sendMsg = async (text) => {
-    const q = (text || input).trim();
-    if (!q || loading) return;
+  const send = async (text) => {
+    const msg = text || input.trim();
+    if (!msg || loading) return;
     setInput('');
-    const newMsgs = [...msgs, { role: 'user', text: q }];
-    setMsgs(newMsgs);
+    setMessages(m => [...m, { role:'user', content:msg }]);
     setLoading(true);
 
     try {
-      const history = newMsgs.slice(1).map(m => ({
-        role: m.role === 'assistant' ? 'assistant' : 'user',
-        content: m.text,
-      }));
-
       const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method:'POST',
+        headers:{ 'Content-Type':'application/json' },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-6',
-          max_tokens: 1000,
-          system: ADMIN_SYSTEM,
-          messages: history,
-        }),
+          model:'claude-sonnet-4-6',
+          max_tokens:1000,
+          system: SYSTEM,
+          messages:[
+            ...messages.filter(m=>m.role!=='assistant'||messages.indexOf(m)>0).map(m=>({ role:m.role, content:m.content })),
+            { role:'user', content:msg }
+          ]
+        })
       });
-
       const data = await res.json();
-      const reply = data.content?.[0]?.text || 'Bir hata oluştu, tekrar deneyin.';
-      setMsgs(m => [...m, { role: 'assistant', text: reply }]);
-    } catch {
-      setMsgs(m => [...m, { role: 'assistant', text: 'Bağlantı hatası oluştu. Lütfen tekrar deneyin.' }]);
-    } finally {
-      setLoading(false);
+      const reply = data.content?.[0]?.text || 'Bir hata oluştu.';
+      setMessages(m => [...m, { role:'assistant', content:reply }]);
+    } catch(e) {
+      setMessages(m => [...m, { role:'assistant', content:'❌ Bağlantı hatası. Tekrar dene.' }]);
     }
+    setLoading(false);
   };
 
-  const copyText = (text, idx) => {
-    navigator.clipboard.writeText(text);
-    setCopied(idx);
-    setTimeout(() => setCopied(null), 2000);
-  };
-
-  // ── GİRİŞ EKRANI
-  if (!isAdmin) return (
-    <div style={{ minHeight: '100vh', background: G.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Montserrat,sans-serif' }}>
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-        style={{ width: '100%', maxWidth: '360px', padding: '40px', background: G.dark, border: `1px solid ${G.goldBorder}`, borderRadius: '16px', boxShadow: '0 24px 60px rgba(0,0,0,0.4)' }}>
-        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-          <div style={{ width: '52px', height: '52px', borderRadius: '14px', background: G.goldFaint, border: `1px solid ${G.goldBorder}`, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
-            <Bot size={24} style={{ color: G.gold }} />
-          </div>
-          <h1 style={{ fontSize: '20px', fontWeight: 900, color: '#fff', letterSpacing: '-0.02em' }}>Admin Paneli</h1>
-          <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)', marginTop: '6px' }}>AI Site Yönetim Asistanı</p>
+  if (!isLoggedIn) return (
+    <div style={{ minHeight:'100vh', background:G.bg, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Montserrat' }}>
+      <motion.div initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }}
+        style={{ background:G.dark, border:`1px solid ${G.goldBorder}`, borderRadius:'20px', padding:'40px', width:'min(400px,90vw)', textAlign:'center' }}>
+        <div style={{ width:'64px', height:'64px', borderRadius:'16px', background:'rgba(212,175,55,0.12)', border:`1px solid ${G.goldBorder}`, display:'flex', alignItems:'center', justifyContent:'center', margin:'0 auto 20px' }}>
+          <Sparkles size={28} style={{ color:G.gold }} />
         </div>
-
-        <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <input type="password" value={password} onChange={e => setPassword(e.target.value)}
-            placeholder="Şifre"
-            style={{ background: G.goldFaint, border: `1px solid ${loginError ? '#ff4444' : G.goldBorder}`, borderRadius: '10px', padding: '12px 16px', fontSize: '13px', color: '#fff', outline: 'none', fontFamily: 'Montserrat', width: '100%' }} />
-          {loginError && <p style={{ fontSize: '11px', color: '#ff4444', margin: 0 }}>{loginError}</p>}
-          <motion.button type="submit" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-            style={{ background: G.gold, color: G.bg, fontSize: '12px', fontWeight: 900, padding: '12px', borderRadius: '10px', border: 'none', cursor: 'pointer', fontFamily: 'Montserrat', letterSpacing: '0.06em' }}>
-            GİRİŞ YAP ✦
-          </motion.button>
-        </form>
+        <h1 style={{ fontSize:'22px', fontWeight:900, color:'#fff', marginBottom:'6px' }}>Admin Panel</h1>
+        <p style={{ fontSize:'13px', color:G.whiteMid, marginBottom:'28px' }}>Gizem Hoca Site Yönetimi</p>
+        <input type="password" value={pass} onChange={e=>setPass(e.target.value)}
+          onKeyDown={e=>e.key==='Enter'&&login(pass)}
+          placeholder="Şifre" autoFocus
+          style={{ width:'100%', background:'rgba(212,175,55,0.07)', border:`1px solid ${G.goldBorder}`, borderRadius:'10px', padding:'12px 16px', fontSize:'14px', color:'#fff', outline:'none', fontFamily:'Montserrat', marginBottom:'12px', boxSizing:'border-box' }} />
+        <motion.button onClick={()=>login(pass)} whileHover={{ scale:1.02 }} whileTap={{ scale:0.98 }}
+          style={{ width:'100%', background:G.gold, color:G.bg, fontSize:'13px', fontWeight:900, padding:'13px', borderRadius:'999px', border:'none', cursor:'pointer', fontFamily:'Montserrat', letterSpacing:'0.06em' }}>
+          Giriş Yap
+        </motion.button>
       </motion.div>
     </div>
   );
 
-  // ── ADMIN EKRANI
   return (
-    <div style={{ minHeight: '100vh', background: G.bg, display: 'flex', flexDirection: 'column', fontFamily: 'Montserrat,sans-serif' }}>
+    <div style={{ height:'calc(100vh - 110px)', background:G.bg, fontFamily:'Montserrat', display:'grid', gridTemplateColumns:'280px 1fr', overflow:'hidden' }}>
 
-      {/* Header */}
-      <div style={{ background: G.dark, borderBottom: `1px solid ${G.goldBorder}`, padding: '14px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: G.goldFaint, border: `1px solid ${G.goldBorder}`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Sparkles size={18} style={{ color: G.gold }} />
+      {/* Sol panel — Hızlı eylemler */}
+      <div style={{ background:G.dark, borderRight:`1px solid ${G.goldBorder}`, overflowY:'auto', display:'flex', flexDirection:'column' }}>
+        <div style={{ padding:'16px', borderBottom:`1px solid ${G.goldBorder}` }}>
+          <div style={{ display:'flex', alignItems:'center', gap:'8px', marginBottom:'4px' }}>
+            <Zap size={14} style={{ color:G.gold }} />
+            <span style={{ fontSize:'11px', fontWeight:900, letterSpacing:'0.12em', color:G.gold }}>HIZLI EYLEMLER</span>
+          </div>
+          <p style={{ fontSize:'11px', color:G.whiteMid }}>Tıkla, AI otomatik yapsın</p>
+        </div>
+
+        <div style={{ flex:1, overflowY:'auto', padding:'8px' }}>
+          {quickActions.map((cat) => {
+            const Icon = cat.icon;
+            const isOpen = openCat === cat.category;
+            return (
+              <div key={cat.category} style={{ marginBottom:'4px' }}>
+                <button onClick={() => setOpenCat(isOpen ? null : cat.category)}
+                  style={{ width:'100%', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px 12px', borderRadius:'10px', border:'none', background:isOpen?`${cat.color}15`:'transparent', color:isOpen?cat.color:G.whiteMid, cursor:'pointer', fontFamily:'Montserrat', fontSize:'12px', fontWeight:900, transition:'all 0.2s' }}>
+                  <div style={{ display:'flex', alignItems:'center', gap:'8px' }}>
+                    <Icon size={14} style={{ color:isOpen?cat.color:G.whiteMid }} />
+                    {cat.category}
+                  </div>
+                  {isOpen ? <ChevronUp size={13}/> : <ChevronDown size={13}/>}
+                </button>
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div initial={{ height:0, opacity:0 }} animate={{ height:'auto', opacity:1 }} exit={{ height:0, opacity:0 }} style={{ overflow:'hidden' }}>
+                      <div style={{ padding:'4px 4px 8px' }}>
+                        {cat.items.map((item,i) => (
+                          <button key={i} onClick={() => send(item.prompt)}
+                            style={{ width:'100%', textAlign:'left', padding:'8px 12px', borderRadius:'8px', border:`1px solid transparent`, background:'transparent', color:G.whiteMid, fontSize:'12px', cursor:'pointer', fontFamily:'Montserrat', transition:'all 0.15s', marginBottom:'2px', lineHeight:1.4 }}
+                            onMouseEnter={e => { e.currentTarget.style.background=`${cat.color}10`; e.currentTarget.style.color=cat.color; e.currentTarget.style.borderColor=`${cat.color}33`; }}
+                            onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.color=G.whiteMid; e.currentTarget.style.borderColor='transparent'; }}>
+                            ↗ {item.label}
+                          </button>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
+        </div>
+
+        <div style={{ padding:'12px', borderTop:`1px solid ${G.goldBorder}` }}>
+          <button onClick={logout}
+            style={{ width:'100%', display:'flex', alignItems:'center', justifyContent:'center', gap:'8px', background:'rgba(255,68,68,0.08)', border:'1px solid rgba(255,68,68,0.2)', color:'rgba(255,100,100,0.8)', fontSize:'12px', fontWeight:700, padding:'9px', borderRadius:'10px', cursor:'pointer', fontFamily:'Montserrat' }}>
+            <LogOut size={13} /> Çıkış
+          </button>
+        </div>
+      </div>
+
+      {/* Sağ — Chat */}
+      <div style={{ display:'flex', flexDirection:'column', overflow:'hidden' }}>
+        {/* Header */}
+        <div style={{ padding:'14px 20px', borderBottom:`1px solid ${G.goldBorder}`, display:'flex', alignItems:'center', gap:'10px', background:G.dark }}>
+          <div style={{ width:'36px', height:'36px', borderRadius:'10px', background:'rgba(212,175,55,0.15)', border:`1px solid ${G.goldBorder}`, display:'flex', alignItems:'center', justifyContent:'center' }}>
+            <Bot size={18} style={{ color:G.gold }} />
           </div>
           <div>
-            <div style={{ fontSize: '13px', fontWeight: 900, color: '#fff' }}>AI Site Asistanı</div>
-            <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.35)', marginTop: '1px' }}>Gizem Hoca Pilates · Admin</div>
+            <div style={{ fontSize:'14px', fontWeight:900, color:'#fff' }}>Site Asistanı</div>
+            <div style={{ fontSize:'11px', color:'#00e87a', display:'flex', alignItems:'center', gap:'5px' }}>
+              <div style={{ width:'6px', height:'6px', borderRadius:'50%', background:'#00e87a' }} />
+              Aktif · Claude Sonnet
+            </div>
           </div>
-        </div>
-        <button onClick={logout}
-          style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'rgba(255,255,255,0.06)', border: `1px solid ${G.goldBorder}`, borderRadius: '8px', padding: '7px 14px', color: 'rgba(255,255,255,0.5)', fontSize: '11px', fontWeight: 700, cursor: 'pointer', fontFamily: 'Montserrat', transition: 'all 0.2s' }}
-          onMouseEnter={e => e.currentTarget.style.color = '#fff'}
-          onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.5)'}>
-          <LogOut size={13} /> Çıkış
-        </button>
-      </div>
-
-      <div style={{ flex: 1, display: 'flex', maxWidth: '960px', width: '100%', margin: '0 auto', padding: '24px', gap: '20px' }}>
-
-        {/* Sol: Öneriler */}
-        <div style={{ width: '200px', flexShrink: 0 }}>
-          <div style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.15em', color: G.gold, marginBottom: '12px' }}>HAZIR ŞABLONLAR</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            {SUGGESTIONS.map((s, i) => (
-              <motion.button key={i} onClick={() => sendMsg(s.prompt)}
-                whileHover={{ x: 4, background: 'rgba(212,175,55,0.12)' }}
-                style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 12px', borderRadius: '10px', background: G.goldFaint, border: `1px solid ${G.goldBorder}`, cursor: 'pointer', fontFamily: 'Montserrat', textAlign: 'left', transition: 'all 0.15s' }}>
-                <span style={{ fontSize: '16px' }}>{s.icon}</span>
-                <span style={{ fontSize: '11px', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>{s.label}</span>
-              </motion.button>
-            ))}
+          <div style={{ marginLeft:'auto', fontSize:'11px', color:G.whiteMid }}>
+            {messages.length - 1} mesaj
           </div>
         </div>
 
-        {/* Sağ: Chat */}
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: G.dark, border: `1px solid ${G.goldBorder}`, borderRadius: '16px', overflow: 'hidden' }}>
-
-          {/* Mesajlar */}
-          <div style={{ flex: 1, overflowY: 'auto', padding: '20px', display: 'flex', flexDirection: 'column', gap: '16px', minHeight: 0, maxHeight: 'calc(100vh - 280px)' }}>
-            {msgs.map((msg, i) => (
-              <div key={i} style={{ display: 'flex', gap: '10px', justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start' }}>
-                {msg.role === 'assistant' && (
-                  <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: G.goldFaint, border: `1px solid ${G.goldBorder}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
-                    <Bot size={13} style={{ color: G.gold }} />
-                  </div>
-                )}
-                <div style={{ maxWidth: '80%' }}>
-                  <div style={{
-                    padding: '12px 16px', fontSize: '13px', lineHeight: 1.7,
-                    borderRadius: msg.role === 'user' ? '14px 14px 0 14px' : '14px 14px 14px 0',
-                    background: msg.role === 'user' ? G.gold : G.goldFaint,
-                    border: msg.role === 'user' ? 'none' : `1px solid ${G.goldBorder}`,
-                    color: msg.role === 'user' ? G.bg : 'rgba(255,255,255,0.88)',
-                    whiteSpace: 'pre-wrap',
-                  }}>
-                    {msg.text}
-                  </div>
-                  {msg.role === 'assistant' && i > 0 && (
-                    <button onClick={() => copyText(msg.text, i)}
-                      style={{ marginTop: '5px', fontSize: '10px', color: copied === i ? '#00e87a' : 'rgba(212,175,55,0.4)', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'Montserrat', fontWeight: 600, padding: '2px 0', transition: 'color 0.2s' }}>
-                      {copied === i ? '✓ Kopyalandı!' : '⎘ Kopyala'}
-                    </button>
-                  )}
-                </div>
-                {msg.role === 'user' && (
-                  <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: G.gold, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
-                    <User size={13} style={{ color: G.bg }} />
-                  </div>
-                )}
+        {/* Mesajlar */}
+        <div style={{ flex:1, overflowY:'auto', padding:'20px' }}>
+          {messages.map((msg,i) => <Message key={i} msg={msg} />)}
+          {loading && (
+            <motion.div initial={{ opacity:0 }} animate={{ opacity:1 }} style={{ display:'flex', gap:'12px', alignItems:'flex-start', marginBottom:'16px' }}>
+              <div style={{ width:'32px', height:'32px', borderRadius:'10px', background:'rgba(212,175,55,0.15)', border:`1px solid ${G.goldBorder}`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                <Bot size={15} style={{ color:G.gold }} />
               </div>
-            ))}
-
-            {loading && (
-              <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-                <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: G.goldFaint, border: `1px solid ${G.goldBorder}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  <Loader size={13} style={{ color: G.gold, animation: 'spin 1s linear infinite' }} />
-                </div>
-                <div style={{ padding: '12px 16px', background: G.goldFaint, border: `1px solid ${G.goldBorder}`, borderRadius: '14px 14px 14px 0', display: 'flex', gap: '4px', alignItems: 'center' }}>
-                  {[0,1,2].map(i => (
-                    <motion.div key={i} animate={{ y: [0,-5,0] }} transition={{ duration: 0.6, delay: i*0.15, repeat: Infinity }}
-                      style={{ width: '6px', height: '6px', borderRadius: '50%', background: G.gold }} />
-                  ))}
-                </div>
+              <div style={{ background:'rgba(13,27,62,0.7)', border:`1px solid ${G.goldBorder}`, borderRadius:'4px 14px 14px 14px', padding:'14px 18px', display:'flex', gap:'6px', alignItems:'center' }}>
+                {[0,1,2].map(i => (
+                  <motion.div key={i} animate={{ y:[0,-6,0] }} transition={{ repeat:Infinity, duration:0.8, delay:i*0.15 }}
+                    style={{ width:'7px', height:'7px', borderRadius:'50%', background:G.gold }} />
+                ))}
               </div>
-            )}
-            <div ref={endRef} />
-          </div>
+            </motion.div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
 
-          {/* Input */}
-          <div style={{ padding: '16px', borderTop: `1px solid ${G.goldBorder}`, display: 'flex', gap: '10px' }}>
-            <textarea ref={inputRef} value={input} onChange={e => setInput(e.target.value)}
-              onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); } }}
-              placeholder="Ne yazmamı istersin? Örn: 'Hamile pilatesi hakkında blog yaz' veya 'Cuma dersi için Instagram postu'"
+        {/* Input */}
+        <div style={{ padding:'14px 20px', borderTop:`1px solid ${G.goldBorder}`, background:G.dark }}>
+          <div style={{ display:'flex', gap:'10px', alignItems:'flex-end' }}>
+            <textarea value={input} onChange={e=>setInput(e.target.value)}
+              onKeyDown={e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); send(); } }}
+              placeholder='Örn: "Blog yaz: sırt ağrısı için pilates hareketleri" ya da "Salı 15:00 reformer dersi ekle"'
               rows={2}
-              style={{ flex: 1, background: G.goldFaint, border: `1px solid ${G.goldBorder}`, borderRadius: '12px', padding: '12px 16px', fontSize: '13px', color: '#fff', outline: 'none', fontFamily: 'Montserrat', resize: 'none', lineHeight: 1.5 }} />
-            <motion.button onClick={() => sendMsg()} disabled={loading || !input.trim()}
-              whileHover={input.trim() ? { scale: 1.05 } : {}} whileTap={input.trim() ? { scale: 0.97 } : {}}
-              style={{ width: '44px', height: '44px', borderRadius: '12px', background: input.trim() ? G.gold : G.goldFaint, border: `1px solid ${input.trim() ? 'transparent' : G.goldBorder}`, cursor: input.trim() ? 'pointer' : 'default', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, transition: 'all 0.2s', alignSelf: 'flex-end' }}>
-              <Send size={16} style={{ color: input.trim() ? G.bg : 'rgba(212,175,55,0.3)' }} />
+              style={{ flex:1, background:'rgba(212,175,55,0.07)', border:`1px solid ${G.goldBorder}`, borderRadius:'12px', padding:'12px 16px', fontSize:'13px', color:'#fff', outline:'none', fontFamily:'Montserrat', resize:'none', lineHeight:1.6 }} />
+            <motion.button onClick={() => send()} disabled={!input.trim()||loading}
+              whileHover={input.trim()&&!loading?{ scale:1.05 }:{}} whileTap={input.trim()&&!loading?{ scale:0.95 }:{}}
+              style={{ width:'44px', height:'44px', borderRadius:'12px', background:input.trim()&&!loading?G.gold:'rgba(212,175,55,0.2)', border:'none', cursor:input.trim()&&!loading?'pointer':'default', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, transition:'all 0.2s' }}>
+              <Send size={16} style={{ color:input.trim()&&!loading?G.bg:'rgba(212,175,55,0.4)' }} />
             </motion.button>
           </div>
+          <p style={{ fontSize:'10px', color:G.whiteMid, marginTop:'8px', textAlign:'center' }}>
+            Enter → gönder · Shift+Enter → yeni satır · Kopyala butonu ile kodu al
+          </p>
         </div>
       </div>
-
-      <style>{`@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
     </div>
   );
 }
