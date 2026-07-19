@@ -14,6 +14,7 @@ const menuItems = [
   { path: '/galeri', label: 'GALERİ' },
   { path: '/blog', label: 'BLOG' },
   { path: '/sss', label: 'SSS' },
+  { path: '/quiz', label: '🎯 TEST' },
   { path: '/iletisim', label: 'İLETİŞİM' },
 ];
 
@@ -37,13 +38,13 @@ export default function MainMenu() {
 
       {/* ÜCRETSİZ DERS TOP BAR */}
       <div style={{ background: G.gold, padding: '6px 24px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', flexWrap: 'wrap' }}>
-        <span style={{ fontSize: '10px', fontWeight: 900, color: G.bg, letterSpacing: '0.06em' }}>
+        <span style={{ fontSize: '15px', fontWeight: 900, color: G.bg, letterSpacing: '0.06em' }}>
           🎁 İLK TANITMA SEANSI ÜCRETSİZ
         </span>
-        <span style={{ fontSize: '9px', color: 'rgba(13,27,62,0.5)' }}>·</span>
+        <span style={{ fontSize: '11px', color: 'rgba(13,27,62,0.5)' }}>·</span>
         <a href="https://wa.me/905383135720?text=Ücretsiz%20tanışma%20seansı%20istiyorum"
           target="_blank" rel="noopener noreferrer"
-          style={{ fontSize: '10px', fontWeight: 900, color: G.bg, textDecoration: 'underline', letterSpacing: '0.04em' }}>
+          style={{ fontSize: '15px', fontWeight: 900, color: G.bg, textDecoration: 'underline', letterSpacing: '0.04em' }}>
           Hemen Rezervasyon Yap →
         </a>
       </div>
@@ -60,13 +61,13 @@ export default function MainMenu() {
           {menuItems.map(item => (
             <NavLink key={item.path} to={item.path}
               style={({ isActive }) => ({
-                padding: '7px 12px', fontSize: '10px', fontWeight: 900, letterSpacing: '0.08em',
+                padding: '7px 12px', fontSize: '15px', fontWeight: 900, letterSpacing: '0.08em',
                 borderRadius: '999px', transition: 'all 0.2s', textDecoration: 'none',
                 background: isActive ? G.gold : 'transparent',
-                color: isActive ? G.bg : 'rgba(255,255,255,0.45)',
+                color: isActive ? G.bg : 'rgba(255,255,255,0.75)',
               })}
               onMouseEnter={e => { if (e.currentTarget.style.background !== G.gold) { e.currentTarget.style.background = 'rgba(212,175,55,0.12)'; e.currentTarget.style.color = G.gold; } }}
-              onMouseLeave={e => { if (e.currentTarget.getAttribute('aria-current') !== 'page') { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'rgba(255,255,255,0.45)'; } }}>
+              onMouseLeave={e => { if (e.currentTarget.getAttribute('aria-current') !== 'page') { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'rgba(255,255,255,0.75)'; } }}>
               {item.label}
             </NavLink>
           ))}
@@ -90,7 +91,7 @@ export default function MainMenu() {
           </div>
 
           <Link to="/iletisim" className="hidden lg:inline-block"
-            style={{ background: G.gold, color: G.bg, fontSize: '10px', fontWeight: 900, letterSpacing: '0.06em', padding: '9px 18px', borderRadius: '999px', textDecoration: 'none', transition: 'all 0.2s' }}
+            style={{ background: G.gold, color: G.bg, fontSize: '15px', fontWeight: 900, letterSpacing: '0.06em', padding: '9px 18px', borderRadius: '999px', textDecoration: 'none', transition: 'all 0.2s' }}
             onMouseEnter={e => { e.currentTarget.style.opacity = '0.85'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
             onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'translateY(0)'; }}>
             DERS AL ✦
@@ -117,7 +118,7 @@ export default function MainMenu() {
                 {menuItems.map(item => (
                   <NavLink key={item.path} to={item.path} onClick={() => setMobileOpen(false)}
                     style={({ isActive }) => ({
-                      padding: '12px 16px', fontSize: '12px', fontWeight: 900, letterSpacing: '0.08em',
+                      padding: '12px 16px', fontSize: '15px', fontWeight: 900, letterSpacing: '0.08em',
                       borderRadius: '10px', textDecoration: 'none',
                       background: isActive ? G.gold : 'rgba(212,175,55,0.05)',
                       color: isActive ? G.bg : 'rgba(255,255,255,0.6)',
@@ -128,7 +129,7 @@ export default function MainMenu() {
                 ))}
               </nav>
               <Link to="/iletisim" onClick={() => setMobileOpen(false)}
-                style={{ display: 'block', textAlign: 'center', background: G.gold, color: G.bg, fontSize: '11px', fontWeight: 900, padding: '14px', borderRadius: '999px', textDecoration: 'none' }}>
+                style={{ display: 'block', textAlign: 'center', background: G.gold, color: G.bg, fontSize: '15px', fontWeight: 900, padding: '14px', borderRadius: '999px', textDecoration: 'none' }}>
                 DERS AL ✦
               </Link>
             </motion.div>

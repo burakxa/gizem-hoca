@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { MessageCircle, Instagram, Youtube, MapPin, Mail, Send, Check } from 'lucide-react';
 
-const G = { bg:'#0d1b3e', dark:'#071029', gold:'#d4af37', goldFaint:'rgba(212,175,55,0.1)', goldBorder:'rgba(212,175,55,0.2)', white:'#fff', whiteMid:'rgba(255,255,255,0.5)' };
+const G = { bg:'#0d1b3e', dark:'#071029', gold:'#d4af37', goldFaint:'rgba(212,175,55,0.1)', goldBorder:'rgba(212,175,55,0.2)', white:'#fff', whiteMid:'rgba(255,255,255,0.78)' };
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name:'', phone:'', message:'' });
@@ -112,7 +112,7 @@ export default function ContactPage() {
         <div style={{ padding: 'clamp(20px,4vw,32px) clamp(16px,4vw,40px)', borderBottom: `1px solid ${G.goldBorder}` }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div style={{ width: '22px', height: '2px', background: G.gold }} />
-            <span style={{ fontSize: '9px', fontWeight: 900, letterSpacing: '0.15em', color: G.gold }}>KONUM</span>
+            <span style={{ fontSize: '11px', fontWeight: 900, letterSpacing: '0.15em', color: G.gold }}>KONUM</span>
           </div>
         </div>
         <div style={{ position: 'relative', paddingBottom: '35%', minHeight: '280px' }}>
@@ -124,7 +124,7 @@ export default function ContactPage() {
           />
           <div style={{ position: 'absolute', bottom: '16px', right: '16px' }}>
             <a href="https://maps.google.com/?q=Beşiktaş+İstanbul" target="_blank" rel="noopener noreferrer"
-              style={{ background: G.gold, color: G.bg, fontSize: '10px', fontWeight: 900, padding: '8px 16px', borderRadius: '999px', textDecoration: 'none', letterSpacing: '0.06em' }}>
+              style={{ background: G.gold, color: G.bg, fontSize: '15px', fontWeight: 900, padding: '8px 16px', borderRadius: '999px', textDecoration: 'none', letterSpacing: '0.06em' }}>
               Yol Tarifi Al →
             </a>
           </div>

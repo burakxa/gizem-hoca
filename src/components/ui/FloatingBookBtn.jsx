@@ -25,7 +25,7 @@ export default function FloatingBookBtn() {
             position: 'fixed', bottom: '160px', right: '24px', zIndex: 47,
             display: 'flex', alignItems: 'center', gap: '8px',
             background: '#0d1b3e', border: '1.5px solid #d4af37',
-            color: '#d4af37', fontSize: '11px', fontWeight: 900,
+            color: '#d4af37', fontSize: '15px', fontWeight: 900,
             padding: '10px 18px', borderRadius: '999px',
             textDecoration: 'none', letterSpacing: '0.06em',
             boxShadow: '0 4px 16px rgba(0,0,0,0.3)',

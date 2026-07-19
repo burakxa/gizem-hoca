@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 import { ChevronDown } from 'lucide-react';
 
-const G = { bg:'#0d1b3e', dark:'#071029', gold:'#d4af37', goldFaint:'rgba(212,175,55,0.1)', goldBorder:'rgba(212,175,55,0.2)', white:'#fff', whiteMid:'rgba(255,255,255,0.5)', whiteLow:'rgba(255,255,255,0.25)' };
+const G = { bg:'#0d1b3e', dark:'#071029', gold:'#d4af37', goldFaint:'rgba(212,175,55,0.1)', goldBorder:'rgba(212,175,55,0.2)', white:'#fff', whiteMid:'rgba(255,255,255,0.78)', whiteLow:'rgba(255,255,255,0.25)' };
 
 const testimonials = [
   { name:'Elif T.', job:'Öğretmen', tag:'Bireysel Ders', date:'Mart 2025', text:'6 aydır devam ediyorum ve fark inanılmaz. Hem güçlendim hem kendimi çok daha iyi hissediyorum.' },

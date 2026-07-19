@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 import { Plus, MessageCircle } from 'lucide-react';
 
-const G = { bg:'#0d1b3e', gold:'#d4af37', goldBorder:'rgba(212,175,55,0.2)', white:'#fff', whiteMid:'rgba(255,255,255,0.5)' };
+const G = { bg:'#0d1b3e', gold:'#d4af37', goldBorder:'rgba(212,175,55,0.2)', white:'#fff', whiteMid:'rgba(255,255,255,0.78)' };
 
 const faqs = [
   { cat:'BAŞLANGIÇ', q:'Pilates kime uygundur?', a:'Pilates her yaştan ve her fitness seviyesinden kişiye uygundur. Yeni başlayanlardan sporculara kadar herkes için özel programlar oluşturulabilir.' },

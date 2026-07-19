@@ -14,7 +14,7 @@ function WhatsAppButton({ phoneNumber }) {
         {hovered && (
           <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 10 }}
             style={{ background: '#071029', border: '1px solid rgba(212,175,55,0.35)', borderRadius: '999px', padding: '8px 16px', whiteSpace: 'nowrap' }}>
-            <span style={{ fontSize: '11px', fontWeight: 700, color: '#d4af37', letterSpacing: '0.04em' }}>Hemen Mesaj At</span>
+            <span style={{ fontSize: '15px', fontWeight: 700, color: '#d4af37', letterSpacing: '0.04em' }}>Hemen Mesaj At</span>
           </motion.div>
         )}
       </AnimatePresence>

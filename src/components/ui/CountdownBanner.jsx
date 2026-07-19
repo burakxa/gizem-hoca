@@ -1,103 +1,61 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { X } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
+import { motion } from 'framer-motion';
 
-const useCountdown = (targetDate) => {
-  const [timeLeft, setTimeLeft] = useState({});
+const G = { bg:'#0d1b3e', gold:'#d4af37' };
+
+function getNextMonday() {
+  const now = new Date();
+  const day = now.getDay();
+  const diff = day === 0 ? 1 : 8 - day;
+  const next = new Date(now);
+  next.setDate(now.getDate() + diff);
+  next.setHours(9, 0, 0, 0);
+  return next;
+}
+
+export default function CountdownBanner() {
+  const [time, setTime] = useState({ d:0, h:0, m:0, s:0 });
+  const [show, setShow] = useState(true);
+
   useEffect(() => {
-    if (!targetDate) return;
-    const calc = () => {
-      const diff = new Date(targetDate) - new Date();
-      if (diff <= 0) return setTimeLeft({ expired: true });
-      setTimeLeft({
-        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((diff / (1000 * 60)) % 60),
-        seconds: Math.floor((diff / 1000) % 60),
+    const target = getNextMonday();
+    const iv = setInterval(() => {
+      const diff = target - new Date();
+      if (diff <= 0) { clearInterval(iv); return; }
+      setTime({
+        d: Math.floor(diff / 86400000),
+        h: Math.floor((diff % 86400000) / 3600000),
+        m: Math.floor((diff % 3600000) / 60000),
+        s: Math.floor((diff % 60000) / 1000),
       });
-    };
-    calc();
-    const timer = setInterval(calc, 1000);
-    return () => clearInterval(timer);
-  }, [targetDate]);
-  return timeLeft;
-};
-
-const pad = (n) => String(n ?? 0).padStart(2, '0');
-
-export const CountdownBanner = () => {
-  const [data, setData] = useState(null);
-  const [dismissed, setDismissed] = useState(false);
-
-  useEffect(() => {
-    supabase.from('settings').select('value').eq('key', 'countdown').single()
-      .then(({ data: row }) => { if (row) setData(row.value); });
+    }, 1000);
+    return () => clearInterval(iv);
   }, []);
 
-  const countdown = useCountdown(data?.date);
-
-  if (!data?.enabled || !data?.date || dismissed || countdown.expired) return null;
+  if (!show) return null;
 
   return (
-    <AnimatePresence>
-      <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
-        className="bg-brand-black text-brand-lime overflow-hidden">
-        <div className="flex items-center justify-between px-4 py-3 gap-4">
-          <div className="flex items-center gap-3 flex-wrap">
-            <span className="text-xs font-bold opacity-60 tracking-widest">{data.title?.toUpperCase()}</span>
-            <div className="flex items-center gap-2">
-              {[{ v: countdown.days, l: 'GG' }, { v: countdown.hours, l: 'SS' }, { v: countdown.minutes, l: 'DK' }, { v: countdown.seconds, l: 'SN' }].map(({ v, l }) => (
-                <div key={l} className="text-center">
-                  <div className="font-black text-lg leading-none">{pad(v)}</div>
-                  <div className="text-[9px] opacity-50">{l}</div>
-                </div>
-              ))}
+    <motion.div initial={{ opacity:0, y:-10 }} animate={{ opacity:1, y:0 }}
+      style={{ background:`linear-gradient(135deg, #071029, #0d1b3e)`, borderBottom:`1px solid rgba(212,175,55,0.3)`, padding:'10px clamp(16px,4vw,40px)', display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:'10px', fontFamily:'Montserrat,sans-serif' }}>
+      <div style={{ display:'flex', alignItems:'center', gap:'12px', flexWrap:'wrap' }}>
+        <span style={{ fontSize:'13px', fontWeight:900, color:G.gold }}>🔥 Bu Haftaki Kontenjan Dolmadan Yerinizi Alın!</span>
+        <div style={{ display:'flex', gap:'8px' }}>
+          {[['d','GÜN'],['h','SAAT'],['m','DAK'],['s','SAN']].map(([k,l]) => (
+            <div key={k} style={{ background:'rgba(212,175,55,0.12)', border:'1px solid rgba(212,175,55,0.25)', borderRadius:'8px', padding:'4px 10px', textAlign:'center', minWidth:'44px' }}>
+              <div style={{ fontSize:'16px', fontWeight:900, color:G.gold, lineHeight:1 }}>{String(time[k]).padStart(2,'0')}</div>
+              <div style={{ fontSize:'9px', color:'rgba(212,175,55,0.5)', letterSpacing:'0.08em', marginTop:'2px' }}>{l}</div>
             </div>
-            {data.subtitle && <span className="text-xs opacity-60">{data.subtitle}</span>}
-          </div>
-          <div className="flex items-center gap-3 flex-shrink-0">
-            {data.link && (
-              <Link to={data.link}>
-                <span className="text-xs bg-brand-lime text-brand-black px-3 py-1 rounded-full font-black">Rezervasyon</span>
-              </Link>
-            )}
-            <button onClick={() => setDismissed(true)} className="opacity-40 hover:opacity-80 transition-opacity"><X size={16} /></button>
-          </div>
+          ))}
         </div>
-      </motion.div>
-    </AnimatePresence>
+      </div>
+      <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
+        <a href="https://wa.me/905383135720?text=Ders%20rezervasyonu%20yapmak%20istiyorum" target="_blank" rel="noopener noreferrer"
+          style={{ background:G.gold, color:G.bg, fontSize:'12px', fontWeight:900, padding:'8px 18px', borderRadius:'999px', textDecoration:'none', letterSpacing:'0.04em', whiteSpace:'nowrap' }}>
+          Hemen Rezerve Et →
+        </a>
+        <button onClick={() => setShow(false)}
+          style={{ background:'none', border:'none', color:'rgba(255,255,255,0.3)', cursor:'pointer', fontSize:'16px', padding:'4px' }}>✕</button>
+      </div>
+    </motion.div>
   );
-};
-
-export const AnnouncementBanner = () => {
-  const [data, setData] = useState(null);
-  const [dismissed, setDismissed] = useState(false);
-
-  useEffect(() => {
-    supabase.from('settings').select('value').eq('key', 'announcement').single()
-      .then(({ data: row }) => { if (row) setData(row.value); });
-  }, []);
-
-  if (!data?.enabled || !data?.text || dismissed) return null;
-
-  return (
-    <AnimatePresence>
-      <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
-        className="bg-brand-lime border-b-2 border-brand-black/10 overflow-hidden">
-        <div className="flex items-center justify-between px-4 py-2.5 gap-4">
-          <p className="text-sm font-medium text-brand-black flex-1">{data.text}</p>
-          <div className="flex items-center gap-3 flex-shrink-0">
-            {data.link && (
-              <Link to={data.link}>
-                <span className="text-xs bg-brand-black text-brand-lime px-3 py-1 rounded-full font-black">{data.linkText || 'Detaylar'}</span>
-              </Link>
-            )}
-            <button onClick={() => setDismissed(true)} className="opacity-40 hover:opacity-80 transition-opacity"><X size={14} /></button>
-          </div>
-        </div>
-      </motion.div>
-    </AnimatePresence>
-  );
-};
+}

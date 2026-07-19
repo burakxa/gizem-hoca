@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 import { X } from 'lucide-react';
 
-const G = { bg:'#0d1b3e', gold:'#d4af37', goldBorder:'rgba(212,175,55,0.2)', whiteMid:'rgba(255,255,255,0.5)' };
+const G = { bg:'#0d1b3e', gold:'#d4af37', goldBorder:'rgba(212,175,55,0.2)', whiteMid:'rgba(255,255,255,0.78)' };
 
 const images = [
   { id:1, src:'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800', alt:'Mat pilates', category:'Stüdyo' },

@@ -22,6 +22,7 @@ import ContactPage from '@/pages/ContactPage';
 import ProgramPage from '@/pages/ProgramPage';
 import SSFPage from '@/pages/SSFPage';
 import NotFoundPage from '@/pages/NotFoundPage';
+import QuizPage from '@/pages/QuizPage';
 import AdminPage from '@/pages/AdminPage';
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
             <Route path="iletisim" element={<ContactPage />} />
             <Route path="program" element={<ProgramPage />} />
             <Route path="sss" element={<SSFPage />} />
+            <Route path="quiz" element={<QuizPage />} />
             <Route path="admin" element={<AdminPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>

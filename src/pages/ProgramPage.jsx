@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { MessageCircle, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const G = { bg:'#0d1b3e', gold:'#d4af37', goldFaint:'rgba(212,175,55,0.1)', goldBorder:'rgba(212,175,55,0.2)', white:'#fff', whiteMid:'rgba(255,255,255,0.5)' };
+const G = { bg:'#0d1b3e', gold:'#d4af37', goldFaint:'rgba(212,175,55,0.1)', goldBorder:'rgba(212,175,55,0.2)', white:'#fff', whiteMid:'rgba(255,255,255,0.78)' };
 
 const days = ['Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'];
 const schedule = {

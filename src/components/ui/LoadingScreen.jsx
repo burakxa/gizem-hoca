@@ -2,17 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function LoadingScreen() {
-  const [done, setDone] = useState(() => {
-    // Daha önce gösterildiyse bir daha gösterme
-    return sessionStorage.getItem('loading_shown') === 'true';
-  });
+  const [done, setDone] = useState(false);
 
   useEffect(() => {
-    if (done) return;
     const t = setTimeout(() => {
       setDone(true);
-      sessionStorage.setItem('loading_shown', 'true');
-    }, 2200);
+    }, 2400);
     return () => clearTimeout(t);
   }, []);
 
@@ -39,11 +34,11 @@ export default function LoadingScreen() {
               style={{ height: '100%', background: '#d4af37', borderRadius: '999px' }}
               initial={{ width: '0%' }}
               animate={{ width: '100%' }}
-              transition={{ duration: 1.8, ease: 'easeInOut' }}
+              transition={{ duration: 2.0, ease: 'easeInOut' }}
             />
           </div>
           <motion.p
-            style={{ fontSize: '10px', fontWeight: 900, letterSpacing: '0.2em', color: 'rgba(212,175,55,0.4)' }}
+            style={{ fontSize: '15px', fontWeight: 900, letterSpacing: '0.2em', color: 'rgba(212,175,55,0.4)' }}
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
             PİLATES & WELLNESS
           </motion.p>

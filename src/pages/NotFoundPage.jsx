@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { ArrowRight } from 'lucide-react';
 
-const G = { bg:'#0d1b3e', gold:'#d4af37', goldBorder:'rgba(212,175,55,0.2)', whiteMid:'rgba(255,255,255,0.5)' };
+const G = { bg:'#0d1b3e', gold:'#d4af37', goldBorder:'rgba(212,175,55,0.2)', whiteMid:'rgba(255,255,255,0.78)' };
 
 export default function NotFoundPage() {
   return (
