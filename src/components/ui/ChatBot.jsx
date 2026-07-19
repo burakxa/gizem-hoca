@@ -113,7 +113,7 @@ export default function ChatBot() {
                   alt="Gizem Hoca" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontSize: '15px', fontWeight: 900, color: G.bg, lineHeight: 1 }}>Gizem Hoca AI</div>
+                <div style={{ fontSize: '14px', fontWeight: 900, color: G.bg, lineHeight: 1 }}>Gizem Hoca AI</div>
                 <div style={{ fontSize: '11px', color: 'rgba(13,27,62,0.55)', marginTop: '2px' }}>
                   {loading ? '⏳ Yazıyor...' : '🟢 Çevrimiçi'}
                 </div>
@@ -133,7 +133,7 @@ export default function ChatBot() {
                   {msgs.map((msg, i) => (
                     <div key={i} style={{ display: 'flex', justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start' }}>
                       <div style={{
-                        maxWidth: '88%', padding: '9px 12px', fontSize: '15px', lineHeight: 1.55,
+                        maxWidth: '88%', padding: '9px 12px', fontSize: '14px', lineHeight: 1.55,
                         borderRadius: msg.role === 'user' ? '12px 12px 0 12px' : '12px 12px 12px 0',
                         background: msg.role === 'user' ? G.gold : 'rgba(212,175,55,0.1)',
                         border: msg.role === 'user' ? 'none' : `1px solid ${G.goldBorder}`,
@@ -159,7 +159,7 @@ export default function ChatBot() {
                   <div style={{ padding: '0 12px 8px', display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
                     {quickQuestions.map((q, i) => (
                       <button key={i} onClick={() => sendMsg(q)}
-                        style={{ fontSize: '15px', padding: '4px 10px', borderRadius: '999px', background: 'rgba(212,175,55,0.1)', border: `1px solid ${G.goldBorder}`, color: G.gold, cursor: 'pointer', fontFamily: 'Montserrat', fontWeight: 600, transition: 'all 0.15s' }}
+                        style={{ fontSize: '14px', padding: '4px 10px', borderRadius: '999px', background: 'rgba(212,175,55,0.1)', border: `1px solid ${G.goldBorder}`, color: G.gold, cursor: 'pointer', fontFamily: 'Montserrat', fontWeight: 600, transition: 'all 0.15s' }}
                         onMouseEnter={e => { e.currentTarget.style.background = 'rgba(212,175,55,0.2)'; }}
                         onMouseLeave={e => { e.currentTarget.style.background = 'rgba(212,175,55,0.1)'; }}>
                         {q}
@@ -171,7 +171,7 @@ export default function ChatBot() {
                 {/* WhatsApp linki */}
                 <div style={{ padding: '0 12px 8px' }}>
                   <a href={`https://wa.me/${WA}`} target="_blank" rel="noopener noreferrer"
-                    style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '15px', fontWeight: 700, color: '#25d366', textDecoration: 'none', opacity: 0.8, transition: 'opacity 0.2s' }}
+                    style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '14px', fontWeight: 700, color: '#25d366', textDecoration: 'none', opacity: 0.8, transition: 'opacity 0.2s' }}
                     onMouseEnter={e => e.currentTarget.style.opacity = '1'}
                     onMouseLeave={e => e.currentTarget.style.opacity = '0.8'}>
                     💬 WhatsApp'tan randevu al
@@ -183,7 +183,7 @@ export default function ChatBot() {
                   <input ref={inputRef} value={input} onChange={e => setInput(e.target.value)}
                     onKeyDown={e => e.key === 'Enter' && !e.shiftKey && sendMsg()}
                     placeholder="Mesajınızı yazın..."
-                    style={{ flex: 1, background: 'rgba(212,175,55,0.08)', border: `1px solid ${G.goldBorder}`, borderRadius: '999px', padding: '8px 14px', fontSize: '15px', color: '#fff', outline: 'none', fontFamily: 'Montserrat' }} />
+                    style={{ flex: 1, background: 'rgba(212,175,55,0.08)', border: `1px solid ${G.goldBorder}`, borderRadius: '999px', padding: '8px 14px', fontSize: '14px', color: '#fff', outline: 'none', fontFamily: 'Montserrat' }} />
                   <button onClick={() => sendMsg()} disabled={loading || !input.trim()}
                     style={{ width: '34px', height: '34px', borderRadius: '50%', background: input.trim() ? G.gold : 'rgba(212,175,55,0.2)', border: 'none', cursor: input.trim() ? 'pointer' : 'default', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, transition: 'all 0.2s' }}>
                     <Send size={14} style={{ color: input.trim() ? G.bg : 'rgba(212,175,55,0.4)' }} />

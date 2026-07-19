@@ -8,8 +8,9 @@ import CookieBanner from '@/components/ui/CookieBanner';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import ChatBot from '@/components/ui/ChatBot';
 import FloatingBookBtn from '@/components/ui/FloatingBookBtn';
-import ExitPopup from '@/components/ui/ExitPopup';
 import CountdownBanner from '@/components/ui/CountdownBanner';
+import CustomCursor from '@/components/ui/CustomCursor';
+import ScrollAnimator from '@/components/ui/ScrollAnimator';
 
 const pageVariants = {
   initial: { opacity: 0, y: 8 },
@@ -22,7 +23,8 @@ const PageLayout = ({ handleNotImplemented }) => {
   return (
     <>
       <LoadingScreen />
-      <ExitPopup />
+      <CustomCursor />
+      <ScrollAnimator />
       <div style={{ minHeight: '100vh', background: '#0d1b3e', display: 'flex', flexDirection: 'column' }}>
         <CountdownBanner />
         <MainMenu />

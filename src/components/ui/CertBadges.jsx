@@ -26,7 +26,7 @@ export default function CertBadges() {
               <Icon size={16} style={{ color: G.bg }} />
             </div>
             <div>
-              <div style={{ fontSize: '15px', fontWeight: 900, color: G.gold, lineHeight: 1.2 }}>{c.label}</div>
+              <div style={{ fontSize: '14px', fontWeight: 900, color: G.gold, lineHeight: 1.2 }}>{c.label}</div>
               <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.78)', marginTop: '2px' }}>{c.sub} · {c.year}</div>
             </div>
           </motion.div>

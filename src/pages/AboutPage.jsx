@@ -61,7 +61,7 @@ export default function AboutPage() {
                 {/* Üzerine overlay badge */}
                 <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '20px 16px', background: 'linear-gradient(to top, rgba(7,16,41,0.95) 0%, transparent 100%)' }}>
                   <div style={{ fontSize: '18px', fontWeight: 900, color: '#fff' }}>Gizem Hoca</div>
-                  <div style={{ fontSize: '15px', color: G.gold, marginTop: '3px', letterSpacing: '0.06em' }}>Pilates Eğitmeni · Beşiktaş</div>
+                  <div style={{ fontSize: '14px', color: G.gold, marginTop: '3px', letterSpacing: '0.06em' }}>Pilates Eğitmeni · Beşiktaş</div>
                 </div>
               </div>
 
@@ -90,8 +90,8 @@ export default function AboutPage() {
                         <Icon size={14} style={{ color: G.bg }} />
                       </div>
                       <div style={{ flex: 1 }}>
-                        <div style={{ fontSize: '15px', fontWeight: 700, color: '#fff', lineHeight: 1.3 }}>{cert.label}</div>
-                        <div style={{ fontSize: '15px', color: G.gold, marginTop: '2px' }}>{cert.year}</div>
+                        <div style={{ fontSize: '14px', fontWeight: 700, color: '#fff', lineHeight: 1.3 }}>{cert.label}</div>
+                        <div style={{ fontSize: '14px', color: G.gold, marginTop: '2px' }}>{cert.year}</div>
                       </div>
                     </motion.div>
                   );
@@ -109,10 +109,10 @@ export default function AboutPage() {
                 "Pilates bir egzersiz değil, yaşam felsefesidir."
               </motion.blockquote>
 
-              <p style={{ fontSize: '15px', color: G.whiteMid, lineHeight: 1.85, marginBottom: '16px' }}>
+              <p style={{ fontSize: '14px', color: G.whiteMid, lineHeight: 1.85, marginBottom: '16px' }}>
                 Merhaba, ben Gizem. Hareketin ve sağlığın hayatımızdaki dönüştürücü gücüne her zaman inandım. Pilatesle tanışmam, kendi bedenimin sınırlarını keşfetme arayışımla başladı.
               </p>
-              <p style={{ fontSize: '15px', color: G.whiteMid, lineHeight: 1.85, marginBottom: '32px' }}>
+              <p style={{ fontSize: '14px', color: G.whiteMid, lineHeight: 1.85, marginBottom: '32px' }}>
                 Derslerimde sadece fiziksel gücü değil, zihin-beden bütünlüğünü ön planda tutuyorum. Her öğrencimin kendine özgü yolculuğuna saygı duyarak, onların en iyi versiyonlarına ulaşmalarına yardım ediyorum.
               </p>
 
@@ -122,7 +122,7 @@ export default function AboutPage() {
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                   {['Mat Pilates', 'Reformer', 'Hamile Pilatesi', 'Postür', 'Rehabilitasyon', 'Nefes Teknikleri'].map(tag => (
                     <motion.span key={tag} whileHover={{ background: 'rgba(212,175,55,0.2)', color: '#fff' }}
-                      style={{ fontSize: '15px', fontWeight: 700, border: `1px solid ${G.goldBorder}`, color: G.gold, padding: '5px 12px', borderRadius: '999px', transition: 'all 0.2s', cursor: 'default' }}>
+                      style={{ fontSize: '14px', fontWeight: 700, border: `1px solid ${G.goldBorder}`, color: G.gold, padding: '5px 12px', borderRadius: '999px', transition: 'all 0.2s', cursor: 'default' }}>
                       {tag}
                     </motion.span>
                   ))}
@@ -131,7 +131,7 @@ export default function AboutPage() {
             </div>
 
             <Link to="/iletisim"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: G.gold, color: G.bg, fontSize: '15px', fontWeight: 900, letterSpacing: '0.06em', padding: '13px 24px', borderRadius: '999px', textDecoration: 'none', transition: 'all 0.2s', alignSelf: 'flex-start' }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: G.gold, color: G.bg, fontSize: '14px', fontWeight: 900, letterSpacing: '0.06em', padding: '13px 24px', borderRadius: '999px', textDecoration: 'none', transition: 'all 0.2s', alignSelf: 'flex-start' }}
               onMouseEnter={e => { e.currentTarget.style.background = '#c49b2a'; e.currentTarget.style.boxShadow = '0 4px 16px rgba(212,175,55,0.4)'; }}
               onMouseLeave={e => { e.currentTarget.style.background = G.gold; e.currentTarget.style.boxShadow = 'none'; }}>
               İLETİŞİME GEÇ <ArrowRight size={16} />
@@ -152,7 +152,7 @@ export default function AboutPage() {
                   <Icon size={20} style={{ color: G.gold }} />
                 </div>
                 <div style={{ fontSize: 'clamp(24px,4vw,36px)', fontWeight: 900, color: G.gold }}>{s.n}</div>
-                <div style={{ fontSize: '15px', fontWeight: 700, letterSpacing: '0.1em', color: 'rgba(255,255,255,0.3)', marginTop: '5px' }}>{s.l.toUpperCase()}</div>
+                <div style={{ fontSize: '14px', fontWeight: 700, letterSpacing: '0.1em', color: 'rgba(255,255,255,0.3)', marginTop: '5px' }}>{s.l.toUpperCase()}</div>
               </motion.div>
             );
           })}
@@ -162,10 +162,10 @@ export default function AboutPage() {
         <div style={{ padding: 'clamp(24px,4vw,32px) clamp(16px,4vw,40px)', background: G.goldFaint, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
           <div>
             <h2 style={{ fontSize: 'clamp(18px,3vw,24px)', fontWeight: 900, color: G.gold }}>Birlikte çalışalım. ✦</h2>
-            <p style={{ fontSize: '15px', color: G.whiteMid, marginTop: '5px' }}>İlk adımı atmak için iletişime geçin.</p>
+            <p style={{ fontSize: '14px', color: G.whiteMid, marginTop: '5px' }}>İlk adımı atmak için iletişime geçin.</p>
           </div>
           <Link to="/fiyatlar"
-            style={{ background: G.gold, color: G.bg, fontSize: '15px', fontWeight: 900, letterSpacing: '0.06em', padding: '12px 22px', borderRadius: '999px', display: 'inline-flex', alignItems: 'center', gap: '6px', textDecoration: 'none', transition: 'all 0.2s' }}
+            style={{ background: G.gold, color: G.bg, fontSize: '14px', fontWeight: 900, letterSpacing: '0.06em', padding: '12px 22px', borderRadius: '999px', display: 'inline-flex', alignItems: 'center', gap: '6px', textDecoration: 'none', transition: 'all 0.2s' }}
             onMouseEnter={e => { e.currentTarget.style.background = '#c49b2a'; }}
             onMouseLeave={e => { e.currentTarget.style.background = G.gold; }}>
             PAKETLERİ GÖR <ArrowRight size={14} />

@@ -6,13 +6,13 @@
   --gold: #d4af37;
   --navy: #0d1b3e;
   --navy-dark: #071029;
-  --font-size-base: 15px;
+  --font-size-base: 14px;
 }
 
 * { box-sizing: border-box; }
 
 html {
-  font-size: var(--font-size-base);
+  font-size: 14px;
   scroll-behavior: smooth;
 }
 
@@ -84,3 +84,73 @@ a { color: inherit; }
   .gallery-grid { grid-template-columns: 1fr 1fr !important; }
   .services-grid { grid-template-columns: 1fr 1fr !important; }
 }
+
+/* ── GLASS MORPHISM ── */
+.glass {
+  background: rgba(13, 27, 62, 0.55) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(212, 175, 55, 0.18) !important;
+}
+
+/* ── SCROLL ANİMASYON SINIFLAR ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fade-left {
+  opacity: 0;
+  transform: translateX(-28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.fade-right {
+  opacity: 0;
+  transform: translateX(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.scale-in {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.scale-in.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ── SVG DALGA GEÇİŞLERİ ── */
+.wave-divider {
+  overflow: hidden;
+  line-height: 0;
+  margin-top: -2px;
+}
+.wave-divider svg {
+  display: block;
+  width: 100%;
+}
+
+/* ── PARALLAX CONTAINER ── */
+.parallax-bg {
+  will-change: transform;
+  transition: transform 0.05s linear;
+}
+
+/* ── ANİMASYONLU SAYAÇLAR ── */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.count-anim { animation: countUp 0.5s ease forwards; }

@@ -19,7 +19,7 @@ export default function Marquee() {
       `}</style>
       <div className="marquee-track">
         {[...items, ...items].map((item, i) => (
-          <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: '12px', padding: '0 20px', fontSize: '15px', fontWeight: 900, letterSpacing: '0.12em', color: '#0d1b3e', whiteSpace: 'nowrap' }}>
+          <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: '12px', padding: '0 20px', fontSize: '14px', fontWeight: 900, letterSpacing: '0.12em', color: '#0d1b3e', whiteSpace: 'nowrap' }}>
             {item} <span style={{ opacity: 0.4 }}>✦</span>
           </span>
         ))}

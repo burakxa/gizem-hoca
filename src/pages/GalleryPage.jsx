@@ -1,89 +1,112 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet';
-import { X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, ZoomIn } from 'lucide-react';
 
-const G = { bg:'#0d1b3e', gold:'#d4af37', goldBorder:'rgba(212,175,55,0.2)', whiteMid:'rgba(255,255,255,0.78)' };
+const G = { bg:'#0d1b3e', dark:'#071029', gold:'#d4af37', goldFaint:'rgba(212,175,55,0.1)', goldBorder:'rgba(212,175,55,0.2)', white:'rgba(255,255,255,0.92)' };
 
-const images = [
-  { id:1, src:'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800', alt:'Mat pilates', category:'Stüdyo' },
-  { id:2, src:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800', alt:'Reformer', category:'Reformer' },
-  { id:3, src:'https://images.unsplash.com/photo-1599402318494-082465b828a2?w=800', alt:'Esneme', category:'Dersler' },
-  { id:4, src:'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800', alt:'Denge', category:'Dersler' },
-  { id:5, src:'https://images.unsplash.com/photo-1571942674757-c342c31345c1?w=800', alt:'Pozisyon', category:'Dersler' },
-  { id:6, src:'https://images.unsplash.com/photo-1607962837359-5e7e89f86776?w=800', alt:'Grup', category:'Grup' },
-  { id:7, src:'https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?w=800', alt:'Stüdyo', category:'Stüdyo' },
-  { id:8, src:'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=800', alt:'Sabah', category:'Dersler' },
-  { id:9, src:'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800', alt:'Meditasyon', category:'Mindfulness' },
-  { id:10, src:'https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?w=800', alt:'Reformer grup', category:'Reformer' },
-  { id:11, src:'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=800', alt:'Bireysel', category:'Dersler' },
-  { id:12, src:'https://images.unsplash.com/photo-1552196563-55cd4e45efb3?w=800', alt:'Detay', category:'Stüdyo' },
+const photos = [
+  { src:'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600', alt:'Mat Pilates', cat:'Mat', tall:true },
+  { src:'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600', alt:'Reformer', cat:'Reformer' },
+  { src:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600', alt:'Yoga Flow', cat:'Online' },
+  { src:'https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=600', alt:'Studio', cat:'Stüdyo', tall:true },
+  { src:'https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=600', alt:'Pilates Core', cat:'Mat' },
+  { src:'https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=600', alt:'Balance', cat:'Reformer' },
+  { src:'https://images.unsplash.com/photo-1540206395-68808572332f?w=600', alt:'Stretch', cat:'Mat' },
+  { src:'https://images.unsplash.com/photo-1588286840104-8957b019727f?w=600', alt:'Pilates Class', cat:'Online', tall:true },
+  { src:'https://images.unsplash.com/photo-1552196563-55cd4e45efb3?w=600', alt:'Wellness', cat:'Stüdyo' },
 ];
 
-const cats = ['TÜMÜ','STÜDYO','DERSLER','REFORMER','GRUP','MİNDFULNESS'];
-const catMap = { 'TÜMÜ':'', 'STÜDYO':'Stüdyo', 'DERSLER':'Dersler', 'REFORMER':'Reformer', 'GRUP':'Grup', 'MİNDFULNESS':'Mindfulness' };
+const cats = ['Tümü','Mat','Reformer','Online','Stüdyo'];
 
 export default function GalleryPage() {
-  const [sel, setSel] = useState(null);
-  const [cat, setCat] = useState('TÜMÜ');
-  const filtered = cat === 'TÜMÜ' ? images : images.filter(i => i.category === catMap[cat]);
+  const [selected, setSelected] = useState('Tümü');
+  const [lightbox, setLightbox] = useState(null);
+  const [hoverId, setHoverId] = useState(null);
+
+  const filtered = selected === 'Tümü' ? photos : photos.filter(p => p.cat === selected);
 
   return (
     <>
       <Helmet>
         <title>Galeri | Pilates Stüdyo Fotoğrafları | Gizem Hoca</title>
-        <meta name="description" content="Gizem Hoca pilates stüdyosundan fotoğraflar. Reformer aleti, mat pilates dersleri ve stüdyo ortamı." />
+        <meta name="description" content="Gizem Hoca pilates stüdyosundan fotoğraflar. Mat pilates, reformer ve stüdyo ortamı." />
       </Helmet>
-      <div style={{ background:G.bg, fontFamily:'Montserrat,sans-serif', minHeight:'100vh' }}>
-        <div style={{ padding:'32px 40px', borderBottom:`1px solid ${G.goldBorder}`, display:'flex', alignItems:'center', gap:'16px' }}>
-          <div style={{ width:'32px', height:'2px', background:G.gold }} />
-          <div>
-            <p style={{ fontSize:'9px', fontWeight:900, letterSpacing:'0.2em', color:G.gold, marginBottom:'6px' }}>GİZEM HOCA PİLATES</p>
-            <h1 style={{ fontSize:'56px', fontWeight:900, color:'#fff', lineHeight:0.92, letterSpacing:'-0.03em' }}>GALERİ</h1>
+      <div style={{ background:G.bg, minHeight:'100vh', fontFamily:'Montserrat,sans-serif' }}>
+
+        {/* Başlık */}
+        <div className="fade-up" style={{ padding:'clamp(24px,4vw,40px) clamp(16px,4vw,40px) 0', borderBottom:`1px solid ${G.goldBorder}` }}>
+          <div style={{ display:'flex', alignItems:'center', gap:'12px', marginBottom:'20px' }}>
+            <div style={{ width:'28px', height:'2px', background:G.gold }} />
+            <p style={{ fontSize:'11px', fontWeight:900, letterSpacing:'0.2em', color:G.gold }}>GALERİ</p>
+          </div>
+          <h1 style={{ fontSize:'clamp(32px,7vw,52px)', fontWeight:900, color:'#fff', letterSpacing:'-0.03em', marginBottom:'20px' }}>
+            Stüdyodan<br /><span style={{ color:G.gold }}>Kareler</span>
+          </h1>
+
+          {/* Filtre */}
+          <div style={{ display:'flex', gap:'8px', flexWrap:'wrap', paddingBottom:'20px' }}>
+            {cats.map(c => (
+              <button key={c} onClick={() => setSelected(c)}
+                style={{ padding:'7px 16px', borderRadius:'999px', border:`1.5px solid ${selected===c ? G.gold : G.goldBorder}`, background:selected===c ? 'rgba(212,175,55,0.12)' : 'transparent', color:selected===c ? G.gold : 'rgba(255,255,255,0.5)', fontSize:'12px', fontWeight:700, cursor:'pointer', fontFamily:'Montserrat', transition:'all 0.2s' }}>
+                {c}
+              </button>
+            ))}
           </div>
         </div>
-        <div style={{ display:'flex', overflowX:'auto', borderBottom:`1px solid ${G.goldBorder}` }}>
-          {cats.map(c => (
-            <button key={c} onClick={() => setCat(c)}
-              style={{ padding:'10px 18px', fontSize:'9px', fontWeight:900, letterSpacing:'0.08em', whiteSpace:'nowrap', borderRight:`1px solid ${G.goldBorder}`, cursor:'pointer', border:'none', background: cat===c ? G.gold : 'transparent', color: cat===c ? G.bg : G.whiteMid, fontFamily:'Montserrat', borderRight:`1px solid ${G.goldBorder}` }}>
-              {c}
-            </button>
-          ))}
-        </div>
-        <div className='gallery-grid' style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)' }}>
-          <AnimatePresence>
-            {filtered.map((img, i) => (
-              <motion.div key={img.id} initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }} transition={{ delay:i*0.04 }}
-                style={{ aspectRatio:'1', overflow:'hidden', cursor:'pointer', borderBottom:`1px solid ${G.goldBorder}`, borderRight:`1px solid ${G.goldBorder}`, position:'relative' }}
-                onClick={() => setSel(img)}>
-                <img src={img.src} alt={img.alt} style={{ width:'100%', height:'100%', objectFit:'cover', filter:'brightness(0.6)', transition:'all 0.4s' }} />
-                <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'flex-end', padding:'10px', background:'linear-gradient(to top, rgba(7,16,41,0.7) 0%, transparent 60%)', opacity:0, transition:'opacity 0.3s' }}
-                  onMouseEnter={e => e.currentTarget.style.opacity=1} onMouseLeave={e => e.currentTarget.style.opacity=0}>
-                  <p style={{ color:'#fff', fontSize:'9px', fontWeight:900, letterSpacing:'0.06em' }}>{img.alt.toUpperCase()}</p>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
-      </div>
 
-      <AnimatePresence>
-        {sel && (
-          <motion.div style={{ position:'fixed', inset:0, background:'rgba(7,16,41,0.97)', display:'flex', alignItems:'center', justifyContent:'center', zIndex:50, padding:'16px' }}
-            onClick={() => setSel(null)} initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }}>
-            <motion.div onClick={e=>e.stopPropagation()} style={{ position:'relative', maxWidth:'860px', width:'100%' }}
-              initial={{ scale:0.9 }} animate={{ scale:1 }} exit={{ scale:0.9 }}>
-              <img src={sel.src} alt={sel.alt} style={{ width:'100%', objectFit:'contain', maxHeight:'80vh', borderRadius:'6px', border:`1px solid ${G.goldBorder}` }} />
-              <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginTop:'12px' }}>
-                <p style={{ color:'#fff', fontSize:'11px', fontWeight:700 }}>{sel.alt}</p>
-                <button onClick={() => setSel(null)} style={{ color:G.whiteMid, background:'none', border:'none', cursor:'pointer', fontSize:'10px', fontWeight:900, letterSpacing:'0.1em', display:'flex', alignItems:'center', gap:'6px', fontFamily:'Montserrat' }}>
-                  KAPAT <X size={14} />
-                </button>
+        {/* Masonry Grid */}
+        <div style={{ padding:'24px clamp(16px,4vw,40px)', columns:'repeat(auto-fill, minmax(260px, 1fr))', columnGap:'12px' }}>
+          {filtered.map((photo, i) => (
+            <motion.div key={`${photo.src}-${i}`}
+              layout initial={{ opacity:0, scale:0.92 }} animate={{ opacity:1, scale:1 }}
+              transition={{ delay: i * 0.06 }}
+              onHoverStart={() => setHoverId(i)} onHoverEnd={() => setHoverId(null)}
+              onClick={() => setLightbox(photo)}
+              style={{ breakInside:'avoid', marginBottom:'12px', borderRadius:'12px', overflow:'hidden', cursor:'pointer', position:'relative', border:`1px solid ${hoverId===i ? G.gold : G.goldBorder}`, transition:'border-color 0.2s', display:'block' }}>
+              <img src={photo.src} alt={photo.alt}
+                style={{ width:'100%', display:'block', objectFit:'cover', height: photo.tall ? '340px' : '220px', transition:'transform 0.5s ease', transform: hoverId===i ? 'scale(1.05)' : 'scale(1)', filter:'brightness(0.75) saturate(0.9)' }} />
+
+              {/* Overlay */}
+              <motion.div animate={{ opacity: hoverId===i ? 1 : 0 }} transition={{ duration:0.2 }}
+                style={{ position:'absolute', inset:0, background:'rgba(13,27,62,0.5)', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'8px' }}>
+                <div style={{ width:'40px', height:'40px', borderRadius:'50%', background:G.gold, display:'flex', alignItems:'center', justifyContent:'center' }}>
+                  <ZoomIn size={18} style={{ color:G.bg }} />
+                </div>
+                <span style={{ fontSize:'12px', fontWeight:700, color:'#fff', letterSpacing:'0.06em' }}>BÜYÜT</span>
+              </motion.div>
+
+              {/* Kategori */}
+              <div style={{ position:'absolute', top:'10px', left:'10px', background:'rgba(7,16,41,0.8)', border:`1px solid ${G.goldBorder}`, color:G.gold, fontSize:'10px', fontWeight:700, padding:'3px 10px', borderRadius:'999px', backdropFilter:'blur(4px)' }}>
+                {photo.cat}
               </div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          ))}
+        </div>
+
+        {/* Lightbox */}
+        <AnimatePresence>
+          {lightbox && (
+            <motion.div initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }}
+              onClick={() => setLightbox(null)}
+              style={{ position:'fixed', inset:0, background:'rgba(7,16,41,0.97)', zIndex:9990, display:'flex', alignItems:'center', justifyContent:'center', padding:'20px' }}>
+              <motion.div initial={{ scale:0.85, opacity:0 }} animate={{ scale:1, opacity:1 }} exit={{ scale:0.85, opacity:0 }}
+                onClick={e => e.stopPropagation()}
+                style={{ position:'relative', maxWidth:'860px', width:'100%' }}>
+                <img src={lightbox.src.replace('w=600','w=1200')} alt={lightbox.alt}
+                  style={{ width:'100%', borderRadius:'12px', border:`1px solid ${G.goldBorder}`, display:'block', maxHeight:'80vh', objectFit:'contain' }} />
+                <button onClick={() => setLightbox(null)}
+                  style={{ position:'absolute', top:'-44px', right:0, background:'none', border:'none', color:'rgba(255,255,255,0.6)', cursor:'pointer', display:'flex', alignItems:'center', gap:'6px', fontSize:'12px', fontFamily:'Montserrat', fontWeight:700 }}>
+                  KAPAT <X size={14} />
+                </button>
+                <div style={{ position:'absolute', bottom:'12px', left:'12px', background:'rgba(7,16,41,0.8)', color:G.gold, fontSize:'11px', fontWeight:700, padding:'5px 12px', borderRadius:'999px', backdropFilter:'blur(4px)' }}>
+                  {lightbox.cat} · {lightbox.alt}
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </>
   );
 }

@@ -124,7 +124,7 @@ export default function ContactPage() {
           />
           <div style={{ position: 'absolute', bottom: '16px', right: '16px' }}>
             <a href="https://maps.google.com/?q=Beşiktaş+İstanbul" target="_blank" rel="noopener noreferrer"
-              style={{ background: G.gold, color: G.bg, fontSize: '15px', fontWeight: 900, padding: '8px 16px', borderRadius: '999px', textDecoration: 'none', letterSpacing: '0.06em' }}>
+              style={{ background: G.gold, color: G.bg, fontSize: '14px', fontWeight: 900, padding: '8px 16px', borderRadius: '999px', textDecoration: 'none', letterSpacing: '0.06em' }}>
               Yol Tarifi Al →
             </a>
           </div>

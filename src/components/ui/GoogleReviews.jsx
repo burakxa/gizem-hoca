@@ -23,13 +23,13 @@ export default function GoogleReviews() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
             <span style={{ fontSize: '28px', fontWeight: 900, color: '#fff' }}>5.0</span>
-            <div style={{ color: '#f8d000', fontSize: '15px', letterSpacing: '2px' }}>★★★★★</div>
+            <div style={{ color: '#f8d000', fontSize: '14px', letterSpacing: '2px' }}>★★★★★</div>
           </div>
           <div>
-            <div style={{ fontSize: '15px', color: 'rgba(255,255,255,0.65)' }}>47 değerlendirme</div>
+            <div style={{ fontSize: '14px', color: 'rgba(255,255,255,0.65)' }}>47 değerlendirme</div>
             <div style={{ display: 'flex', gap: '3px', marginTop: '2px' }}>
               {'GOOGLE'.split('').map((l, i) => (
-                <span key={i} style={{ fontSize: '15px', fontWeight: 900, color: ['#4285f4','#ea4335','#fbbc04','#34a853','#4285f4','#ea4335'][i] }}>{l}</span>
+                <span key={i} style={{ fontSize: '14px', fontWeight: 900, color: ['#4285f4','#ea4335','#fbbc04','#34a853','#4285f4','#ea4335'][i] }}>{l}</span>
               ))}
             </div>
           </div>
@@ -45,16 +45,16 @@ export default function GoogleReviews() {
             whileHover={{ y: -3, borderColor: 'rgba(212,175,55,0.4)' }}
             style={{ background: G.goldFaint, border: `1px solid ${G.goldBorder}`, borderRadius: '12px', padding: '16px', transition: 'all 0.2s' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-              <div style={{ width: '34px', height: '34px', borderRadius: '50%', background: G.gold, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '15px', fontWeight: 900, color: G.bg, flexShrink: 0 }}>
+              <div style={{ width: '34px', height: '34px', borderRadius: '50%', background: G.gold, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: 900, color: G.bg, flexShrink: 0 }}>
                 {r.name[0]}
               </div>
               <div>
-                <div style={{ fontSize: '15px', fontWeight: 900, color: '#fff' }}>{r.name}</div>
+                <div style={{ fontSize: '14px', fontWeight: 900, color: '#fff' }}>{r.name}</div>
                 <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.3)', marginTop: '1px' }}>{r.time}</div>
               </div>
             </div>
-            <div style={{ color: '#f8d000', fontSize: '15px', marginBottom: '8px', letterSpacing: '2px' }}>{'★'.repeat(r.rating)}</div>
-            <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.75)', lineHeight: 1.65, fontStyle: 'italic' }}>"{r.text}"</p>
+            <div style={{ color: '#f8d000', fontSize: '14px', marginBottom: '8px', letterSpacing: '2px' }}>{'★'.repeat(r.rating)}</div>
+            <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.75)', lineHeight: 1.65, fontStyle: 'italic' }}>"{r.text}"</p>
           </motion.div>
         ))}
       </div>
@@ -62,7 +62,7 @@ export default function GoogleReviews() {
       {/* CTA */}
       <div style={{ textAlign: 'center' }}>
         <a href="https://g.page/r/gizemhoca/review" target="_blank" rel="noopener noreferrer"
-          style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '15px', fontWeight: 900, color: 'rgba(212,175,55,0.6)', textDecoration: 'none', border: '1px solid rgba(212,175,55,0.2)', padding: '7px 16px', borderRadius: '999px', transition: 'all 0.2s', letterSpacing: '0.06em' }}
+          style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '14px', fontWeight: 900, color: 'rgba(212,175,55,0.6)', textDecoration: 'none', border: '1px solid rgba(212,175,55,0.2)', padding: '7px 16px', borderRadius: '999px', transition: 'all 0.2s', letterSpacing: '0.06em' }}
           onMouseEnter={e => { e.currentTarget.style.color = G.gold; e.currentTarget.style.borderColor = 'rgba(212,175,55,0.5)'; }}
           onMouseLeave={e => { e.currentTarget.style.color = 'rgba(212,175,55,0.6)'; e.currentTarget.style.borderColor = 'rgba(212,175,55,0.2)'; }}>
           TÜM DEĞERLENDİRMELERİ GÖR <ExternalLink size={12} />

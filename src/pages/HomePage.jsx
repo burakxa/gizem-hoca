@@ -2,6 +2,9 @@ import { Helmet } from 'react-helmet';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, ChevronRight, PlayCircle, X, Users, Monitor, Dumbbell, Sparkles } from 'lucide-react';
+import WaveDivider from '@/components/ui/WaveDivider';
+import { useParallax } from '@/hooks/useParallax';
+import { useCountUp } from '@/hooks/useCountUp';
 import Marquee from '@/components/ui/Marquee';
 import BeforeAfterSlider from '@/components/ui/BeforeAfterSlider';
 import GoogleReviews from '@/components/ui/GoogleReviews';
@@ -46,7 +49,7 @@ const GoldBtn = ({ to, children, outline, fullWidth }) => {
     <span onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
       style={{
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
-        padding: '12px 24px', borderRadius: '999px', fontSize: '15px', fontWeight: 900,
+        padding: '12px 24px', borderRadius: '999px', fontSize: '14px', fontWeight: 900,
         letterSpacing: '0.06em', cursor: 'pointer', transition: 'all 0.2s', fontFamily: 'Montserrat',
         width: fullWidth ? '100%' : 'auto',
         background: outline ? 'transparent' : h ? '#c49b2a' : G.gold,
@@ -120,12 +123,12 @@ export default function HomePage() {
 
           <div>
             <motion.h1
-              style={{ fontSize: 'clamp(40px, 6vw, 64px)', fontWeight: 900, color: '#fff', lineHeight: 0.92, letterSpacing: '-0.03em', marginBottom: '18px' }}
-              initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.7 }}>
+              style={{ fontSize: 'clamp(48px, 7vw, 78px)', fontWeight: 900, color: '#fff', lineHeight: 0.88, letterSpacing: '-0.03em', marginBottom: '18px' }}
+              initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.8 }} className="fade-up">
               <>Move.<br />Breathe.<br /><span style={{ color: G.gold }}>Thrive.</span></>
             </motion.h1>
             <motion.p
-              style={{ fontSize: '15px', color: G.whiteMid, lineHeight: 1.75, maxWidth: '300px', marginBottom: '16px' }}
+              style={{ fontSize: '14px', color: G.whiteMid, lineHeight: 1.75, maxWidth: '300px', marginBottom: '16px' }}
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
               Hareketin dönüştürücü gücüne inanıyorum. Her öğrencimin potansiyelini ortaya çıkarmasına yardım ediyorum.
             </motion.p>
@@ -133,8 +136,8 @@ export default function HomePage() {
             {/* İLK DERS ÜCRETSİZ BADGE */}
             <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.45 }}
               style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(212,175,55,0.12)', border: '1px solid rgba(212,175,55,0.4)', borderRadius: '999px', padding: '7px 16px', marginBottom: '20px' }}>
-              <span style={{ fontSize: '15px' }}>🎁</span>
-              <span style={{ fontSize: '15px', fontWeight: 900, color: G.gold, letterSpacing: '0.04em' }}>İLK TANITMA SEANSI ÜCRETSİZ</span>
+              <span style={{ fontSize: '14px' }}>🎁</span>
+              <span style={{ fontSize: '14px', fontWeight: 900, color: G.gold, letterSpacing: '0.04em' }}>İLK TANITMA SEANSI ÜCRETSİZ</span>
             </motion.div>
 
             <motion.div className="hero-btns" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
@@ -149,7 +152,7 @@ export default function HomePage() {
             onViewportEnter={() => setStatsVis(true)}>
             {[{ n: 500, s: '+', l: 'ÖĞRENCİ' }, { n: 8, s: '+', l: 'YIL' }, { n: 4, s: '', l: 'SERTİFİKA' }].map((st, i) => (
               <motion.div key={i} whileHover={{ y: -2 }}
-                style={{ background: G.goldFaint, border: `1px solid ${G.goldBorder}`, borderRadius: '12px', padding: '14px 10px', textAlign: 'center' }}>
+                style={{ background: 'rgba(13,27,62,0.5)', backdropFilter: 'blur(12px)', border: '1px solid rgba(212,175,55,0.2)', borderRadius: '12px', padding: '14px 10px', textAlign: 'center' }}>
                 <div style={{ fontSize: 'clamp(20px, 3vw, 26px)', fontWeight: 900, color: G.gold, lineHeight: 1 }}>
                   {statsVis ? <AnimNum n={st.n} s={st.s} /> : `0${st.s}`}
                 </div>
@@ -195,20 +198,22 @@ export default function HomePage() {
         </Link>
       </motion.div>
 
+      <WaveDivider color="#071029" />
+
       {/* HİZMETLER */}
       <div className="services-grid">
         {services.map((s, i) => {
           const { Icon } = s;
           return (
             <motion.div key={i}
-              initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
+              initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.5 }}
               style={{ padding: '20px 16px', borderRight: i < services.length - 1 ? `1px solid ${G.goldBorder}` : 'none', borderBottom: `1px solid ${G.goldBorder}`, background: s.accent ? G.goldFaint : 'transparent', transition: 'background 0.2s', cursor: 'default' }}
               whileHover={{ background: s.accent ? 'rgba(212,175,55,0.15)' : 'rgba(212,175,55,0.05)' }}>
               <div style={{ width: '38px', height: '38px', borderRadius: '10px', marginBottom: '12px', background: s.accent ? G.gold : G.goldFaint, border: `1px solid ${s.accent ? 'transparent' : G.goldBorder}`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Icon size={17} style={{ color: s.accent ? G.bg : G.gold }} />
               </div>
-              <div style={{ fontSize: '15px', fontWeight: 900, letterSpacing: '0.04em', color: s.accent ? G.gold : '#fff', marginBottom: '5px' }}>{s.t}</div>
-              <div style={{ fontSize: '15px', color: G.whiteMid, lineHeight: 1.5 }}>{s.d}</div>
+              <div style={{ fontSize: '14px', fontWeight: 900, letterSpacing: '0.04em', color: s.accent ? G.gold : '#fff', marginBottom: '5px' }}>{s.t}</div>
+              <div style={{ fontSize: '14px', color: G.whiteMid, lineHeight: 1.5 }}>{s.d}</div>
             </motion.div>
           );
         })}
@@ -232,8 +237,8 @@ export default function HomePage() {
               </motion.div>
             </div>
             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '14px', background: 'linear-gradient(to top, rgba(7,16,41,0.95) 0%, transparent 100%)' }}>
-              <p style={{ color: '#fff', fontSize: '15px', fontWeight: 700 }}>{videos[0].title}</p>
-              <p style={{ color: G.gold, fontSize: '15px', marginTop: '2px' }}>{videos[0].dur}</p>
+              <p style={{ color: '#fff', fontSize: '14px', fontWeight: 700 }}>{videos[0].title}</p>
+              <p style={{ color: G.gold, fontSize: '14px', marginTop: '2px' }}>{videos[0].dur}</p>
             </div>
           </motion.div>
           {videos.slice(1).map(v => (
@@ -243,8 +248,8 @@ export default function HomePage() {
                 <img src={`https://img.youtube.com/vi/${v.id}/default.jpg`} alt={v.title} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.65)' }} />
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <p style={{ fontSize: '15px', fontWeight: 700, color: '#fff', lineHeight: 1.3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{v.title}</p>
-                <p style={{ fontSize: '15px', color: G.gold, marginTop: '2px' }}>{v.dur}</p>
+                <p style={{ fontSize: '14px', fontWeight: 700, color: '#fff', lineHeight: 1.3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{v.title}</p>
+                <p style={{ fontSize: '14px', color: G.gold, marginTop: '2px' }}>{v.dur}</p>
               </div>
               <PlayCircle size={16} style={{ color: G.gold, flexShrink: 0 }} />
             </motion.div>
@@ -268,7 +273,7 @@ export default function HomePage() {
           <blockquote style={{ fontSize: 'clamp(15px, 2vw, 19px)', fontWeight: 900, color: '#fff', lineHeight: 1.2, marginBottom: '12px', fontStyle: 'italic' }}>
             "Pilates bir egzersiz değil, yaşam felsefesidir."
           </blockquote>
-          <p style={{ fontSize: '15px', color: G.whiteMid, lineHeight: 1.75, marginBottom: '16px' }}>
+          <p style={{ fontSize: '14px', color: G.whiteMid, lineHeight: 1.75, marginBottom: '16px' }}>
             Hareketin ve sağlığın hayatımızdaki dönüştürücü gücüne her zaman inandım.
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '20px' }}>
@@ -302,10 +307,10 @@ export default function HomePage() {
             <h3 style={{ fontSize: 'clamp(18px,2.5vw,24px)', fontWeight: 900, color: '#fff', lineHeight: 1.2 }}>
               Sadece 3 ayda<br /><span style={{ color: G.gold }}>inanılmaz dönüşüm</span>
             </h3>
-            <p style={{ fontSize: '15px', color: G.whiteMid, lineHeight: 1.75 }}>
+            <p style={{ fontSize: '14px', color: G.whiteMid, lineHeight: 1.75 }}>
               Düzenli pilates pratiği ile öğrencilerimiz hem fiziksel hem zihinsel olarak güçleniyor. Fotoğrafı sürükleyerek farkı kendiniz görün.
             </p>
-            <Link to="/musteri-yorumlari" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '15px', fontWeight: 900, letterSpacing: '0.1em', color: G.gold, textDecoration: 'none', borderBottom: `2px solid ${G.gold}`, paddingBottom: '2px', alignSelf: 'flex-start' }}>
+            <Link to="/musteri-yorumlari" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '14px', fontWeight: 900, letterSpacing: '0.1em', color: G.gold, textDecoration: 'none', borderBottom: `2px solid ${G.gold}`, paddingBottom: '2px', alignSelf: 'flex-start' }}>
               BAŞARILI HİKAYELER <ArrowRight size={12} />
             </Link>
           </div>
@@ -313,6 +318,8 @@ export default function HomePage() {
       </div>
 
       <GoogleReviews />
+
+      <WaveDivider color="#071029" flip={true} />
 
       {/* YORUMLAR */}
       <div style={{ padding: 'clamp(28px, 5vw, 48px) clamp(16px, 4vw, 40px)', borderBottom: `1px solid ${G.goldBorder}`, background: G.dark }}>
@@ -330,20 +337,85 @@ export default function HomePage() {
         <div className="testimonials-grid">
           {testimonials.map((t, i) => (
             <motion.div key={i}
-              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+              initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.12, duration: 0.6 }}
               whileHover={{ y: -4, borderColor: 'rgba(212,175,55,0.4)', boxShadow: '0 8px 28px rgba(212,175,55,0.12)' }}
-              style={{ border: `1px solid ${G.goldBorder}`, borderRadius: '12px', padding: '20px', background: G.goldFaint, transition: 'all 0.2s' }}>
-              <div style={{ color: G.gold, fontSize: '15px', marginBottom: '10px', letterSpacing: '2px' }}>★★★★★</div>
-              <p style={{ fontSize: '15px', color: G.white, lineHeight: 1.65, fontStyle: 'italic', marginBottom: '14px' }}>"{t.text}"</p>
+              style={{ border: `1px solid rgba(212,175,55,0.25)`, borderRadius: '12px', padding: '20px', background: 'rgba(13,27,62,0.6)', backdropFilter: 'blur(12px)', transition: 'all 0.2s' }}>
+              <div style={{ color: G.gold, fontSize: '14px', marginBottom: '10px', letterSpacing: '2px' }}>★★★★★</div>
+              <p style={{ fontSize: '14px', color: G.white, lineHeight: 1.65, fontStyle: 'italic', marginBottom: '14px' }}>"{t.text}"</p>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
                 <div>
-                  <p style={{ fontSize: '15px', fontWeight: 900, color: G.gold }}>— {t.name}</p>
-                  <p style={{ fontSize: '15px', color: G.whiteLow, marginTop: '2px' }}>{t.job}</p>
+                  <p style={{ fontSize: '14px', fontWeight: 900, color: G.gold }}>— {t.name}</p>
+                  <p style={{ fontSize: '14px', color: G.whiteLow, marginTop: '2px' }}>{t.job}</p>
                 </div>
                 <span style={{ fontSize: '11px', fontWeight: 900, color: 'rgba(212,175,55,0.3)', border: '1px solid rgba(212,175,55,0.15)', padding: '3px 8px', borderRadius: '999px' }}>{t.tag}</span>
               </div>
             </motion.div>
           ))}
+        </div>
+      </div>
+
+
+      {/* SPOTİFY PLAYLIST + ETKİNLİKLER */}
+      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', borderBottom:`1px solid ${G.goldBorder}` }} className="content-grid">
+
+        {/* Playlist */}
+        <div style={{ padding:'clamp(24px,4vw,40px)', borderRight:`1px solid ${G.goldBorder}` }} className="fade-left">
+          <div style={{ display:'flex', alignItems:'center', gap:'10px', marginBottom:'18px' }}>
+            <div style={{ width:'22px', height:'2px', background:G.gold }} />
+            <span style={{ fontSize:'11px', fontWeight:900, letterSpacing:'0.15em', color:G.gold }}>DERS MÜZİĞİ</span>
+          </div>
+          <h3 style={{ fontSize:'clamp(16px,3vw,22px)', fontWeight:900, color:'#fff', marginBottom:'14px', letterSpacing:'-0.02em' }}>
+            Derslerimde Çalan<br /><span style={{ color:G.gold }}>Playlist</span>
+          </h3>
+          <p style={{ fontSize:'13px', color:G.whiteMid, lineHeight:1.7, marginBottom:'18px' }}>
+            Her ders özenle hazırlanmış müziklerle dolu. Siz de evde çalabilirsiniz.
+          </p>
+          <iframe
+            style={{ borderRadius:'14px', width:'100%', border:'none', minHeight:'152px' }}
+            src="https://open.spotify.com/embed/playlist/37i9dQZF1DX9uKNf5jGX6m?utm_source=generator&theme=0"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy"
+            title="Pilates playlist"
+          />
+        </div>
+
+        {/* Etkinlik takvimi */}
+        <div style={{ padding:'clamp(24px,4vw,40px)' }} className="fade-right">
+          <div style={{ display:'flex', alignItems:'center', gap:'10px', marginBottom:'18px' }}>
+            <div style={{ width:'22px', height:'2px', background:G.gold }} />
+            <span style={{ fontSize:'11px', fontWeight:900, letterSpacing:'0.15em', color:G.gold }}>YAKLAŞAN ETKİNLİKLER</span>
+          </div>
+          <h3 style={{ fontSize:'clamp(16px,3vw,22px)', fontWeight:900, color:'#fff', marginBottom:'14px', letterSpacing:'-0.02em' }}>
+            Bu Hafta<br /><span style={{ color:G.gold }}>Özel Dersler</span>
+          </h3>
+          <div style={{ display:'flex', flexDirection:'column', gap:'10px' }}>
+            {[
+              { gun:'Pzt', tarih:'21', ders:'Ücretsiz Tanışma Dersi', saat:'10:00', renk:'#00e87a', dolu:false },
+              { gun:'Çar', tarih:'23', ders:'Hamile Pilatesi', saat:'11:00', renk:G.gold, dolu:false },
+              { gun:'Cum', tarih:'25', ders:'Reformer Özel', saat:'09:00', renk:'#ff4444', dolu:true },
+              { gun:'Cmt', tarih:'26', ders:'Mat Pilates Grubu', saat:'10:00', renk:G.gold, dolu:false },
+            ].map((e,i) => (
+              <motion.div key={i} whileHover={{ x:4 }}
+                style={{ display:'flex', alignItems:'center', gap:'12px', padding:'12px 14px', background:'rgba(13,27,62,0.5)', backdropFilter:'blur(12px)', border:`1px solid rgba(212,175,55,0.15)`, borderRadius:'10px', cursor:'default', transition:'all 0.2s', borderLeft:`3px solid ${e.renk}`, borderRadius:'0 10px 10px 0' }}>
+                <div style={{ textAlign:'center', minWidth:'36px' }}>
+                  <div style={{ fontSize:'10px', color:'rgba(255,255,255,0.4)', fontWeight:600 }}>{e.gun}</div>
+                  <div style={{ fontSize:'20px', fontWeight:900, color:G.gold, lineHeight:1 }}>{e.tarih}</div>
+                </div>
+                <div style={{ flex:1 }}>
+                  <div style={{ fontSize:'13px', fontWeight:700, color:'#fff' }}>{e.ders}</div>
+                  <div style={{ fontSize:'11px', color:'rgba(255,255,255,0.5)', marginTop:'2px' }}>{e.saat}</div>
+                </div>
+                {e.dolu ? (
+                  <span style={{ fontSize:'10px', fontWeight:700, color:'#ff4444', background:'rgba(255,68,68,0.12)', padding:'3px 8px', borderRadius:'999px' }}>DOLU</span>
+                ) : (
+                  <a href="https://wa.me/905383135720?text=Ders%20rezervasyonu%20yapmak%20istiyorum" target="_blank" rel="noopener noreferrer"
+                    style={{ fontSize:'10px', fontWeight:700, color:G.gold, background:'rgba(212,175,55,0.12)', border:`1px solid rgba(212,175,55,0.25)`, padding:'4px 10px', borderRadius:'999px', textDecoration:'none', whiteSpace:'nowrap' }}>
+                    Rezerve Et
+                  </a>
+                )}
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -353,7 +425,7 @@ export default function HomePage() {
       <div className="cta-section" style={{ padding: 'clamp(28px, 5vw, 48px) clamp(16px, 4vw, 40px)', borderBottom: `1px solid ${G.goldBorder}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '20px', background: 'rgba(212,175,55,0.06)' }}>
         <div>
           <h2 style={{ fontSize: 'clamp(24px, 4vw, 36px)', fontWeight: 900, color: '#fff', letterSpacing: '-0.02em' }}>Başlamaya hazır mısın?</h2>
-          <p style={{ fontSize: '15px', color: G.whiteMid, marginTop: '6px' }}>İlk ders için hemen iletişime geç.</p>
+          <p style={{ fontSize: '14px', color: G.whiteMid, marginTop: '6px' }}>İlk ders için hemen iletişime geç.</p>
         </div>
         <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' }}>
           <GoldBtn to="/fiyatlar">PAKETLERİ GÖR <ArrowRight size={14} /></GoldBtn>
@@ -373,7 +445,7 @@ export default function HomePage() {
                 title={selVideo.title} frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
               <button onClick={() => setSelVideo(null)}
-                style={{ position: 'absolute', top: '-44px', right: 0, color: 'rgba(255,255,255,0.78)', background: 'none', border: 'none', cursor: 'pointer', fontSize: '15px', fontWeight: 900, letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: '6px', fontFamily: 'Montserrat', transition: 'color 0.2s' }}
+                style={{ position: 'absolute', top: '-44px', right: 0, color: 'rgba(255,255,255,0.78)', background: 'none', border: 'none', cursor: 'pointer', fontSize: '14px', fontWeight: 900, letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: '6px', fontFamily: 'Montserrat', transition: 'color 0.2s' }}
                 onMouseEnter={e => e.currentTarget.style.color = G.gold}
                 onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.78)'}>
                 KAPAT <X size={14} />

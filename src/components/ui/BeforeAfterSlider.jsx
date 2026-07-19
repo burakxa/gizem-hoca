@@ -42,7 +42,7 @@ export default function BeforeAfterSlider({ before, after, beforeLabel = 'ÖNCE'
         whileHover={{ scale: 1.1 }}
         onMouseDown={() => { dragging.current = true; }}
         onTouchStart={() => { dragging.current = true; }}>
-        <span style={{ color: '#0d1b3e', fontSize: '15px', fontWeight: 900, userSelect: 'none' }}>⟷</span>
+        <span style={{ color: '#0d1b3e', fontSize: '14px', fontWeight: 900, userSelect: 'none' }}>⟷</span>
       </motion.div>
     </div>
   );
