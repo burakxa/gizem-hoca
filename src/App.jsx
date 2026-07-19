@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import { Toaster } from '@/components/ui/toaster';
 import { toast } from '@/components/ui/use-toast';
 import { AnimatePresence } from 'framer-motion';
+import ErrorBoundary from '@/components/ui/ErrorBoundary';
 import { AdminProvider } from '@/contexts/AdminContext';
 
 import PageLayout from '@/components/layout/PageLayout';
@@ -12,16 +13,14 @@ import AboutPage from '@/pages/AboutPage';
 import BlogPage from '@/pages/BlogPage';
 import BlogPostPage from '@/pages/BlogPostPage';
 import MusteriYorumlariPage from '@/pages/MusteriYorumlariPage';
-import OnlineEgitimPage from '@/pages/OnlineEgitimPage';
-import PilatesDerslerimPage from '@/pages/PilatesDerslerimPage';
 import GalleryPage from '@/pages/GalleryPage';
-import ServicesPage from '@/pages/ServicesPage';
 import DerslerPage from '@/pages/DerslerPage';
 import FiyatlarPage from '@/pages/FiyatlarPage';
 import ContactPage from '@/pages/ContactPage';
 import ProgramPage from '@/pages/ProgramPage';
 import SSFPage from '@/pages/SSFPage';
 import NotFoundPage from '@/pages/NotFoundPage';
+import KVKKPage from '@/pages/KVKKPage';
 import QuizPage from '@/pages/QuizPage';
 import AdminPage from '@/pages/AdminPage';
 
@@ -36,7 +35,7 @@ function App() {
     <>
       <Helmet>
         <title>Gizem Hoca - Pilates & Wellness | İstanbul</title>
-        <meta name="description" content="İstanbul Beşiktaş'ta profesyonel pilates dersleri." />
+        <meta name="description" content="İstanbul Maltepe'ta profesyonel pilates dersleri." />
       </Helmet>
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
@@ -45,19 +44,20 @@ function App() {
             <Route path="hakkimda" element={<AboutPage />} />
             <Route path="blog" element={<BlogPage />} />
             <Route path="blog/:id" element={<BlogPostPage />} />
-            <Route path="blog/:postId" element={<BlogPostPage />} />
+} />
             <Route path="musteri-yorumlari" element={<MusteriYorumlariPage />} />
-            <Route path="online-egitim" element={<OnlineEgitimPage handleNotImplemented={handleNotImplemented} />} />
-            <Route path="pilates-derslerim" element={<PilatesDerslerimPage />} />
+} />
+} />
             <Route path="galeri" element={<GalleryPage />} />
             <Route path="dersler" element={<DerslerPage />} />
-            <Route path="hizmetler" element={<ServicesPage handleNotImplemented={handleNotImplemented} />} />
+} />
             <Route path="fiyatlar" element={<FiyatlarPage />} />
             <Route path="iletisim" element={<ContactPage />} />
             <Route path="program" element={<ProgramPage />} />
             <Route path="sss" element={<SSFPage />} />
             <Route path="quiz" element={<QuizPage />} />
             <Route path="admin" element={<AdminPage />} />
+            <Route path="kvkk" element={<KVKKPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>
@@ -70,9 +70,11 @@ function App() {
 function AppWrapper() {
   return (
     <Router>
+      <ErrorBoundary>
       <AdminProvider>
         <App />
       </AdminProvider>
+      </ErrorBoundary>
     </Router>
   );
 }

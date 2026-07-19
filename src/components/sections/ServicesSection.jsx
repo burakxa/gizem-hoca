@@ -50,7 +50,7 @@ import React from 'react';
     
     function ServicesSection({ handleNotImplemented, isPreview = false, onBookClassClick }) {
       const displayedServices = isPreview ? services.slice(0, 4) : services;
-      const whatsappUrl = 'https://wa.me/905000000000'; // TODO: Replace with actual number
+      const whatsappUrl = 'https://wa.me/905383135720'; // TODO: Replace with actual number
 
       const handleWhatsAppRedirect = () => {
         window.open(whatsappUrl, '_blank', 'noopener,noreferrer');

@@ -29,8 +29,9 @@ export default function GalleryPage() {
   return (
     <>
       <Helmet>
-        <title>Galeri | Pilates Stüdyo Fotoğrafları | Gizem Hoca</title>
-        <meta name="description" content="Gizem Hoca pilates stüdyosundan fotoğraflar. Mat pilates, reformer ve stüdyo ortamı." />
+        <title>Galeri | Pilates Stüdyo Fotoğrafları | Gizem Hoca Maltepe</title>
+        <meta name="description" content="Gizem Hoca Maltepe pilates stüdyosundan fotoğraflar. Mat pilates, reformer ve stüdyo ortamı." />
+        <link rel="canonical" href="https://gizemhoca.net/galeri" />
       </Helmet>
       <div style={{ background:G.bg, minHeight:'100vh', fontFamily:'Montserrat,sans-serif' }}>
 
@@ -64,7 +65,7 @@ export default function GalleryPage() {
               onHoverStart={() => setHoverId(i)} onHoverEnd={() => setHoverId(null)}
               onClick={() => setLightbox(photo)}
               style={{ breakInside:'avoid', marginBottom:'12px', borderRadius:'12px', overflow:'hidden', cursor:'pointer', position:'relative', border:`1px solid ${hoverId===i ? G.gold : G.goldBorder}`, transition:'border-color 0.2s', display:'block' }}>
-              <img src={photo.src} alt={photo.alt}
+              <img loading="lazy" src={photo.src} alt={photo.alt}
                 style={{ width:'100%', display:'block', objectFit:'cover', height: photo.tall ? '340px' : '220px', transition:'transform 0.5s ease', transform: hoverId===i ? 'scale(1.05)' : 'scale(1)', filter:'brightness(0.75) saturate(0.9)' }} />
 
               {/* Overlay */}
@@ -93,7 +94,7 @@ export default function GalleryPage() {
               <motion.div initial={{ scale:0.85, opacity:0 }} animate={{ scale:1, opacity:1 }} exit={{ scale:0.85, opacity:0 }}
                 onClick={e => e.stopPropagation()}
                 style={{ position:'relative', maxWidth:'860px', width:'100%' }}>
-                <img src={lightbox.src.replace('w=600','w=1200')} alt={lightbox.alt}
+                <img loading="lazy" src={lightbox.src.replace('w=600','w=1200')} alt={lightbox.alt}
                   style={{ width:'100%', borderRadius:'12px', border:`1px solid ${G.goldBorder}`, display:'block', maxHeight:'80vh', objectFit:'contain' }} />
                 <button onClick={() => setLightbox(null)}
                   style={{ position:'absolute', top:'-44px', right:0, background:'none', border:'none', color:'rgba(255,255,255,0.6)', cursor:'pointer', display:'flex', alignItems:'center', gap:'6px', fontSize:'12px', fontFamily:'Montserrat', fontWeight:700 }}>

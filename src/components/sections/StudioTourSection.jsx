@@ -26,7 +26,7 @@ import React from 'react';
                         transition={{ duration: 0.8, ease: 'easeOut' }}
                         className="relative rounded-lg overflow-hidden shadow-2xl group"
                     >
-                        <img
+                        <img loading="lazy"
                             className="w-full h-[500px] object-cover"
                             alt="Geniş ve aydınlık pilates stüdyosu, reformer aletleri ve büyük pencereler"
                          src="https://images.unsplash.com/photo-1687783615476-f4c12358ca9d" />

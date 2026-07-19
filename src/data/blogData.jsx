@@ -213,23 +213,23 @@ export const newBlogPosts = [
   },
   {
     id: 11,
-    title: "Beşiktaş'ta Pilates Nerede Yapılır? Semt Rehberi 2026",
+    title: "Maltepe'ta Pilates Nerede Yapılır? Semt Rehberi 2026",
     date: '10 Aralık 2025',
     category: 'İstanbul',
-    summary: "Beşiktaş ve çevresinde pilates yapabileceğiniz yerler, fiyat karşılaştırması ve neden Gizem Hoca öne çıkıyor.",
+    summary: "Maltepe ve çevresinde pilates yapabileceğiniz yerler, fiyat karşılaştırması ve neden Gizem Hoca öne çıkıyor.",
     image: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=800',
     readTime: 4,
-    tags: ['beşiktaş pilates', 'istanbul pilates', 'lokal'],
+    tags: ['maltepe pilates', 'istanbul pilates', 'lokal'],
     content: `
-      <p>İstanbul'un en dinamik semtlerinden Beşiktaş, son yıllarda pilates stüdyoları açısından da oldukça zenginleşti. Ama kalite ve yaklaşım açısından fark büyük.</p>
-      <h3>Beşiktaş'ta Pilates Seçerken Nelere Bakmalı?</h3>
+      <p>İstanbul'un en dinamik semtlerinden Maltepe, son yıllarda pilates stüdyoları açısından da oldukça zenginleşti. Ama kalite ve yaklaşım açısından fark büyük.</p>
+      <h3>Maltepe'ta Pilates Seçerken Nelere Bakmalı?</h3>
       <p>Eğitmenin sertifikası en kritik kriter. Balanced Body®, STOTT veya benzeri uluslararası akreditasyonlar arayın. Sertifikasız "pilates eğitmeni" maalesef çok yaygın ve risk oluşturuyor.</p>
       <h3>Grup mu, Bireysel mi?</h3>
-      <p>Beşiktaş'taki çoğu stüdyo grup dersler sunuyor. Ancak grup dersin kalitesi doğrudan grup büyüklüğüyle ilgili — 8-10 kişilik "pilates grupları" aslında pek az bireysel ilgi sunabilir. 4 kişi ve altı ideal.</p>
+      <p>Maltepe'taki çoğu stüdyo grup dersler sunuyor. Ancak grup dersin kalitesi doğrudan grup büyüklüğüyle ilgili — 8-10 kişilik "pilates grupları" aslında pek az bireysel ilgi sunabilir. 4 kişi ve altı ideal.</p>
       <h3>Online Seçenek Var mı?</h3>
-      <p>Pandemi sonrası online pilates kalıcı bir seçenek haline geldi. Beşiktaş'ta yaşamıyor olsanız da kaliteli bir eğitmene erişebilirsiniz.</p>
+      <p>Pandemi sonrası online pilates kalıcı bir seçenek haline geldi. Maltepe'ta yaşamıyor olsanız da kaliteli bir eğitmene erişebilirsiniz.</p>
       <h3>Gizem Hoca Pilates</h3>
-      <p>8+ yıl deneyim, Balanced Body® sertifikası, maksimum 4 kişilik gruplar ve ilk tanışma seansı ücretsiz. Beşiktaş'ta pilates arayanlar için iletişime geçin.</p>
+      <p>8+ yıl deneyim, Balanced Body® sertifikası, maksimum 4 kişilik gruplar ve ilk tanışma seansı ücretsiz. Maltepe'ta pilates arayanlar için iletişime geçin.</p>
     `
   },
   {

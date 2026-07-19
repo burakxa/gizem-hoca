@@ -43,8 +43,9 @@ export default function DerslerPage() {
   return (
     <>
       <Helmet>
-        <title>Pilates Dersleri | Mat, Reformer, Hamile Pilatesi | Gizem Hoca</title>
-        <meta name="description" content="Beşiktaş'ta mat pilates, reformer pilates, hamile pilatesi ve online pilates dersleri. Bireysel ve grup seçenekleri." />
+        <title>Pilates Dersleri Maltepe | Mat, Reformer, Hamile Pilatesi | Gizem Hoca</title>
+        <meta name="description" content="Maltepe İstanbul'da mat pilates, reformer pilates, hamile pilatesi ve online pilates dersleri. Bireysel ve grup seçenekleri. Ücretsiz deneme seansı." />
+        <link rel="canonical" href="https://gizemhoca.net/dersler" />
       </Helmet>
       <div style={{ background:G.bg, fontFamily:'Montserrat,sans-serif', minHeight:'100vh' }}>
 
@@ -77,7 +78,7 @@ export default function DerslerPage() {
               initial={{ opacity:0, y:12 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ delay:i*0.1 }}
               style={{ padding:'clamp(20px,3vw,32px)', borderRight:i%2===0?`1px solid ${G.goldBorder}`:'none', borderBottom:i<2?`1px solid ${G.goldBorder}`:'none', position:'relative', transition:'background 0.2s' }}>
               {d.popular && (
-                <div style={{ position:'absolute', top:'16px', right:'16px', background:G.gold, color:G.bg, fontSize:'9px', fontWeight:900, padding:'3px 10px', borderRadius:'999px', letterSpacing:'0.06em' }}>
+                <div style={{ position:'absolute', top:'16px', right:'16px', background:G.gold, color:G.bg, fontSize:'11px', fontWeight:900, padding:'3px 10px', borderRadius:'999px', letterSpacing:'0.06em' }}>
                   EN POPÜLER ✦
                 </div>
               )}
@@ -121,13 +122,13 @@ export default function DerslerPage() {
             </div>
           </div>
 
-          <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)' }} className="services-grid">
+          <div className='services-grid' style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)' }}>
             {current.map((v,i) => (
               <motion.div key={v.id}
                 initial={{ opacity:0, scale:0.96 }} animate={{ opacity:1, scale:1 }} transition={{ delay:i*0.05 }}
                 onClick={() => setSel(v)} style={{ cursor:'pointer', borderRight:i%3!==2?`1px solid ${G.goldBorder}`:'none', borderBottom:`1px solid ${G.goldBorder}` }}>
                 <div style={{ position:'relative', aspectRatio:'16/9', overflow:'hidden' }}>
-                  <img src={`https://img.youtube.com/vi/${v.id}/hqdefault.jpg`} alt={v.title}
+                  <img loading="lazy" src={`https://img.youtube.com/vi/${v.id}/hqdefault.jpg`} alt={v.title}
                     style={{ width:'100%', height:'100%', objectFit:'cover', filter:'brightness(0.55) saturate(0.8)', transition:'transform 0.4s, filter 0.4s' }}
                     onMouseEnter={e => { e.target.style.transform='scale(1.06)'; e.target.style.filter='brightness(0.7) saturate(1)'; }}
                     onMouseLeave={e => { e.target.style.transform='scale(1)'; e.target.style.filter='brightness(0.55) saturate(0.8)'; }} />

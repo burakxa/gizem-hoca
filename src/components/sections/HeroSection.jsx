@@ -8,7 +8,7 @@ function HeroSection() {
   return (
     <section id="hero" className="relative h-[80vh] md:h-screen flex items-center justify-center text-center text-white overflow-hidden bg-brand-surface">
       <div className="absolute inset-0 z-0">
-        <img alt="Sakin bir pilates stüdyosu, güneş ışığı vuruyor" className="w-full h-full object-cover opacity-30" src="https://images.unsplash.com/photo-1687783615476-f4c12358ca9d" />
+        <img loading="lazy" alt="Sakin bir pilates stüdyosu, güneş ışığı vuruyor" className="w-full h-full object-cover opacity-30" src="https://images.unsplash.com/photo-1687783615476-f4c12358ca9d" />
         <div className="absolute inset-0 bg-gradient-to-t from-brand-background via-brand-background/70 to-transparent"></div>
       </div>
       

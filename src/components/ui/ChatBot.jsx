@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send, MessageSquare, Minimize2 } from 'lucide-react';
 
@@ -8,7 +8,7 @@ const WA = '905383135720';
 const SYSTEM_PROMPT = `Sen Gizem Hoca Pilates stüdyosunun yapay zeka asistanısın. Türkçe konuşuyorsun, samimi ve yardımseversin.
 
 Gizem Hoca hakkında bilgiler:
-- İstanbul Beşiktaş'ta pilates eğitmeni, 8+ yıl deneyim, 500+ öğrenci
+- İstanbul Maltepe'ta pilates eğitmeni, 8+ yıl deneyim, 500+ öğrenci
 - Sertifikalar: Balanced Body® Mat 1&2, Reformer 1-2-3, Hamile Pilatesi, Postür & Rehabilitasyon
 - Ders türleri: Bireysel (1 kişi), Grup (max 4 kişi), Online (Zoom), Reformer
 - Fiyatlar: Bireysel 8 seans 3200₺, Grup 8 seans 1800₺, Online 8 seans 2400₺
@@ -109,7 +109,7 @@ export default function ChatBot() {
             {/* Header */}
             <div style={{ background: G.gold, padding: '12px 14px', display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
               <div style={{ width: '30px', height: '30px', borderRadius: '50%', overflow: 'hidden', border: '2px solid rgba(13,27,62,0.3)', flexShrink: 0 }}>
-                <img src="https://horizons-cdn.hostinger.com/451c65e3-9af7-4c36-9235-9b5c17a191ce/71e533503d331149fe73f8e165f13f5b.png"
+                <img loading="lazy" src="https://horizons-cdn.hostinger.com/451c65e3-9af7-4c36-9235-9b5c17a191ce/71e533503d331149fe73f8e165f13f5b.png"
                   alt="Gizem Hoca" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
               <div style={{ flex: 1 }}>

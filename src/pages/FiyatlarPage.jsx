@@ -50,8 +50,9 @@ export default function FiyatlarPage() {
   return (
     <>
       <Helmet>
-        <title>Pilates Fiyatları 2026 | Uygun Paketler | Gizem Hoca Beşiktaş</title>
-        <meta name="description" content="Beşiktaş pilates ders ücretleri ve paketleri. Bireysel, grup ve online pilates fiyatları. İlk tanışma seansı ücretsiz." />
+        <title>Pilates Fiyatları 2026 Maltepe | Uygun Paketler | Gizem Hoca</title>
+        <meta name="description" content="Maltepe pilates ders ücretleri ve paketleri 2026. Bireysel, grup ve online pilates fiyatları. İlk tanışma seansı ücretsiz. Sırt ağrısı için özel pilates." />
+        <link rel="canonical" href="https://gizemhoca.net/fiyatlar" />
       </Helmet>
       <div style={{ background:G.bg, fontFamily:'Montserrat,sans-serif', minHeight:'100vh' }}>
 
@@ -75,7 +76,7 @@ export default function FiyatlarPage() {
             <div style={{ background:'rgba(212,175,55,0.08)', border:`1px solid ${G.goldBorder}`, borderRadius:'14px', padding:'6px' }}>
               {[['b','Bireysel'],['g','Grup']].map(([key,label]) => (
                 <button key={key} onClick={() => setType(key)}
-                  style={{ padding:'10px 22px', borderRadius:'10px', border:'none', cursor:'pointer', fontFamily:'Montserrat', fontSize:'13px', fontWeight:900, letterSpacing:'0.04em', transition:'all 0.2s', background:type===key?G.gold:'transparent', color:type===key?G.bg:G.whiteMid }}>
+                  style={{ padding:'10px 22px', borderRadius:'12px', border:'none', cursor:'pointer', fontFamily:'Montserrat', fontSize:'13px', fontWeight:900, letterSpacing:'0.04em', transition:'all 0.2s', background:type===key?G.gold:'transparent', color:type===key?G.bg:G.whiteMid }}>
                   {label}
                 </button>
               ))}
@@ -150,7 +151,7 @@ export default function FiyatlarPage() {
             const Icon = g.icon;
             return (
               <div key={i} style={{ padding:'22px', textAlign:'center', borderRight:i<2?`1px solid ${G.goldBorder}`:'none' }}>
-                <div style={{ width:'40px', height:'40px', borderRadius:'10px', background:G.goldFaint, border:`1px solid ${G.goldBorder}`, display:'flex', alignItems:'center', justifyContent:'center', margin:'0 auto 10px' }}>
+                <div style={{ width:'40px', height:'40px', borderRadius:'12px', background:G.goldFaint, border:`1px solid ${G.goldBorder}`, display:'flex', alignItems:'center', justifyContent:'center', margin:'0 auto 10px' }}>
                   <Icon size={18} style={{ color:G.gold }} />
                 </div>
                 <div style={{ fontSize:'13px', fontWeight:900, color:'#fff', marginBottom:'4px' }}>{g.title}</div>
@@ -173,7 +174,7 @@ export default function FiyatlarPage() {
                   <th style={{ padding:'12px 16px', textAlign:'left', fontSize:'12px', color:G.whiteLow, borderBottom:`1px solid ${G.goldBorder}`, fontWeight:600 }}>Özellik</th>
                   {[['Grup','#00e87a'],['Bireysel',G.gold],['Online','#75aadb'],['Reformer','#ff9fd4']].map(([p,c]) => (
                     <th key={p} style={{ padding:'12px 16px', textAlign:'center', fontSize:'13px', color:p==='Bireysel'?G.gold:'#fff', borderBottom:`1px solid ${G.goldBorder}`, fontWeight:900, background:p==='Bireysel'?'rgba(212,175,55,0.08)':'transparent' }}>
-                      {p}{p==='Bireysel'&&<span style={{ display:'block', fontSize:'9px', color:G.gold, marginTop:'3px' }}>⭐ POPÜLER</span>}
+                      {p}{p==='Bireysel'&&<span style={{ display:'block', fontSize:'11px', color:G.gold, marginTop:'3px' }}>⭐ POPÜLER</span>}
                     </th>
                   ))}
                 </tr>

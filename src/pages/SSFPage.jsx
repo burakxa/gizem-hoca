@@ -156,9 +156,9 @@ export default function SSFPage() {
   return (
     <>
       <Helmet>
-        <title>Sıkça Sorulan Sorular | Pilates SSS | Gizem Hoca Beşiktaş</title>
-        <meta name="description" content="Pilates hakkında en çok sorulan sorular: başlangıç, dersler, sağlık, fiyatlar, iptal politikası ve daha fazlası." />
-        <script type="application/ld+json">{JSON.stringify(schema)}</script>
+        <title>Sıkça Sorulan Sorular | Pilates SSS | Gizem Hoca Maltepe İstanbul</title>
+        <meta name="description" content="Pilates hakkında en çok sorulan sorular. Maltepe pilates fiyatları, dersler, sağlık, iptal politikası ve daha fazlası." />
+        <link rel="canonical" href="https://gizemhoca.net/sss" />
       </Helmet>
 
       <div style={{ background:G.bg, minHeight:'100vh', fontFamily:'Montserrat,sans-serif' }}>

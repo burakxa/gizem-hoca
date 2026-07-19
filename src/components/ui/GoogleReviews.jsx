@@ -10,7 +10,7 @@ const reviews = [
   { name: 'Selin T.', rating: 5, time: '3 hafta önce', text: 'Reformer derslerine başlayalı 6 ay oldu. Vücudum çok güçlendi, postürüm düzeldi. Teşekkürler!' },
 ];
 
-export default function GoogleReviews() {
+function GoogleReviews() {
   return (
     <div style={{ padding: 'clamp(28px,5vw,40px) clamp(16px,4vw,40px)', background: G.dark, borderBottom: `1px solid ${G.goldBorder}`, fontFamily: 'Montserrat,sans-serif' }}>
       {/* Başlık */}
@@ -71,3 +71,5 @@ export default function GoogleReviews() {
     </div>
   );
 }
+
+export default React.memo(GoogleReviews);

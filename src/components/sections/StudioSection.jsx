@@ -32,13 +32,13 @@ import React from 'react';
                         className="grid grid-cols-2 gap-4"
                     >
                         <div className="col-span-2 rounded-lg overflow-hidden shadow-lg">
-                            <img alt="Pilates stüdyosunun geniş ve aydınlık genel görünümü" className="w-full h-full object-cover" src="https://images.unsplash.com/photo-1698113625570-2d21bb09b31a" />
+                            <img loading="lazy" alt="Pilates stüdyosunun geniş ve aydınlık genel görünümü" className="w-full h-full object-cover" src="https://images.unsplash.com/photo-1698113625570-2d21bb09b31a" />
                         </div>
                         <div className="rounded-lg overflow-hidden shadow-lg">
-                            <img alt="Reformer aletlerinin yakın çekimi" className="w-full h-full object-cover" src="https://images.unsplash.com/photo-1698113625570-2d21bb09b31a" />
+                            <img loading="lazy" alt="Reformer aletlerinin yakın çekimi" className="w-full h-full object-cover" src="https://images.unsplash.com/photo-1698113625570-2d21bb09b31a" />
                         </div>
                         <div className="rounded-lg overflow-hidden shadow-lg">
-                            <img alt="Stüdyodaki dinlenme köşesi" className="w-full h-full object-cover" src="https://images.unsplash.com/photo-1673604229937-8e3411ed4e73" />
+                            <img loading="lazy" alt="Stüdyodaki dinlenme köşesi" className="w-full h-full object-cover" src="https://images.unsplash.com/photo-1673604229937-8e3411ed4e73" />
                         </div>
                     </motion.div>
                 </div>

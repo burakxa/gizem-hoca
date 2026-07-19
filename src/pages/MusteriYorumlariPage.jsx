@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Star, Filter, ThumbsUp } from 'lucide-react';
 import { Helmet } from 'react-helmet';
 import { ChevronDown } from 'lucide-react';
 
@@ -17,6 +18,36 @@ const testimonials = [
 const tags = ['TÜMÜ','BİREYSEL DERS','GRUP DERS','REFORMER','ONLİNE DERS'];
 const tagMap = { 'TÜMÜ':'', 'BİREYSEL DERS':'Bireysel Ders', 'GRUP DERS':'Grup Ders', 'REFORMER':'Reformer', 'ONLİNE DERS':'Online Ders' };
 
+
+  const reviewSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Gizem Hoca Pilates",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5.0",
+      "reviewCount": "47",
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    "review": [
+      {
+        "@type": "Review",
+        "author": { "@type": "Person", "name": "Ayşe K." },
+        "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+        "reviewBody": "Sırt ağrılarım tamamen geçti. Gizem Hoca çok profesyonel ve ilgili bir eğitmen."
+      },
+      {
+        "@type": "Review",
+        "author": { "@type": "Person", "name": "Merve D." },
+        "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+        "reviewBody": "Hamile pilatesi için geldim, çok güvenilir bir yaklaşım. Kesinlikle tavsiye ederim."
+      }
+    ]
+  };
+
+const reviewCategories = ['Tümü', 'Reformer', 'Mat Pilates', 'Hamile Pilatesi', 'Online', 'Genel'];
+
 export default function MusteriYorumlariPage() {
   const [activeTag, setActiveTag] = useState('TÜMÜ');
   const [visibleCount, setVisibleCount] = useState(4);
@@ -26,15 +57,17 @@ export default function MusteriYorumlariPage() {
   return (
     <>
       <Helmet>
-        <title>Öğrenci Yorumları | Gizem Hoca Pilates Beşiktaş</title>
-        <meta name="description" content="500+ öğrencinin Gizem Hoca pilates deneyimleri. Gerçek yorumlar ve dönüşüm hikayeleri." />
+        <title>Öğrenci Yorumları | Gizem Hoca Pilates Maltepe İstanbul</title>
+        <meta name="description" content="500+ öğrencinin Gizem Hoca pilates deneyimleri. Maltepe'de gerçek yorumlar ve dönüşüm hikayeleri." />
+        <script type="application/ld+json">{JSON.stringify(reviewSchema)}</script>
+        <link rel="canonical" href="https://gizemhoca.net/musteri-yorumlari" />
       </Helmet>
       <div style={{ background:G.bg, fontFamily:'Montserrat,sans-serif', minHeight:'100vh' }}>
         <div style={{ padding:'32px 40px', borderBottom:`1px solid ${G.goldBorder}`, display:'flex', justifyContent:'space-between', alignItems:'flex-end' }}>
           <div style={{ display:'flex', alignItems:'center', gap:'16px' }}>
             <div style={{ width:'32px', height:'2px', background:G.gold }} />
             <div>
-              <p style={{ fontSize:'9px', fontWeight:900, letterSpacing:'0.2em', color:G.gold, marginBottom:'6px' }}>GİZEM HOCA PİLATES</p>
+              <p style={{ fontSize:'11px', fontWeight:900, letterSpacing:'0.2em', color:G.gold, marginBottom:'6px' }}>GİZEM HOCA PİLATES</p>
               <h1 style={{ fontSize:'56px', fontWeight:900, color:'#fff', lineHeight:0.92, letterSpacing:'-0.03em' }}>YORUMLAR</h1>
             </div>
           </div>
@@ -50,7 +83,7 @@ export default function MusteriYorumlariPage() {
         <div style={{ display:'flex', overflowX:'auto', borderBottom:`1px solid ${G.goldBorder}` }}>
           {tags.map(tag => (
             <button key={tag} onClick={() => { setActiveTag(tag); setVisibleCount(4); }}
-              style={{ padding:'10px 18px', fontSize:'9px', fontWeight:900, letterSpacing:'0.08em', whiteSpace:'nowrap', borderRight:`1px solid ${G.goldBorder}`, cursor:'pointer', border:'none', background: activeTag===tag ? G.gold : 'transparent', color: activeTag===tag ? G.bg : G.whiteMid, fontFamily:'Montserrat', borderRight:`1px solid ${G.goldBorder}` }}>
+              style={{ padding:'10px 18px', fontSize:'11px', fontWeight:900, letterSpacing:'0.08em', whiteSpace:'nowrap', borderRight:`1px solid ${G.goldBorder}`, cursor:'pointer', border:'none', background: activeTag===tag ? G.gold : 'transparent', color: activeTag===tag ? G.bg : G.whiteMid, fontFamily:'Montserrat', borderRight:`1px solid ${G.goldBorder}` }}>
               {tag}
             </button>
           ))}
@@ -64,7 +97,7 @@ export default function MusteriYorumlariPage() {
                 <p style={{ fontSize:'13px', fontWeight:900, color:'#fff' }}>{t.name}</p>
                 <p style={{ fontSize:'11px', color:G.whiteMid, marginTop:'4px' }}>{t.job}</p>
                 <p style={{ fontSize:'10px', color:G.whiteLow, marginTop:'4px' }}>{t.date}</p>
-                <span style={{ display:'inline-block', marginTop:'8px', fontSize:'8px', fontWeight:900, letterSpacing:'0.06em', border:`1px solid ${G.goldBorder}`, color:G.gold, padding:'3px 10px', borderRadius:'999px' }}>
+                <span style={{ display:'inline-block', marginTop:'8px', fontSize:'11px', fontWeight:900, letterSpacing:'0.06em', border:`1px solid ${G.goldBorder}`, color:G.gold, padding:'3px 10px', borderRadius:'999px' }}>
                   {t.tag.toUpperCase()}
                 </span>
               </div>
@@ -79,7 +112,7 @@ export default function MusteriYorumlariPage() {
         {visibleCount < filtered.length && (
           <div style={{ borderTop:`1px solid ${G.goldBorder}`, padding:'20px', textAlign:'center' }}>
             <button onClick={() => setVisibleCount(v=>v+4)}
-              style={{ display:'inline-flex', alignItems:'center', gap:'6px', fontSize:'9px', fontWeight:900, letterSpacing:'0.1em', color:G.gold, background:'none', border:'none', cursor:'pointer', fontFamily:'Montserrat' }}>
+              style={{ display:'inline-flex', alignItems:'center', gap:'6px', fontSize:'11px', fontWeight:900, letterSpacing:'0.1em', color:G.gold, background:'none', border:'none', cursor:'pointer', fontFamily:'Montserrat' }}>
               DAHA FAZLA <ChevronDown size={14} />
             </button>
           </div>

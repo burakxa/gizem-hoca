@@ -1,52 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUp } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { ChevronUp } from 'lucide-react';
 
-function BackToTop() {
-  const [isVisible, setIsVisible] = useState(false);
-
-  const toggleVisibility = () => {
-    if (window.pageYOffset > 300) {
-      setIsVisible(true);
-    } else {
-      setIsVisible(false);
-    }
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
+function BackToTopInner() {
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
-    window.addEventListener('scroll', toggleVisibility);
-    return () => window.removeEventListener('scroll', toggleVisibility);
+    const fn = () => setShow(window.scrollY > 500);
+    window.addEventListener('scroll', fn, { passive: true });
+    return () => window.removeEventListener('scroll', fn);
   }, []);
+
+  const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
     <AnimatePresence>
-      {isVisible && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
+      {show && (
+        <motion.button
+          onClick={scrollTop}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 20 }}
-          transition={{ duration: 0.3 }}
-          className="fixed bottom-6 right-6 z-50"
+          exit={{ opacity: 0, y: 16 }}
+          whileHover={{ scale: 1.1, boxShadow: '0 6px 20px rgba(212,175,55,0.4)' }}
+          whileTap={{ scale: 0.95 }}
+          title="Yukarı çık"
+          style={{
+            position: 'fixed', bottom: '24px', left: '24px', zIndex: 46,
+            width: '42px', height: '42px', borderRadius: '50%',
+            background: '#0d1b3e', border: '1.5px solid rgba(212,175,55,0.4)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            cursor: 'pointer', boxShadow: '0 4px 14px rgba(0,0,0,0.3)',
+            transition: 'border-color 0.2s',
+          }}
+          onMouseEnter={e => e.currentTarget.style.borderColor = '#d4af37'}
+          onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(212,175,55,0.4)'}
         >
-          <Button
-            onClick={scrollToTop}
-            size="icon"
-            className="bg-brand-neon hover:bg-brand-gold text-white hover:text-brand-dark rounded-full h-12 w-12 shadow-lg animate-pulse"
-          >
-            <ArrowUp className="h-6 w-6" />
-          </Button>
-        </motion.div>
+          <ChevronUp size={18} style={{ color: '#d4af37' }} />
+        </motion.button>
       )}
     </AnimatePresence>
   );
 }
 
-export default BackToTop;
+export default React.memo(BackToTopInner);

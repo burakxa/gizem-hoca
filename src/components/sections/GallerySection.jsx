@@ -51,7 +51,7 @@ import React from 'react';
                   variants={itemVariants}
                   className="group relative aspect-square overflow-hidden rounded-xl shadow-lg cursor-pointer"
                 >
-                  <img
+                  <img loading="lazy"
                     alt={image.alt}
                     className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
                     src={image.src} />

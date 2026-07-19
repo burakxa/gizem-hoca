@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://gizemhoca.net/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://gizemhoca.net/</loc><changefreq>weekly</changefreq><priority>1.0</priority><lastmod>2026-07-20</lastmod></url>
   <url><loc>https://gizemhoca.net/hakkimda</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://gizemhoca.net/dersler</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://gizemhoca.net/program</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://gizemhoca.net/fiyatlar</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://gizemhoca.net/galeri</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://gizemhoca.net/blog</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://gizemhoca.net/musteri-yorumlari</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://gizemhoca.net/sss</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://gizemhoca.net/quiz</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://gizemhoca.net/iletisim</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://gizemhoca.net/kvkk</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
   <url><loc>https://gizemhoca.net/blog/1</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://gizemhoca.net/blog/2</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://gizemhoca.net/blog/3</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
@@ -21,8 +26,4 @@
   <url><loc>https://gizemhoca.net/blog/12</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://gizemhoca.net/blog/13</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://gizemhoca.net/blog/14</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://gizemhoca.net/musteri-yorumlari</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://gizemhoca.net/sss</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://gizemhoca.net/quiz</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://gizemhoca.net/iletisim</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>

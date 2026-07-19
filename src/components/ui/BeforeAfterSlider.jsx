@@ -24,12 +24,12 @@ export default function BeforeAfterSlider({ before, after, beforeLabel = 'ÖNCE'
       onTouchMove={onTouchMove} onTouchEnd={() => { dragging.current = false; }}>
 
       {/* SONRA (arka) */}
-      <img src={after} alt="Sonra" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.65) sepia(0.1)' }} />
+      <img loading="lazy" src={after} alt="Sonra" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.65) sepia(0.1)' }} />
       <div style={{ position: 'absolute', top: '12px', right: '14px', background: 'rgba(212,175,55,0.9)', color: '#0d1b3e', fontSize: '11px', fontWeight: 900, padding: '4px 10px', borderRadius: '999px', letterSpacing: '0.1em' }}>{afterLabel}</div>
 
       {/* ÖNCE (kırpılan) */}
       <div style={{ position: 'absolute', inset: 0, width: `${pos}%`, overflow: 'hidden' }}>
-        <img src={before} alt="Önce" style={{ position: 'absolute', inset: 0, width: containerRef.current?.offsetWidth || '100%', height: '100%', maxWidth: 'none', objectFit: 'cover', filter: 'brightness(0.6) grayscale(0.5)' }} />
+        <img loading="lazy" src={before} alt="Önce" style={{ position: 'absolute', inset: 0, width: containerRef.current?.offsetWidth || '100%', height: '100%', maxWidth: 'none', objectFit: 'cover', filter: 'brightness(0.6) grayscale(0.5)' }} />
         <div style={{ position: 'absolute', top: '12px', left: '14px', background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(4px)', border: '1px solid rgba(255,255,255,0.3)', color: '#fff', fontSize: '11px', fontWeight: 900, padding: '4px 10px', borderRadius: '999px', letterSpacing: '0.1em' }}>{beforeLabel}</div>
       </div>
 

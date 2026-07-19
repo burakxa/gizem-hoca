@@ -115,6 +115,16 @@ export default function BlogPostPage() {
   });
 
   // Article schema
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://gizemhoca.net" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://gizemhoca.net/blog" },
+      { "@type": "ListItem", "position": 3, "name": post.title, "item": currentUrl }
+    ]
+  };
+
   const schema = {
     "@context":"https://schema.org",
     "@type":"Article",
@@ -138,6 +148,8 @@ export default function BlogPostPage() {
         {post.image && <meta property="og:image" content={post.image} />}
         <meta property="og:url" content={currentUrl} />
         <meta property="og:type" content="article" />
+        <link rel="canonical" href={currentUrl} />
+        <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(schema)}</script>
       </Helmet>
 
@@ -148,13 +160,23 @@ export default function BlogPostPage() {
         {/* Hero */}
         {post.image && (
           <div style={{ height:'clamp(200px,35vw,380px)', position:'relative', overflow:'hidden', borderBottom:`1px solid ${G.goldBorder}` }}>
-            <img src={post.image.replace('w=800','w=1400')} alt={post.title}
+            <img loading="lazy" src={post.image.replace('w=800','w=1400')} alt={post.title}
               style={{ width:'100%', height:'100%', objectFit:'cover', filter:'brightness(0.45) saturate(0.7)' }} />
             <div style={{ position:'absolute', inset:0, background:'linear-gradient(to top, rgba(13,27,62,1) 0%, rgba(13,27,62,0.3) 60%, transparent 100%)' }} />
           </div>
         )}
 
         <div style={{ maxWidth:'780px', margin:'0 auto', padding:'clamp(24px,4vw,48px) clamp(16px,4vw,40px)' }}>
+
+
+          {/* Breadcrumb */}
+          <nav style={{ display:'flex', alignItems:'center', gap:'6px', marginBottom:'16px', fontSize:'12px', color:'rgba(255,255,255,0.4)' }}>
+            <Link to="/" style={{ color:'rgba(255,255,255,0.4)', textDecoration:'none' }}>Ana Sayfa</Link>
+            <span>›</span>
+            <Link to="/blog" style={{ color:'rgba(255,255,255,0.4)', textDecoration:'none' }}>Blog</Link>
+            <span>›</span>
+            <span style={{ color:'rgba(212,175,55,0.7)' }}>{post.category}</span>
+          </nav>
 
           {/* Geri */}
           <Link to="/blog" style={{ display:'inline-flex', alignItems:'center', gap:'6px', color:'rgba(212,175,55,0.6)', fontSize:'12px', fontWeight:700, textDecoration:'none', marginBottom:'24px', letterSpacing:'0.06em' }}>
@@ -221,7 +243,7 @@ export default function BlogPostPage() {
                     <Link to={`/blog/${r.id}`} style={{ display:'block', background:'rgba(13,27,62,0.5)', backdropFilter:'blur(8px)', border:`1px solid ${G.goldBorder}`, borderRadius:'12px', overflow:'hidden', textDecoration:'none', transition:'border-color 0.2s' }}
                       onMouseEnter={e => e.currentTarget.style.borderColor='rgba(212,175,55,0.4)'}
                       onMouseLeave={e => e.currentTarget.style.borderColor=G.goldBorder}>
-                      {r.image && <img src={r.image} alt={r.title} style={{ width:'100%', height:'110px', objectFit:'cover', filter:'brightness(0.6)' }} />}
+                      {r.image && <img loading="lazy" src={r.image} alt={r.title} style={{ width:'100%', height:'110px', objectFit:'cover', filter:'brightness(0.6)' }} />}
                       <div style={{ padding:'12px' }}>
                         <div style={{ fontSize:'10px', fontWeight:700, color:G.gold, marginBottom:'6px' }}>{r.category}</div>
                         <div style={{ fontSize:'13px', fontWeight:700, color:'#fff', lineHeight:1.3, marginBottom:'4px' }}>{r.title}</div>

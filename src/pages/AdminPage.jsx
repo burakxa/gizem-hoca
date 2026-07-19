@@ -45,7 +45,7 @@ const templates = [
 
 👉 [Harekete geçirici mesaj — örn: "Ücretsiz deneme dersi için DM at!"]
 
-#pilates #beşiktaş #istanbul #pilatesestrüdyosu #sağlıklıyaşam #reformerpilates #matpilates #wellness #gizemhoca`
+#pilates #maltepe #istanbul #pilatesestrüdyosu #sağlıklıyaşam #reformerpilates #matpilates #wellness #gizemhoca`
       },
       {
         label: 'WhatsApp Duyurusu',
@@ -138,7 +138,7 @@ wa.me/905383135720`
 Fırsatı kaçırmayın! 👇
 wa.me/905383135720
 
-#pilates #kampanya #beşiktaş`
+#pilates #kampanya #maltepe`
       },
       {
         label: 'Fiyat Güncelleme',
@@ -255,7 +255,7 @@ Bugün dersini yaptın mı? 💬`
 Yer ayırtmak için 👇
 wa.me/905383135720
 
-#pilates #workshop #beşiktaş #gizemhoca`
+#pilates #workshop #maltepe #gizemhoca`
       },
     ]
   },
@@ -296,14 +296,14 @@ function TemplateCard({ item }) {
           <motion.div initial={{ height:0, opacity:0 }} animate={{ height:'auto', opacity:1 }} exit={{ height:0, opacity:0 }} style={{ overflow:'hidden' }}>
             <div style={{ padding:'0 16px 16px' }}>
               {/* Dosya yolu */}
-              <div style={{ background:'rgba(212,175,55,0.06)', border:`1px solid rgba(212,175,55,0.15)`, borderRadius:'8px', padding:'8px 12px', marginBottom:'10px', display:'flex', alignItems:'center', gap:'8px' }}>
+              <div style={{ background:'rgba(212,175,55,0.06)', border:`1px solid rgba(212,175,55,0.15)`, borderRadius:'12px', padding:'8px 12px', marginBottom:'10px', display:'flex', alignItems:'center', gap:'8px' }}>
                 <Edit3 size={12} style={{ color:G.gold, flexShrink:0 }} />
                 <span style={{ fontSize:'11px', color:G.gold, fontWeight:700 }}>Nereye eklenecek:</span>
                 <span style={{ fontSize:'11px', color:G.whiteMid }}>{item.file}</span>
               </div>
               {/* Düzenlenebilir içerik */}
               <textarea value={edited} onChange={e => setEdited(e.target.value)} rows={12}
-                style={{ width:'100%', background:'rgba(7,16,41,0.8)', border:`1px solid ${G.goldBorder}`, borderRadius:'10px', padding:'12px 14px', fontSize:'12px', color:G.white, outline:'none', fontFamily:'monospace', resize:'vertical', lineHeight:1.7, boxSizing:'border-box' }} />
+                style={{ width:'100%', background:'rgba(7,16,41,0.8)', border:`1px solid ${G.goldBorder}`, borderRadius:'12px', padding:'12px 14px', fontSize:'12px', color:G.white, outline:'none', fontFamily:'monospace', resize:'vertical', lineHeight:1.7, boxSizing:'border-box' }} />
               <div style={{ display:'flex', gap:'8px', marginTop:'10px', flexWrap:'wrap' }}>
                 <CopyButton text={edited} />
                 <button onClick={() => setEdited(item.content)}
@@ -336,7 +336,7 @@ export default function AdminPage() {
         <input type="password" value={pass} onChange={e=>setPass(e.target.value)}
           onKeyDown={e=>e.key==='Enter'&&login(pass)}
           placeholder="Şifre girin" autoFocus
-          style={{ width:'100%', background:'rgba(212,175,55,0.07)', border:`1px solid ${G.goldBorder}`, borderRadius:'10px', padding:'12px 16px', fontSize:'14px', color:'#fff', outline:'none', fontFamily:'Montserrat', marginBottom:'12px', boxSizing:'border-box' }} />
+          style={{ width:'100%', background:'rgba(212,175,55,0.07)', border:`1px solid ${G.goldBorder}`, borderRadius:'12px', padding:'12px 16px', fontSize:'14px', color:'#fff', outline:'none', fontFamily:'Montserrat', marginBottom:'12px', boxSizing:'border-box' }} />
         <motion.button onClick={()=>login(pass)} whileHover={{ scale:1.02 }} whileTap={{ scale:0.98 }}
           style={{ width:'100%', background:G.gold, color:G.bg, fontSize:'13px', fontWeight:900, padding:'13px', borderRadius:'999px', border:'none', cursor:'pointer', fontFamily:'Montserrat', letterSpacing:'0.06em' }}>
           Giriş Yap
@@ -348,10 +348,16 @@ export default function AdminPage() {
   const activeTpl = templates.find(t => t.category === activecat);
 
   return (
-    <div style={{ minHeight:'calc(100vh - 110px)', background:G.bg, fontFamily:'Montserrat', display:'grid', gridTemplateColumns:'220px 1fr' }}>
+    <style>{`
+      @media (max-width: 640px) {
+        .admin-layout { grid-template-columns: 1fr !important; grid-template-rows: auto 1fr; }
+        .admin-sidebar { border-right: none !important; border-bottom: 1px solid rgba(212,175,55,0.2) !important; max-height: 200px; overflow-y: auto; }
+      }
+    `}</style>
+    <div className="admin-layout" style={{ minHeight:'calc(100vh - 110px)', background:G.bg, fontFamily:'Montserrat', display:'grid', gridTemplateColumns:'220px 1fr' }}>
 
       {/* Sol sidebar */}
-      <div style={{ background:G.dark, borderRight:`1px solid ${G.goldBorder}`, padding:'16px 10px', display:'flex', flexDirection:'column' }}>
+      <div className='admin-sidebar' style={{ background:G.dark, borderRight:`1px solid ${G.goldBorder}`, padding:'16px 10px', display:'flex', flexDirection:'column' }}>
         <div style={{ padding:'0 6px 16px', borderBottom:`1px solid ${G.goldBorder}`, marginBottom:'12px' }}>
           <div style={{ fontSize:'10px', fontWeight:900, letterSpacing:'0.15em', color:G.gold }}>ŞABLONLAR</div>
           <div style={{ fontSize:'11px', color:G.whiteMid, marginTop:'3px' }}>Seç, düzenle, kopyala</div>
@@ -363,7 +369,7 @@ export default function AdminPage() {
             const isActive = activecat === t.category;
             return (
               <button key={t.category} onClick={() => setActiveCat(t.category)}
-                style={{ display:'flex', alignItems:'center', gap:'10px', padding:'10px 12px', borderRadius:'10px', border:'none', background:isActive?`${t.color}18`:'transparent', color:isActive?t.color:G.whiteMid, cursor:'pointer', fontFamily:'Montserrat', fontSize:'13px', fontWeight:isActive?900:400, transition:'all 0.15s', textAlign:'left' }}>
+                style={{ display:'flex', alignItems:'center', gap:'10px', padding:'10px 12px', borderRadius:'12px', border:'none', background:isActive?`${t.color}18`:'transparent', color:isActive?t.color:G.whiteMid, cursor:'pointer', fontFamily:'Montserrat', fontSize:'13px', fontWeight:isActive?900:400, transition:'all 0.15s', textAlign:'left' }}>
                 <Icon size={15} style={{ color:isActive?t.color:G.whiteMid, flexShrink:0 }} />
                 {t.category}
                 <span style={{ marginLeft:'auto', fontSize:'10px', background:`${t.color}22`, color:t.color, padding:'2px 7px', borderRadius:'999px' }}>{t.items.length}</span>
@@ -373,7 +379,7 @@ export default function AdminPage() {
         </div>
 
         <button onClick={logout}
-          style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:'8px', background:'rgba(255,68,68,0.08)', border:'1px solid rgba(255,68,68,0.2)', color:'rgba(255,100,100,0.8)', fontSize:'12px', fontWeight:700, padding:'10px', borderRadius:'10px', cursor:'pointer', fontFamily:'Montserrat', marginTop:'12px' }}>
+          style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:'8px', background:'rgba(255,68,68,0.08)', border:'1px solid rgba(255,68,68,0.2)', color:'rgba(255,100,100,0.8)', fontSize:'12px', fontWeight:700, padding:'10px', borderRadius:'12px', cursor:'pointer', fontFamily:'Montserrat', marginTop:'12px' }}>
           <LogOut size={13} /> Çıkış
         </button>
       </div>

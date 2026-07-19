@@ -177,8 +177,9 @@ export default function QuizPage() {
   return (
     <>
       <Helmet>
-        <title>Pilates Seviye Testi | Sana Hangi Ders Uygun? | Gizem Hoca</title>
-        <meta name="description" content="5 soruluk quiz ile sana en uygun pilates dersini bul. Ücretsiz, 2 dakika sürer!" />
+        <title>Pilates Seviye Testi | Sana Hangi Ders Uygun? | Gizem Hoca Maltepe</title>
+        <meta name="description" content="5 soruluk quiz ile sana en uygun pilates dersini bul. Maltepe İstanbul'da ücretsiz deneme seansı!" />
+        <link rel="canonical" href="https://gizemhoca.net/quiz" />
       </Helmet>
 
       <div style={{ minHeight:'100vh', background:`radial-gradient(ellipse at 20% 50%, rgba(212,175,55,0.06) 0%, transparent 60%), ${G.bg}`, fontFamily:'Montserrat,sans-serif', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:'40px 16px', position:'relative', overflow:'hidden' }}>
@@ -259,7 +260,7 @@ export default function QuizPage() {
               <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'10px', marginBottom:'28px' }}>
                 {currentQ.opts.map((opt, i) => (
                   <motion.button key={i} onClick={() => setSelected(i)}
-                    whileHover={{ y:-2, borderColor:'rgba(212,175,55,0.5)' }} whileTap={{ scale:0.98 }}
+                    whileHover={{ y:-3, borderColor:'rgba(212,175,55,0.5)' }} whileTap={{ scale:0.98 }}
                     style={{
                       padding:'18px 16px', borderRadius:'14px',
                       border:`2px solid ${selected===i ? G.gold : 'rgba(212,175,55,0.2)'}`,

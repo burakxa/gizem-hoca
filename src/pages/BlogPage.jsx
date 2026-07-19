@@ -30,8 +30,9 @@ export default function BlogPage() {
   return (
     <>
       <Helmet>
-        <title>Pilates Blog | Wellness İpuçları | Gizem Hoca Beşiktaş</title>
-        <meta name="description" content="Pilates, sağlıklı yaşam ve wellness hakkında faydalı içerikler. Postür, core güçlendirme, hamile pilatesi, reformer rehberleri ve daha fazlası." />
+        <title>Pilates Blog | Wellness İpuçları | Gizem Hoca Maltepe İstanbul</title>
+        <meta name="description" content="Pilates, sağlıklı yaşam ve wellness hakkında faydalı içerikler. Postür, core güçlendirme, hamile pilatesi, sırt ağrısı için pilates ve daha fazlası." />
+        <link rel="canonical" href="https://gizemhoca.net/blog" />
       </Helmet>
       <div style={{ background:G.bg, minHeight:'100vh', fontFamily:'Montserrat,sans-serif' }}>
 
@@ -79,7 +80,7 @@ export default function BlogPage() {
                 <Link to={`/blog/${featured.id}`} style={{ textDecoration:'none', display:'grid', gridTemplateColumns:'1fr 1fr', gap:'0', borderRadius:'16px', overflow:'hidden', border:`1px solid ${G.goldBorder}`, background:'rgba(13,27,62,0.5)', backdropFilter:'blur(12px)' }} className="content-grid">
                   {featured.image && (
                     <div style={{ position:'relative', minHeight:'240px', overflow:'hidden' }}>
-                      <img src={featured.image} alt={featured.title} style={{ width:'100%', height:'100%', objectFit:'cover', filter:'brightness(0.65) saturate(0.8)' }} />
+                      <img loading="lazy" src={featured.image} alt={featured.title} style={{ width:'100%', height:'100%', objectFit:'cover', filter:'brightness(0.65) saturate(0.8)' }} />
                       <div style={{ position:'absolute', top:'12px', left:'12px', background:G.gold, color:G.bg, fontSize:'10px', fontWeight:900, padding:'4px 10px', borderRadius:'999px' }}>
                         ✦ ÖNE ÇIKAN
                       </div>
@@ -117,7 +118,7 @@ export default function BlogPage() {
                     onMouseLeave={e => e.currentTarget.style.borderColor=G.goldBorder}>
                     {post.image && (
                       <div style={{ height:'160px', overflow:'hidden' }}>
-                        <img src={post.image} alt={post.title} style={{ width:'100%', height:'100%', objectFit:'cover', filter:'brightness(0.65) saturate(0.8)', transition:'transform 0.4s' }}
+                        <img loading="lazy" src={post.image} alt={post.title} style={{ width:'100%', height:'100%', objectFit:'cover', filter:'brightness(0.65) saturate(0.8)', transition:'transform 0.4s' }}
                           onMouseEnter={e => e.target.style.transform='scale(1.05)'}
                           onMouseLeave={e => e.target.style.transform='scale(1)'} />
                       </div>

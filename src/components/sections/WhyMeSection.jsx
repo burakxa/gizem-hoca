@@ -34,7 +34,7 @@ import React from 'react';
                 transition={{ duration: 0.8, ease: "easeOut" }}
                 className="relative h-[500px] rounded-lg overflow-hidden"
               >
-                <img
+                <img loading="lazy"
                   src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b"
                   alt="Eğitmen Gizem Hoca"
                   className="w-full h-full object-cover"

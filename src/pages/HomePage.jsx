@@ -165,7 +165,7 @@ export default function HomePage() {
         {/* Fotoğraf */}
         <motion.div className="hero-photo"
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.1 }}>
-          <img src={PHOTO} alt="Gizem Hoca"
+          <img loading="lazy" src={PHOTO} alt="Gizem Hoca"
             style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0, filter: 'grayscale(0.2) brightness(0.65) sepia(0.15)' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(7,16,41,0.75) 0%, rgba(7,16,41,0.1) 50%, transparent 100%)' }} />
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}
@@ -228,7 +228,7 @@ export default function HomePage() {
           </div>
           <motion.div style={{ position: 'relative', aspectRatio: '16/9', borderRadius: '10px', overflow: 'hidden', border: `1px solid ${G.goldBorder}`, cursor: 'pointer', marginBottom: '14px' }}
             onClick={() => setSelVideo(videos[0])} whileHover={{ scale: 1.01 }}>
-            <img src={`https://img.youtube.com/vi/${videos[0].id}/hqdefault.jpg`} alt={videos[0].title}
+            <img loading="lazy" src={`https://img.youtube.com/vi/${videos[0].id}/hqdefault.jpg`} alt={videos[0].title}
               style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.55)' }} />
             <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <motion.div whileHover={{ scale: 1.1 }}
@@ -245,7 +245,7 @@ export default function HomePage() {
             <motion.div key={v.id} className="video-list-item" onClick={() => setSelVideo(v)} whileHover={{ background: G.goldFaint }}
               style={{ display: 'flex', gap: '10px', alignItems: 'center', cursor: 'pointer', padding: '10px', borderRadius: '8px', marginBottom: '6px', border: '1px solid transparent', transition: 'all 0.2s' }}>
               <div style={{ width: '60px', height: '38px', borderRadius: '5px', overflow: 'hidden', flexShrink: 0, border: `1px solid ${G.goldBorder}` }}>
-                <img src={`https://img.youtube.com/vi/${v.id}/default.jpg`} alt={v.title} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.65)' }} />
+                <img loading="lazy" src={`https://img.youtube.com/vi/${v.id}/default.jpg`} alt={v.title} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.65)' }} />
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <p style={{ fontSize: '14px', fontWeight: 700, color: '#fff', lineHeight: 1.3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{v.title}</p>
@@ -265,7 +265,7 @@ export default function HomePage() {
             <span style={{ fontSize: '11px', fontWeight: 900, letterSpacing: '0.15em', color: G.gold }}>HAKKIMDA</span>
           </div>
           <div style={{ borderRadius: '10px', overflow: 'hidden', aspectRatio: '4/3', marginBottom: '20px', border: `1px solid ${G.goldBorder}` }}>
-            <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800" alt="Pilates"
+            <img loading="lazy" src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800" alt="Pilates"
               style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.6) sepia(0.15)', transition: 'transform 0.5s' }}
               onMouseEnter={e => e.target.style.transform = 'scale(1.04)'}
               onMouseLeave={e => e.target.style.transform = 'scale(1)'} />
@@ -338,7 +338,7 @@ export default function HomePage() {
           {testimonials.map((t, i) => (
             <motion.div key={i}
               initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.12, duration: 0.6 }}
-              whileHover={{ y: -4, borderColor: 'rgba(212,175,55,0.4)', boxShadow: '0 8px 28px rgba(212,175,55,0.12)' }}
+              whileHover={{ y: -3, borderColor: 'rgba(212,175,55,0.4)', boxShadow: '0 8px 28px rgba(212,175,55,0.12)' }}
               style={{ border: `1px solid rgba(212,175,55,0.25)`, borderRadius: '12px', padding: '20px', background: 'rgba(13,27,62,0.6)', backdropFilter: 'blur(12px)', transition: 'all 0.2s' }}>
               <div style={{ color: G.gold, fontSize: '14px', marginBottom: '10px', letterSpacing: '2px' }}>★★★★★</div>
               <p style={{ fontSize: '14px', color: G.white, lineHeight: 1.65, fontStyle: 'italic', marginBottom: '14px' }}>"{t.text}"</p>
@@ -396,7 +396,7 @@ export default function HomePage() {
               { gun:'Cmt', tarih:'26', ders:'Mat Pilates Grubu', saat:'10:00', renk:G.gold, dolu:false },
             ].map((e,i) => (
               <motion.div key={i} whileHover={{ x:4 }}
-                style={{ display:'flex', alignItems:'center', gap:'12px', padding:'12px 14px', background:'rgba(13,27,62,0.5)', backdropFilter:'blur(12px)', border:`1px solid rgba(212,175,55,0.15)`, borderRadius:'10px', cursor:'default', transition:'all 0.2s', borderLeft:`3px solid ${e.renk}`, borderRadius:'0 10px 10px 0' }}>
+                style={{ display:'flex', alignItems:'center', gap:'12px', padding:'12px 14px', background:'rgba(13,27,62,0.5)', backdropFilter:'blur(12px)', border:`1px solid rgba(212,175,55,0.15)`, borderRadius:'12px', cursor:'default', transition:'all 0.2s', borderLeft:`3px solid ${e.renk}`, borderRadius:'0 10px 10px 0' }}>
                 <div style={{ textAlign:'center', minWidth:'36px' }}>
                   <div style={{ fontSize:'10px', color:'rgba(255,255,255,0.4)', fontWeight:600 }}>{e.gun}</div>
                   <div style={{ fontSize:'20px', fontWeight:900, color:G.gold, lineHeight:1 }}>{e.tarih}</div>

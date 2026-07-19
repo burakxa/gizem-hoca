@@ -20,7 +20,7 @@ const socials = [
 
 const faqs = [
   { q:'İlk ders ücretli mi?', a:'Hayır! İlk tanışma seansı tamamen ücretsiz.' },
-  { q:'Hangi bölgelere hizmet veriyorsunuz?', a:'Beşiktaş stüdyomuzda yüz yüze, tüm Türkiye\'ye online ders.' },
+  { q:'Hangi bölgelere hizmet veriyorsunuz?', a:'Maltepe stüdyomuzda yüz yüze, tüm Türkiye\'ye online ders.' },
   { q:'Bireysel mi grup mu?', a:'Her ikisi de mevcut. Sana uygun formatı birlikte belirleriz.' },
 ];
 
@@ -44,13 +44,14 @@ export default function ContactPage() {
     }, 600);
   };
 
-  const inp = { width:'100%', background:'rgba(212,175,55,0.07)', border:`1px solid ${G.goldBorder}`, padding:'11px 14px', fontSize:'13px', color:'#fff', outline:'none', fontFamily:'Montserrat', borderRadius:'10px', boxSizing:'border-box', transition:'border-color 0.2s' };
+  const inp = { width:'100%', background:'rgba(212,175,55,0.07)', border:`1px solid ${G.goldBorder}`, padding:'11px 14px', fontSize:'13px', color:'#fff', outline:'none', fontFamily:'Montserrat', borderRadius:'12px', boxSizing:'border-box', transition:'border-color 0.2s' };
 
   return (
     <>
       <Helmet>
-        <title>İletişim | Gizem Hoca Pilates Beşiktaş İstanbul</title>
-        <meta name="description" content="Gizem Hoca pilates stüdyosu iletişim bilgileri. Beşiktaş İstanbul. WhatsApp: 0538 313 57 20. Ücretsiz tanışma seansı için randevu alın." />
+        <title>İletişim | Gizem Hoca Pilates Maltepe İstanbul</title>
+        <meta name="description" content="Gizem Hoca pilates stüdyosu iletişim bilgileri. Maltepe İstanbul. WhatsApp: 0538 313 57 20. Ücretsiz tanışma seansı için randevu alın." />
+        <link rel="canonical" href="https://gizemhoca.net/iletisim" />
       </Helmet>
 
       <div style={{ background:G.bg, fontFamily:'Montserrat,sans-serif', minHeight:'100vh' }}>
@@ -96,13 +97,13 @@ export default function ContactPage() {
                   <motion.a key={i} href={s.href} target="_blank" rel="noopener noreferrer"
                     whileHover={{ x:4, borderColor:'rgba(212,175,55,0.4)' }}
                     style={{ display:'flex', alignItems:'center', gap:'14px', padding:'14px 16px', background:'rgba(13,27,62,0.4)', backdropFilter:'blur(8px)', border:`1px solid ${G.goldBorder}`, borderRadius:'12px', textDecoration:'none', transition:'all 0.2s' }}>
-                    <div style={{ width:'40px', height:'40px', borderRadius:'10px', background:s.bg, border:`1px solid ${s.color}33`, display:'flex', alignItems:'center', justifyContent:'center', color:s.color, flexShrink:0 }}>
+                    <div style={{ width:'40px', height:'40px', borderRadius:'12px', background:s.bg, border:`1px solid ${s.color}33`, display:'flex', alignItems:'center', justifyContent:'center', color:s.color, flexShrink:0 }}>
                       {s.icon}
                     </div>
                     <div style={{ flex:1 }}>
                       <div style={{ display:'flex', alignItems:'center', gap:'8px', marginBottom:'2px' }}>
                         <span style={{ fontSize:'12px', fontWeight:900, color:'#fff' }}>{s.label}</span>
-                        {s.badge && <span style={{ fontSize:'9px', fontWeight:900, background:s.color, color:'#fff', padding:'2px 7px', borderRadius:'999px', letterSpacing:'0.05em' }}>{s.badge}</span>}
+                        {s.badge && <span style={{ fontSize:'11px', fontWeight:900, background:s.color, color:'#fff', padding:'2px 7px', borderRadius:'999px', letterSpacing:'0.05em' }}>{s.badge}</span>}
                       </div>
                       <div style={{ fontSize:'11px', color:G.whiteMid }}>{s.sub}</div>
                     </div>
@@ -137,14 +138,14 @@ export default function ContactPage() {
             {/* Stüdyo bilgisi */}
             <div style={{ padding:'0 clamp(16px,4vw,32px) 28px' }}>
               <div style={{ background:'rgba(13,27,62,0.4)', border:`1px solid ${G.goldBorder}`, borderRadius:'14px', padding:'16px 18px', display:'flex', gap:'14px', alignItems:'flex-start' }}>
-                <div style={{ width:'40px', height:'40px', borderRadius:'10px', background:G.goldFaint, border:`1px solid ${G.goldBorder}`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                <div style={{ width:'40px', height:'40px', borderRadius:'12px', background:G.goldFaint, border:`1px solid ${G.goldBorder}`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
                   <MapPin size={18} style={{ color:G.gold }} />
                 </div>
                 <div>
                   <div style={{ fontSize:'12px', fontWeight:900, color:'#fff', marginBottom:'4px' }}>Stüdyo Adresi</div>
-                  <div style={{ fontSize:'13px', color:G.whiteMid, lineHeight:1.6 }}>Beşiktaş, İstanbul</div>
+                  <div style={{ fontSize:'13px', color:G.whiteMid, lineHeight:1.6 }}>Maltepe, İstanbul</div>
                   <div style={{ fontSize:'11px', color:G.whiteLow, marginTop:'4px' }}>Online dersler için adres gerekmez</div>
-                  <a href="https://maps.google.com/?q=Beşiktaş+İstanbul" target="_blank" rel="noopener noreferrer"
+                  <a href="https://maps.google.com/?q=Maltepe+İstanbul" target="_blank" rel="noopener noreferrer"
                     style={{ display:'inline-flex', alignItems:'center', gap:'4px', fontSize:'11px', fontWeight:700, color:G.gold, textDecoration:'none', marginTop:'8px' }}>
                     Yol tarifi al <ArrowRight size={11} />
                   </a>
@@ -185,7 +186,7 @@ export default function ContactPage() {
                 <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'6px' }}>
                   {['Mat Pilates','Reformer','Hamile Pilatesi','Online Ders'].map(opt => (
                     <button key={opt} type="button" onClick={() => setForm(f=>({...f, interest: f.interest===opt ? '' : opt}))}
-                      style={{ padding:'9px 12px', borderRadius:'10px', border:`1.5px solid ${form.interest===opt ? G.gold : G.goldBorder}`, background: form.interest===opt ? 'rgba(212,175,55,0.12)' : 'rgba(212,175,55,0.05)', color: form.interest===opt ? G.gold : G.whiteMid, fontSize:'12px', fontWeight:700, cursor:'pointer', fontFamily:'Montserrat', transition:'all 0.15s', textAlign:'left' }}>
+                      style={{ padding:'9px 12px', borderRadius:'12px', border:`1.5px solid ${form.interest===opt ? G.gold : G.goldBorder}`, background: form.interest===opt ? 'rgba(212,175,55,0.12)' : 'rgba(212,175,55,0.05)', color: form.interest===opt ? G.gold : G.whiteMid, fontSize:'12px', fontWeight:700, cursor:'pointer', fontFamily:'Montserrat', transition:'all 0.15s', textAlign:'left' }}>
                       {form.interest===opt ? '✓ ' : ''}{opt}
                     </button>
                   ))}
@@ -252,17 +253,17 @@ export default function ContactPage() {
           <div style={{ padding:'clamp(16px,3vw,24px) clamp(16px,4vw,40px)', borderBottom:`1px solid ${G.goldBorder}`, display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:'12px' }}>
             <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
               <div style={{ width:'22px', height:'2px', background:G.gold }} />
-              <span style={{ fontSize:'11px', fontWeight:900, letterSpacing:'0.15em', color:G.gold }}>STÜDYO KONUMU — BEŞİKTAŞ, İSTANBUL</span>
+              <span style={{ fontSize:'11px', fontWeight:900, letterSpacing:'0.15em', color:G.gold }}>STÜDYO KONUMU — MALTEPE, İSTANBUL</span>
             </div>
-            <a href="https://maps.google.com/?q=Beşiktaş+İstanbul" target="_blank" rel="noopener noreferrer"
+            <a href="https://maps.google.com/?q=Maltepe+İstanbul" target="_blank" rel="noopener noreferrer"
               style={{ display:'inline-flex', alignItems:'center', gap:'6px', background:G.gold, color:G.bg, fontSize:'11px', fontWeight:900, padding:'8px 18px', borderRadius:'999px', textDecoration:'none', letterSpacing:'0.05em' }}>
               <MapPin size={12} /> Yol Tarifi Al
             </a>
           </div>
           <div style={{ position:'relative', paddingBottom:'32%', minHeight:'260px' }}>
             <iframe
-              title="Gizem Hoca Pilates Konum - Beşiktaş İstanbul"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.5!2d29.0044!3d41.0439!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zQmXFn2lrdGHFnw!5e0!3m2!1str!2str!4v1234567890"
+              title="Gizem Hoca Pilates Konum - Maltepe İstanbul"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.5!2d29.1601!3d40.9173!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zQmXFn2lrdGHFnw!5e0!3m2!1str!2str!4v1234567890"
               style={{ position:'absolute', inset:0, width:'100%', height:'100%', border:'none', filter:'grayscale(1) invert(0.88) hue-rotate(180deg)' }}
               allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
             />

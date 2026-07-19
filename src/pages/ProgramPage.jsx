@@ -74,8 +74,9 @@ export default function ProgramPage() {
   return (
     <>
       <Helmet>
-        <title>Pilates Programı | Haftalık Ders Takvimi | Gizem Hoca Beşiktaş</title>
-        <meta name="description" content="Gizem Hoca haftalık pilates ders programı. Mat, Reformer, Hamile Pilatesi, Online dersler. Pazartesi-Cumartesi sabah-akşam seçenekleri." />
+        <title>Pilates Programı Maltepe | Haftalık Ders Takvimi | Gizem Hoca</title>
+        <meta name="description" content="Gizem Hoca Maltepe haftalık pilates ders programı. Mat, Reformer, Hamile Pilatesi, Online dersler. Pazartesi-Cumartesi sabah-akşam seçenekleri." />
+        <link rel="canonical" href="https://gizemhoca.net/program" />
       </Helmet>
       <div style={{ background:G.bg, fontFamily:'Montserrat,sans-serif', minHeight:'100vh' }}>
 
@@ -130,7 +131,7 @@ export default function ProgramPage() {
                   style={{ padding:'10px 16px', borderRadius:'12px', border:`1.5px solid ${activeDay===day?G.gold:G.goldBorder}`, background:activeDay===day?'rgba(212,175,55,0.12)':'transparent', color:activeDay===day?G.gold:G.whiteMid, fontSize:'12px', fontWeight:900, cursor:'pointer', fontFamily:'Montserrat', transition:'all 0.2s', whiteSpace:'nowrap', flexShrink:0, display:'flex', flexDirection:'column', alignItems:'center', gap:'4px' }}>
                   <span style={{ fontSize:'10px', letterSpacing:'0.05em' }}>{dayShort[day]}</span>
                   <span>{day}</span>
-                  {!hasSpots && <span style={{ fontSize:'9px', color:'#ff6b6b', fontWeight:700 }}>DOLU</span>}
+                  {!hasSpots && <span style={{ fontSize:'11px', color:'#ff6b6b', fontWeight:700 }}>DOLU</span>}
                 </motion.button>
               );
             })}

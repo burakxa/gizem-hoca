@@ -48,7 +48,7 @@ function TestimonialsSection() {
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
                     <div className="flex items-center mb-4">
-                        <img src={testimonial.image} alt={testimonial.name} className="w-14 h-14 rounded-full object-cover mr-4 border-2 border-brand-accent" />
+                        <img loading="lazy" src={testimonial.image} alt={testimonial.name} className="w-14 h-14 rounded-full object-cover mr-4 border-2 border-brand-accent" />
                         <div>
                             <h4 className="text-lg font-bold text-brand-heading">{testimonial.name}</h4>
                             <div className="flex mt-1">

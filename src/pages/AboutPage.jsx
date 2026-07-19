@@ -32,7 +32,7 @@ const timeline = [
   { year:'2016', title:'Pilates Yolculuğu Başladı', desc:'Balanced Body® Mat Pilates sertifikası ile ilk adım.' },
   { year:'2017', title:'Reformer Uzmanlığı', desc:'Reformer eğitimlerini tamamlayarak alet pilatesi derslerine başladı.' },
   { year:'2019', title:'Hamile Pilatesi', desc:'Hamile öğrencilere özel sertifika programını bitirdi.' },
-  { year:'2021', title:'Stüdyo Açıldı', desc:'Beşiktaş\'ta kendi stüdyosunu kurdu, 500+ öğrenciye ulaştı.' },
+  { year:'2021', title:'Stüdyo Açıldı', desc:'Maltepe\'ta kendi stüdyosunu kurdu, 500+ öğrenciye ulaştı.' },
   { year:'2026', title:'Hâlâ Büyüyoruz', desc:'Online derslerle Türkiye geneline yayılan aktif topluluk.' },
 ];
 
@@ -42,8 +42,9 @@ export default function AboutPage() {
   return (
     <>
       <Helmet>
-        <title>Hakkımda | Gizem Hoca - Certified Pilates Eğitmeni Beşiktaş</title>
-        <meta name="description" content="Balanced Body® sertifikalı pilates eğitmeni Gizem Hoca hakkında. 8+ yıl deneyim, 500+ öğrenci, Beşiktaş İstanbul stüdyosu." />
+        <title>Hakkımda | Gizem Hoca - Certified Pilates Eğitmeni Maltepe İstanbul</title>
+        <meta name="description" content="Balanced Body® sertifikalı pilates eğitmeni Gizem Hoca hakkında. 8+ yıl deneyim, 500+ öğrenci, Maltepe İstanbul stüdyosu." />
+        <link rel="canonical" href="https://gizemhoca.net/hakkimda" />
       </Helmet>
       <div style={{ background:G.bg, fontFamily:'Montserrat,sans-serif', minHeight:'100vh' }}>
 
@@ -80,7 +81,7 @@ export default function AboutPage() {
 
           {/* Sağ: fotoğraf */}
           <div style={{ position:'relative', overflow:'hidden', minHeight:'360px' }}>
-            <img src={PHOTO} alt="Gizem Hoca Pilates Eğitmeni"
+            <img loading="lazy" src={PHOTO} alt="Gizem Hoca Pilates Eğitmeni"
               style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'top', filter:'brightness(0.7) saturate(0.85)' }} />
             <div style={{ position:'absolute', inset:0, background:'linear-gradient(135deg, rgba(13,27,62,0.4) 0%, transparent 50%, rgba(13,27,62,0.6) 100%)' }} />
             {/* Floating badges */}

@@ -52,7 +52,7 @@ export default function MainMenu() {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 24px', height: '58px' }}>
         {/* Logo */}
         <Link to="/" style={{ flexShrink: 0 }}>
-          <img src="https://horizons-cdn.hostinger.com/451c65e3-9af7-4c36-9235-9b5c17a191ce/5987e4c01aee4b6498a58f6a3b12f01e.png"
+          <img loading="lazy" src="https://horizons-cdn.hostinger.com/451c65e3-9af7-4c36-9235-9b5c17a191ce/5987e4c01aee4b6498a58f6a3b12f01e.png"
             alt="Gizem Hoca" style={{ height: '48px', filter: 'brightness(0) invert(1)', display: 'block' }} />
         </Link>
 

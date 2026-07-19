@@ -85,6 +85,12 @@ a { color: inherit; }
   .services-grid { grid-template-columns: 1fr 1fr !important; }
 }
 
+/* Font display swap */
+@font-face {
+  font-family: 'Montserrat';
+  font-display: swap;
+}
+
 /* ── GLASS MORPHISM ── */
 .glass {
   background: rgba(13, 27, 62, 0.55) !important;

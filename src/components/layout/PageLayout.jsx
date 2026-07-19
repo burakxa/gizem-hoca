@@ -8,6 +8,7 @@ import CookieBanner from '@/components/ui/CookieBanner';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import ChatBot from '@/components/ui/ChatBot';
 import FloatingBookBtn from '@/components/ui/FloatingBookBtn';
+import BackToTop from '@/components/ui/BackToTop';
 import CountdownBanner from '@/components/ui/CountdownBanner';
 import CustomCursor from '@/components/ui/CustomCursor';
 import ScrollAnimator from '@/components/ui/ScrollAnimator';
@@ -38,6 +39,7 @@ const PageLayout = ({ handleNotImplemented }) => {
         <Footer />
         <WhatsAppButton phoneNumber="905383135720" />
         <FloatingBookBtn />
+        <BackToTop />
         <ChatBot />
         <CookieBanner />
       </div>

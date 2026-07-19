@@ -6,7 +6,7 @@ import React, { useState, useEffect } from 'react';
       {
         name: 'WhatsApp',
         icon: <MessageSquare className="h-6 w-6" />,
-        url: 'https://wa.me/905000000000', // TODO: Replace with actual number
+        url: 'https://wa.me/905383135720', // TODO: Replace with actual number
         color: 'bg-green-500',
       },
       {

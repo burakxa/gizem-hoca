@@ -54,7 +54,7 @@ function InstructorsSection({ fadeInUp, staggerContainer }) {
               variants={fadeInUp}
               className="bg-white p-8 rounded-xl shadow-lg flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300"
             >
-              <img
+              <img loading="lazy"
                 src={instructor.image}
                 alt={instructor.name}
                 className="w-32 h-32 rounded-full object-cover mb-6 border-4 border-emerald-100"
