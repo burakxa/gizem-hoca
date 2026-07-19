@@ -29,7 +29,7 @@ export default function LoadingScreen() {
           <motion.img
             src="https://horizons-cdn.hostinger.com/451c65e3-9af7-4c36-9235-9b5c17a191ce/5987e4c01aee4b6498a58f6a3b12f01e.png"
             alt="Gizem Hoca"
-            style={{ height: '52px', filter: 'brightness(0) invert(1)' }}
+            style={{ height: '72px', filter: 'brightness(0) invert(1)' }}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}

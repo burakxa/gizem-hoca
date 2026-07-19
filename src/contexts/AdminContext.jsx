@@ -4,28 +4,29 @@ const AdminContext = createContext(null);
 export const useAdmin = () => useContext(AdminContext);
 
 export const AdminProvider = ({ children }) => {
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    if (sessionStorage.getItem('gizem_admin') === 'true') setIsAdmin(true);
+    if (sessionStorage.getItem('gizem_admin') === 'true') setIsLoggedIn(true);
   }, []);
 
   const login = (password) => {
     if (password === 'gizem2026') {
-      setIsAdmin(true);
+      setIsLoggedIn(true);
       sessionStorage.setItem('gizem_admin', 'true');
       return true;
     }
+    alert('Şifre yanlış!');
     return false;
   };
 
   const logout = () => {
-    setIsAdmin(false);
+    setIsLoggedIn(false);
     sessionStorage.removeItem('gizem_admin');
   };
 
   return (
-    <AdminContext.Provider value={{ isAdmin, login, logout }}>
+    <AdminContext.Provider value={{ isLoggedIn, isAdmin: isLoggedIn, login, logout }}>
       {children}
     </AdminContext.Provider>
   );
