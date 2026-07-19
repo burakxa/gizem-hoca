@@ -45,8 +45,6 @@ const schedule = {
 };
 
 
-const G = { bg: '#0d1b3e', dark: '#071029', gold: '#d4af37', goldFaint: 'rgba(212,175,55,0.1)', goldBorder: 'rgba(212,175,55,0.2)', white: 'rgba(255,255,255,0.9)', whiteMid: 'rgba(255,255,255,0.5)' };
-
 const spotsColor = (spots) => spots === 0 ? '#ff4444' : spots <= 1 ? '#f8a000' : spots <= 2 ? '#f8d000' : '#00e87a';
 const spotsText = (spots) => spots === 0 ? 'DOLU' : spots === 1 ? '1 YER KALDI' : `${spots} YER`;
 
