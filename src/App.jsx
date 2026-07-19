@@ -44,6 +44,7 @@ function App() {
             <Route index element={<HomePage />} />
             <Route path="hakkimda" element={<AboutPage />} />
             <Route path="blog" element={<BlogPage />} />
+            <Route path="blog/:id" element={<BlogPostPage />} />
             <Route path="blog/:postId" element={<BlogPostPage />} />
             <Route path="musteri-yorumlari" element={<MusteriYorumlariPage />} />
             <Route path="online-egitim" element={<OnlineEgitimPage handleNotImplemented={handleNotImplemented} />} />
